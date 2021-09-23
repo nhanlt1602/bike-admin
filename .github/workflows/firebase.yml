@@ -23,7 +23,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install -g yarn
-    - name: yarn install, build and test
+    - name: yarn install, upgrade -R eslint, build and test
       run: |
         yarn install
         yarn build
