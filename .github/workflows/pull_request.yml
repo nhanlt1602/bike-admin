@@ -1,4 +1,4 @@
-name: FCode Storybook CI
+name: Pull Req CI
 
 on: [pull_request]
 
@@ -30,6 +30,7 @@ jobs:
                   path: |
                       ${{github.workspace}}/node_modules
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
     build:
         name: Build
         continue-on-error: false

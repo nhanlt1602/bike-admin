@@ -5,10 +5,11 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  types: [closed]
 
 jobs:
   build:
-
+    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
 
     strategy:
