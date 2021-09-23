@@ -26,6 +26,7 @@ jobs:
     - name: yarn install, upgrade -R eslint, build and test
       run: |
         yarn install
+        yarn upgrade -R eslint
         yarn build
     - name: Archive Build
       uses: actions/upload-artifact@v2
