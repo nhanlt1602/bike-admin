@@ -28,13 +28,11 @@ function Hospitals() {
     const onAdd = async (newHospital: Hospital) => {
         setLoading(true);
         await HospitalService.create(newHospital)
-            .then((response: any) => {
-                console.log(response);
+            .then(() => {
                 initData();
             })
-            .catch((err: any) => {
+            .catch(() => {
                 setLoading(false);
-                console.log(err);
             })
             .finally(() => {
                 setLoading(false);
@@ -44,13 +42,11 @@ function Hospitals() {
     const onUpdate = async (newHospital: Hospital) => {
         setLoading(true);
         await HospitalService.update(newHospital)
-            .then((response: any) => {
-                console.log(response);
+            .then(() => {
                 initData();
             })
-            .catch((err: any) => {
+            .catch(() => {
                 setLoading(false);
-                console.log(err);
             })
             .finally(() => {
                 setLoading(false);
@@ -60,13 +56,11 @@ function Hospitals() {
     const onDelete = async (hospital: Hospital) => {
         setLoading(true);
         await HospitalService.delete(hospital.id)
-            .then((response: any) => {
-                console.log(response);
+            .then(() => {
                 initData();
             })
-            .catch((err: any) => {
+            .catch(() => {
                 setLoading(false);
-                console.log(err);
             })
             .finally(() => {
                 setLoading(false);
