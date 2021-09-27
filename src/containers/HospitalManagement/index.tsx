@@ -66,7 +66,7 @@ const Hospitals: React.FC = () => {
             title="Hospitals List"
             columns={columns}
             data={(query) =>
-                new Promise((resolve, _reject) => {
+                new Promise((resolve) => {
                     HospitalService.getAll(query.pageSize, query.page + 1).then((response) => {
                         resolve({
                             data: response.data.content,
