@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import MaterialTable from "material-table";
 
@@ -9,27 +9,14 @@ import HospitalService from "./services/Hospital.service";
 
 import { Divider, Grid, Toolbar } from "@mui/material";
 
-function Hospitals() {
-    const limit = 20;
-    const offset = 1;
+const Hospitals: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [hospitals, setHospitals] = useState<Hospital[]>([]);
-
-    const initData = () => {
-        HospitalService.getAll(limit, offset).then((response) => {
-            setHospitals(response.data.content);
-        });
-    };
-
-    useEffect(() => {
-        initData();
-    }, []);
 
     const onAdd = async (newHospital: Hospital) => {
         setLoading(true);
         await HospitalService.create(newHospital)
             .then(() => {
-                initData();
+                // initData()
             })
             .catch(() => {
                 setLoading(false);
@@ -43,7 +30,7 @@ function Hospitals() {
         setLoading(true);
         await HospitalService.update(newHospital)
             .then(() => {
-                initData();
+                // initData();
             })
             .catch(() => {
                 setLoading(false);
@@ -57,7 +44,7 @@ function Hospitals() {
         setLoading(true);
         await HospitalService.delete(hospital.id)
             .then(() => {
-                initData();
+                // initData();
             })
             .catch(() => {
                 setLoading(false);
@@ -78,18 +65,28 @@ function Hospitals() {
         <MaterialTable
             title="Hospitals List"
             columns={columns}
-            data={hospitals}
+            data={(query) =>
+                new Promise((resolve, _reject) => {
+                    HospitalService.getAll(query.pageSize, query.page + 1).then((response) => {
+                        resolve({
+                            data: response.data.content,
+                            page: response.data.currentPage - 1,
+                            totalCount: response.data.totalCount,
+                        });
+                    });
+                })
+            }
             isLoading={loading}
             editable={{
-                onRowAdd: (newHospital) => onAdd(newHospital),
-                onRowUpdate: (newHospital) => onUpdate(newHospital),
-                onRowDelete: (hospital) => onDelete(hospital),
+                onRowAdd: (newHospital: Hospital) => onAdd(newHospital),
+                onRowUpdate: (newHospital: Hospital) => onUpdate(newHospital),
+                onRowDelete: (hospital: Hospital) => onDelete(hospital),
             }}
         ></MaterialTable>
     );
 
     return (
-        <div>
+        <React.Fragment>
             <Grid container spacing={2}>
                 <Grid item xs={3}>
                     <CustomSidebar />
@@ -100,8 +97,8 @@ function Hospitals() {
                     {table}
                 </Grid>
             </Grid>
-        </div>
+        </React.Fragment>
     );
-}
+};
 
 export default Hospitals;
