@@ -2,12 +2,8 @@ import React, { useState } from "react";
 
 import MaterialTable from "material-table";
 
-import CustomSidebar from "../../components/CustomSidebar";
-
 import { Hospital } from "./models/Hospital.model";
 import HospitalService from "./services/Hospital.service";
-
-import { Divider, Grid, Toolbar } from "@mui/material";
 
 const Hospitals: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -61,7 +57,7 @@ const Hospitals: React.FC = () => {
         { title: "Thông tin chi tiết", field: "description" },
     ];
 
-    const table = (
+    return (
         <MaterialTable
             title="Hospitals List"
             columns={columns}
@@ -83,21 +79,6 @@ const Hospitals: React.FC = () => {
                 onRowDelete: (hospital: Hospital) => onDelete(hospital),
             }}
         ></MaterialTable>
-    );
-
-    return (
-        <React.Fragment>
-            <Grid container spacing={2}>
-                <Grid item xs={3}>
-                    <CustomSidebar />
-                </Grid>
-                <Grid item xs={8}>
-                    <Toolbar />
-                    <Divider />
-                    {table}
-                </Grid>
-            </Grid>
-        </React.Fragment>
     );
 };
 
