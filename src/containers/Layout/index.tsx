@@ -7,7 +7,7 @@ import { CssBaseline } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import { Box } from "@mui/system";
 
-const drawerWidth = 360;
+const drawerWidth = 200;
 
 const Layout: React.FC<{ children?: React.ReactNode }> = ({
     children,
