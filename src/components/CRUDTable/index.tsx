@@ -3,6 +3,7 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { IPagingSupport } from "src/common/types";
 
 import { ConfirmModal } from "../ConfirmModal";
+import useSnackbar from "../Snackbar/useSnackbar";
 
 import {
     AddBoxRounded,
@@ -112,13 +113,15 @@ export interface ITableData<T> {
 export const TableData = <T extends Record<string, any>>(
     props: ITableData<T> & { children?: React.ReactNode }
 ) => {
+    const showSnackbar = useSnackbar();
     const [open, setOpen] = useState<boolean>(false);
     const [selectedId, setSelectedId] = useState<number>(0);
+    const [selectedToDeleteId, setSelectedToDeleteId] = useState<number>(0);
 
     const handleClose = async (e: any, action: "CONFIRM" | "CANCEL") => {
         if (action === "CONFIRM") {
             try {
-                const response = await fetch(`${props.query}/${selectedId}`, {
+                const response = await fetch(`${props.query}/${selectedToDeleteId}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
@@ -127,9 +130,20 @@ export const TableData = <T extends Record<string, any>>(
                 });
                 if (response.ok) {
                     props.loadData(1, props.rowPerPage);
+                    showSnackbar({
+                        children: "Xóa thành công",
+                        variant: "filled",
+                        severity: "success",
+                    });
                 }
             } catch (ex) {
-                alert(ex);
+                showSnackbar({
+                    children: "Xóa đối tượng thất bại",
+                    variant: "filled",
+                    severity: "error",
+                });
+            } finally {
+                setSelectedToDeleteId(0);
             }
         }
         setOpen(false);
@@ -210,7 +224,7 @@ export const TableData = <T extends Record<string, any>>(
                                             size="large"
                                             onClick={() => {
                                                 setOpen(true);
-                                                setSelectedId(row.id);
+                                                setSelectedToDeleteId(row.id);
                                             }}
                                         >
                                             <Delete />
@@ -308,19 +322,24 @@ export const MutationRow = <T extends Record<string, any>>(
             if (props?.action?.onAdd) {
                 props?.action?.onAdd(form, () => {
                     props.loadData(1, props.pageSize);
+                    props.setMode("NORMAL");
+                    props.setInMutation(false);
+                    if (props.setSelectedItem) {
+                        props.setSelectedItem(0);
+                    }
                 });
             }
         } else if (props.mode === "EDIT") {
             if (props?.action?.onEdit) {
                 props?.action?.onEdit(form, () => {
                     props.loadData(props.page, props.pageSize);
+                    props.setMode("NORMAL");
+                    props.setInMutation(false);
+                    if (props.setSelectedItem) {
+                        props.setSelectedItem(0);
+                    }
                 });
             }
-        }
-        props.setMode("NORMAL");
-        props.setInMutation(false);
-        if (props.setSelectedItem) {
-            props.setSelectedItem(0);
         }
     };
 
@@ -422,7 +441,7 @@ const CRUDTable = <T extends Record<string, any>>(
         totalPage: 0,
         totalCount: 0,
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 5,
         content: [],
         nextPage: 2,
         previousPage: null,
@@ -478,7 +497,7 @@ const CRUDTable = <T extends Record<string, any>>(
     );
 
     useEffect(() => {
-        callbackLoadData(1, 10, param);
+        callbackLoadData(1, 5, param);
     }, [callbackLoadData, param]);
 
     const handleChangePage = (event: unknown, newPage: number) => {

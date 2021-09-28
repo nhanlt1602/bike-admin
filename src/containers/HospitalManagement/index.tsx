@@ -1,9 +1,11 @@
 import CRUDTable, { IColumn } from "src/components/CRUDTable";
+import useSnackbar from "src/components/Snackbar/useSnackbar";
 
 import { Hospital } from "./models/Hospital.model";
 import HospitalService from "./services/Hospital.service";
 
 const Hospitals: React.FC = () => {
+    const showSnackbar = useSnackbar();
     const colums: IColumn[] = [
         {
             field: "id",
@@ -49,12 +51,20 @@ const Hospitals: React.FC = () => {
         await HospitalService.create(hospital)
             .then((res) => {
                 if (res.status === 201) {
+                    showSnackbar({
+                        children: "Thêm mới thành công",
+                        variant: "filled",
+                        severity: "success",
+                    });
                     callback();
                 }
             })
-            .catch((ex) => {
-                // eslint-disable-next-line no-console
-                console.log(ex);
+            .catch(() => {
+                showSnackbar({
+                    children: "Thêm mới thất bại",
+                    variant: "filled",
+                    severity: "error",
+                });
             });
     };
 
@@ -70,11 +80,19 @@ const Hospitals: React.FC = () => {
             .then((res) => {
                 if (res.status === 200) {
                     callback();
+                    showSnackbar({
+                        children: "Chỉnh sửa thành công",
+                        variant: "filled",
+                        severity: "success",
+                    });
                 }
             })
-            .catch((ex) => {
-                // eslint-disable-next-line no-console
-                console.log(ex);
+            .catch(() => {
+                showSnackbar({
+                    children: "Chỉnh sửa thất bại",
+                    variant: "filled",
+                    severity: "error",
+                });
             });
     };
     return (
