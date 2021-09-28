@@ -37,7 +37,7 @@ const Symptoms: React.FC = () => {
     ];
 
     const addRowData = async (rowData: Record<string, string>, callback: any) => {
-        let symptom: Symptom = {
+        const symptom: Symptom = {
             symptomCode: rowData["symptomCode"],
             name: rowData["name"],
             description: rowData["description"],
@@ -63,7 +63,7 @@ const Symptoms: React.FC = () => {
     };
 
     const updateRowData = async (rowData: Record<string, string>, callback: any) => {
-        let symptom: Symptom = {
+        const symptom: Symptom = {
             id: Number(rowData["id"]),
             symptomCode: rowData["symptomCode"],
             name: rowData["name"],
