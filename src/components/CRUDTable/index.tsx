@@ -328,69 +328,86 @@ export const MutationRow = <T extends Record<string, any>>(
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
     };
+
+    const [open, setOpen] = useState<boolean>(false);
+
+    const handleClose = async (e: any, action: "CONFIRM" | "CANCEL") => {
+        if (action === "CONFIRM") {
+            submitHandler();
+        }
+        setOpen(false);
+    };
     return (
-        <TableRow>
-            {columns?.map((column: IColumn, index: number) => {
-                switch (mode) {
-                    case "ADD":
-                        return (
-                            <TableCell key={index}>
-                                <TextField
-                                    name={column.field}
-                                    value={form[column.field]}
-                                    size="small"
-                                    disabled={
-                                        column.editable &&
-                                        (column.editable === "onEdit" ||
-                                            column.editable === "never")
-                                    }
-                                    variant="standard"
-                                    onChange={onHandleChange}
-                                />
-                            </TableCell>
-                        );
-                    case "EDIT":
-                        return (
-                            <TableCell key={index}>
-                                <TextField
-                                    name={column.field}
-                                    value={form[column.field]}
-                                    size="small"
-                                    disabled={
-                                        column.editable &&
-                                        (column.editable === "onAdd" || column.editable === "never")
-                                    }
-                                    variant="standard"
-                                    onChange={onHandleChange}
-                                />
-                            </TableCell>
-                        );
-                    default:
-                        break;
-                }
-            })}
-            <TableCell>
-                <Tooltip title="Xác nhận">
-                    <IconButton size="large" onClick={submitHandler}>
-                        <CheckCircle />
-                    </IconButton>
-                </Tooltip>
-                <Tooltip title="Xóa">
-                    <IconButton
-                        size="large"
-                        onClick={() => {
-                            props.setMode("NORMAL");
-                            props.setInMutation(false);
-                            if (props.setSelectedItem) {
-                                props.setSelectedItem(0);
-                            }
-                        }}
-                    >
-                        <Clear />
-                    </IconButton>
-                </Tooltip>
-            </TableCell>
-        </TableRow>
+        <React.Fragment>
+            <ConfirmModal
+                open={open}
+                message="Bạn có muốn thực hiện thay đổi?"
+                handleClose={handleClose}
+            />
+            <TableRow>
+                {columns?.map((column: IColumn, index: number) => {
+                    switch (mode) {
+                        case "ADD":
+                            return (
+                                <TableCell key={index}>
+                                    <TextField
+                                        name={column.field}
+                                        value={form[column.field]}
+                                        size="small"
+                                        disabled={
+                                            column.editable &&
+                                            (column.editable === "onEdit" ||
+                                                column.editable === "never")
+                                        }
+                                        variant="standard"
+                                        onChange={onHandleChange}
+                                    />
+                                </TableCell>
+                            );
+                        case "EDIT":
+                            return (
+                                <TableCell key={index}>
+                                    <TextField
+                                        name={column.field}
+                                        value={form[column.field]}
+                                        size="small"
+                                        disabled={
+                                            column.editable &&
+                                            (column.editable === "onAdd" ||
+                                                column.editable === "never")
+                                        }
+                                        variant="standard"
+                                        onChange={onHandleChange}
+                                    />
+                                </TableCell>
+                            );
+                        default:
+                            break;
+                    }
+                })}
+                <TableCell>
+                    <Tooltip title="Xác nhận">
+                        <IconButton size="large" onClick={() => setOpen(true)}>
+                            <CheckCircle />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Xóa">
+                        <IconButton
+                            size="large"
+                            onClick={() => {
+                                props.setMode("NORMAL");
+                                props.setInMutation(false);
+                                if (props.setSelectedItem) {
+                                    props.setSelectedItem(0);
+                                }
+                            }}
+                        >
+                            <Clear />
+                        </IconButton>
+                    </Tooltip>
+                </TableCell>
+            </TableRow>
+        </React.Fragment>
     );
 };
 const convertCamelToSnakeCase = (str: string) =>
