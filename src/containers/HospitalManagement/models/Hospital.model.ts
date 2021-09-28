@@ -1,5 +1,5 @@
 export type Hospital = {
-    id: number;
+    id?: number;
     hospitalCode: string;
     name: string;
     address: string;
