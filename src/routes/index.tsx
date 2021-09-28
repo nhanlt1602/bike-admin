@@ -1,6 +1,7 @@
 import { Route, Switch } from "react-router-dom";
 
 import Hospitals from "src/containers/HospitalManagement";
+import Symptoms from "src/containers/SymptomManagement";
 
 export const routes = [
     {
@@ -16,7 +17,7 @@ export const routes = [
     {
         path: "/symptoms",
         name: "Symptom",
-        component: Hospitals,
+        component: Symptoms,
     },
 ];
 
