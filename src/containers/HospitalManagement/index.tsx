@@ -1,103 +1,94 @@
-import React, { useState } from "react";
-
-import MaterialTable from "material-table";
-
-import CustomSidebar from "../../components/CustomSidebar";
+import CRUDTable, { IColumn } from "src/components/CRUDTable";
 
 import { Hospital } from "./models/Hospital.model";
 import HospitalService from "./services/Hospital.service";
 
-import { Divider, Grid, Toolbar } from "@mui/material";
-
 const Hospitals: React.FC = () => {
-    const [loading, setLoading] = useState<boolean>(false);
-
-    const onAdd = async (newHospital: Hospital) => {
-        setLoading(true);
-        await HospitalService.create(newHospital)
-            .then(() => {
-                // initData()
-            })
-            .catch(() => {
-                setLoading(false);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    };
-
-    const onUpdate = async (newHospital: Hospital) => {
-        setLoading(true);
-        await HospitalService.update(newHospital)
-            .then(() => {
-                // initData();
-            })
-            .catch(() => {
-                setLoading(false);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    };
-
-    const onDelete = async (hospital: Hospital) => {
-        setLoading(true);
-        await HospitalService.delete(hospital.id)
-            .then(() => {
-                // initData();
-            })
-            .catch(() => {
-                setLoading(false);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    };
-
-    const columns = [
-        { title: "Mã", field: "hospitalCode" },
-        { title: "Tên bệnh viện", field: "name" },
-        { title: "Địa chỉ", field: "address" },
-        { title: "Thông tin chi tiết", field: "description" },
+    const colums: IColumn[] = [
+        {
+            field: "id",
+            align: "left",
+            title: "ID",
+            type: "index",
+            disableFilter: true,
+            editable: "never",
+        },
+        {
+            field: "hospitalCode",
+            align: "left",
+            title: "Mã Bệnh Viện",
+        },
+        {
+            field: "name",
+            align: "left",
+            title: "Tên Bệnh viện",
+        },
+        {
+            field: "address",
+            align: "left",
+            title: "Địa chỉ",
+        },
+        {
+            field: "description",
+            align: "left",
+            title: "Mô tả",
+            disableFilter: true,
+            // render: (props: string) => {
+            //     return <div style={{ backgroundColor: "red" }}>{props}</div>;
+            // },
+        },
     ];
 
-    const table = (
-        <MaterialTable
-            title="Hospitals List"
-            columns={columns}
-            data={(query) =>
-                new Promise((resolve) => {
-                    HospitalService.getAll(query.pageSize, query.page + 1).then((response) => {
-                        resolve({
-                            data: response.data.content,
-                            page: response.data.currentPage - 1,
-                            totalCount: response.data.totalCount,
-                        });
-                    });
-                })
-            }
-            isLoading={loading}
-            editable={{
-                onRowAdd: (newHospital: Hospital) => onAdd(newHospital),
-                onRowUpdate: (newHospital: Hospital) => onUpdate(newHospital),
-                onRowDelete: (hospital: Hospital) => onDelete(hospital),
-            }}
-        ></MaterialTable>
-    );
+    const addRowData = async (rowData: Record<string, string>, callback: any) => {
+        let hospital: Hospital = {
+            address: rowData["address"],
+            hospitalCode: rowData["hospitalCode"],
+            name: rowData["name"],
+            description: rowData["description"],
+        };
+        await HospitalService.create(hospital)
+            .then((res) => {
+                if (res.status === 201) {
+                    callback();
+                }
+            })
+            .catch((ex) => {
+                // eslint-disable-next-line no-console
+                console.log(ex);
+            });
+    };
 
+    const updateRowData = async (rowData: Record<string, string>, callback: any) => {
+        let hospital: Hospital = {
+            id: Number(rowData["id"]),
+            address: rowData["address"],
+            hospitalCode: rowData["hospitalCode"],
+            name: rowData["name"],
+            description: rowData["description"],
+        };
+        await HospitalService.update(hospital)
+            .then((res) => {
+                if (res.status === 200) {
+                    callback();
+                }
+            })
+            .catch((ex) => {
+                // eslint-disable-next-line no-console
+                console.log(ex);
+            });
+    };
     return (
-        <React.Fragment>
-            <Grid container spacing={2}>
-                <Grid item xs={3}>
-                    <CustomSidebar />
-                </Grid>
-                <Grid item xs={8}>
-                    <Toolbar />
-                    <Divider />
-                    {table}
-                </Grid>
-            </Grid>
-        </React.Fragment>
+        <CRUDTable
+            title="Quản lí Bệnh Viện"
+            enableFilter
+            query="http://52.221.193.237/api/v1/hospitals"
+            columns={colums}
+            action={{
+                onAdd: (rowData, callback) => addRowData(rowData, callback),
+                onDelete: true,
+                onEdit: (rowData, callback) => updateRowData(rowData, callback),
+            }}
+        />
     );
 };
 
