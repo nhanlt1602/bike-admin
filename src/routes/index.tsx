@@ -1,5 +1,7 @@
 import { Route, Switch } from "react-router-dom";
 
+import Drugs from "src/containers/DrugManagement";
+import DrugTypes from "src/containers/DrugTypeManagement";
 import Hospitals from "src/containers/HospitalManagement";
 import Symptoms from "src/containers/SymptomManagement";
 
@@ -16,8 +18,18 @@ export const routes = [
     },
     {
         path: "/symptoms",
-        name: "Symptom",
+        name: "symptom",
         component: Symptoms,
+    },
+    {
+        path: "/drugs",
+        name: "drug",
+        component: Drugs,
+    },
+    {
+        path: "/drug-types",
+        name: "drugType",
+        component: DrugTypes,
     },
 ];
 
