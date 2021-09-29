@@ -14,12 +14,19 @@ const Drugs: React.FC = () => {
             type: "index",
             disableFilter: true,
             editable: "never",
+            index: 1,
         },
-        { field: "name", align: "left", title: "Tên thuốc" },
-        { field: "producer", align: "left", title: "Nhà sản xuất" },
-        { field: "drugOrigin", align: "left", title: "Xuất xứ" },
-        { field: "drugForm", align: "left", title: "Định dạng" },
-        { field: "drugTypeId", align: "left", title: "Mã loại thuốc", disableFilter: true },
+        { field: "name", align: "left", title: "Tên thuốc", index: 2 },
+        { field: "producer", align: "left", title: "Nhà sản xuất", index: 3 },
+        { field: "drugOrigin", align: "left", title: "Xuất xứ", index: 4 },
+        { field: "drugForm", align: "left", title: "Định dạng", index: 5 },
+        {
+            field: "drugTypeId",
+            align: "left",
+            title: "Mã loại thuốc",
+            disableFilter: true,
+            index: 6,
+        },
     ];
 
     const addRowData = async (rowData: Record<string, string>, callback: any) => {

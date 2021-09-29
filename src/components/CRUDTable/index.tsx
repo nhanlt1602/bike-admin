@@ -13,6 +13,8 @@ import {
     FilterList,
     ModeEdit,
 } from "@mui/icons-material";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import {
     TableCell,
     TableHead,
@@ -29,6 +31,8 @@ import {
     Toolbar,
     Tooltip,
     IconButton,
+    Autocomplete,
+    Checkbox,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { Box } from "@mui/system";
@@ -41,12 +45,12 @@ interface ITable {
     enableSelection?: boolean;
     enableFilter?: boolean;
     sort?: boolean;
-    title?: string | React.ReactElement<any>;
+    title?: string | React.ReactElement;
     headerColor?: "primary" | "secondary" | "standard";
     query: string;
     action?: {
-        onAdd?: (rowData: Record<string, string>, callback: any) => void;
-        onEdit?: (rowData: Record<string, string>, callback: any) => void;
+        onAdd?: (rowData: Record<string, string>, callback: Function) => void;
+        onEdit?: (rowData: Record<string, string>, callback: Function) => void;
         onDelete?: boolean;
         onDeleteWithGroup?: boolean;
     };
@@ -57,13 +61,14 @@ export interface IColumn {
     align?: "left" | "right" | "center";
     title: string;
     field: string;
-    render?: (data?: any) => React.ReactElement<any>;
+    render?: (data?: Record<number, string | number>) => React.ReactElement;
     disableSort?: boolean;
     disableFilter?: boolean;
-    customSort?: any;
-    customFilter?: any;
+    customSort?: (data?: Record<number, string | number>) => React.ReactElement;
+    customFilter?: (data?: Record<number, string | number>) => React.ReactElement;
     type?: "index";
     editable?: "never" | "onAdd" | "onEdit";
+    index: number;
 }
 
 export interface ITableHeader {
@@ -103,8 +108,8 @@ export interface ITableData<T> {
     mode: "NORMAL" | "ADD" | "EDIT";
     setMode: any;
     action?: {
-        onAdd?: (rowData: Record<string, string>, callback: any) => void;
-        onEdit?: (rowData: Record<string, string>, callback: any) => void;
+        onAdd?: (rowData: Record<string, string>, callback: Function) => void;
+        onEdit?: (rowData: Record<string, string>, callback: Function) => void;
         onDelete?: boolean;
         onDeleteWithGroup?: boolean;
     };
@@ -118,7 +123,10 @@ export const TableData = <T extends Record<string, any>>(
     const [selectedId, setSelectedId] = useState<number>(0);
     const [selectedToDeleteId, setSelectedToDeleteId] = useState<number>(0);
 
-    const handleClose = async (e: any, action: "CONFIRM" | "CANCEL") => {
+    const handleClose = async (
+        e: React.MouseEvent<HTMLButtonElement | MouseEvent>,
+        action: "CONFIRM" | "CANCEL"
+    ) => {
         if (action === "CONFIRM") {
             try {
                 const response = await fetch(`${props.query}/${selectedToDeleteId}`, {
@@ -240,6 +248,71 @@ export const TableData = <T extends Record<string, any>>(
     );
 };
 
+export interface ICheckBoxHeader {
+    columns: IColumn[];
+    selectedColumns: IColumn[];
+    setSelectedColumns: any;
+    setStringFilter: any;
+}
+
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
+export const CheckboxesHeader: React.FC<ICheckBoxHeader> = (props: ICheckBoxHeader) => {
+    const showSnackbar = useSnackbar();
+    return (
+        <Autocomplete
+            multiple
+            id="checkbox header"
+            options={props.columns}
+            disableCloseOnSelect
+            value={props.selectedColumns}
+            getOptionLabel={(option) => option.title}
+            onChange={(event, newValue) => {
+                if (newValue.length !== 0) {
+                    newValue = newValue.sort((a, b) => {
+                        return a.index - b.index;
+                    });
+                    props.setSelectedColumns([...newValue]);
+                    let stringFilter = newValue
+                        .map((column) => column.field)
+                        .map((field) => field.charAt(0).toUpperCase() + field.slice(1))
+                        .join(",");
+                    stringFilter = `&filtering=${stringFilter}`;
+                    props.setStringFilter(stringFilter);
+                } else {
+                    showSnackbar({
+                        severity: "warning",
+                        children: "Phải chọn ít nhất một cột hiển thị",
+                    });
+                }
+            }}
+            renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                    <Checkbox
+                        icon={icon}
+                        checkedIcon={checkedIcon}
+                        style={{ marginRight: 8 }}
+                        checked={selected}
+                    />
+                    {option.title}
+                </li>
+            )}
+            style={{ width: 500 }}
+            renderTags={() => null}
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    size="small"
+                    variant="standard"
+                    value={`${props.selectedColumns.length} hàng được chọn`}
+                    placeholder={`${props.selectedColumns.length} hàng được chọn`}
+                />
+            )}
+        />
+    );
+};
+
 export interface IFilterTable {
     columns: IColumn[];
     filters: Record<string, string>;
@@ -287,8 +360,8 @@ export interface IMutaionRow<T> {
     setInMutation: any;
     setSelectedItem?: any;
     action?: {
-        onAdd?: (rowData: Record<string, string>, callback: any) => void;
-        onEdit?: (rowData: Record<string, string>, callback: any) => void;
+        onAdd?: (rowData: Record<string, string>, callback: Function) => void;
+        onEdit?: (rowData: Record<string, string>, callback: Function) => void;
         onDelete?: boolean;
         onDeleteWithGroup?: boolean;
     };
@@ -317,7 +390,7 @@ export const MutationRow = <T extends Record<string, any>>(
         return obj;
     };
     const [form, setForm] = useState(generateForm());
-    const submitHandler: any = () => {
+    const submitHandler = () => {
         if (props.mode === "ADD") {
             if (props?.action?.onAdd) {
                 props?.action?.onAdd(form, () => {
@@ -350,7 +423,10 @@ export const MutationRow = <T extends Record<string, any>>(
 
     const [open, setOpen] = useState<boolean>(false);
 
-    const handleClose = async (e: any, action: "CONFIRM" | "CANCEL") => {
+    const handleClose = async (
+        e: React.MouseEvent<HTMLButtonElement | MouseEvent>,
+        action: "CONFIRM" | "CANCEL"
+    ) => {
         if (action === "CONFIRM") {
             submitHandler();
         }
@@ -432,10 +508,10 @@ export const MutationRow = <T extends Record<string, any>>(
 const convertCamelToSnakeCase = (str: string) =>
     str.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
 
-const CRUDTable = <T extends Record<string, any>>(
+const CRUDTable = <T extends Record<string, string | number>>(
     props: ITable & { children?: React.ReactNode }
 ) => {
-    const { query } = props;
+    const { query, columns } = props;
     const [loading, setLoading] = useState<boolean>(false);
     const [paging, setPaging] = useState<IPagingSupport<T>>({
         totalPage: 0,
@@ -446,9 +522,11 @@ const CRUDTable = <T extends Record<string, any>>(
         nextPage: 2,
         previousPage: null,
     });
+    const [selectedColumns, setSelectedColumns] = useState<IColumn[]>(columns);
+    const [stringFilter, setStringFilter] = useState<string>("");
 
     const generateFilter = () => {
-        let fields: string[] = props.columns.map((column) => column.field);
+        let fields: string[] = columns.map((column) => column.field);
         let obj: Record<string, string> = {};
         fields.forEach((field) => {
             obj[field] = "";
@@ -462,7 +540,7 @@ const CRUDTable = <T extends Record<string, any>>(
     const loadData = async (offset: number, limit: number) => {
         setLoading(true);
         try {
-            const response = await fetch(`${query}?offset=${offset}&limit=${limit}`);
+            const response = await fetch(`${query}?offset=${offset}&limit=${limit}${stringFilter}`);
             if (response.ok) {
                 const data: IPagingSupport<T> = await response.json();
                 setPaging({
@@ -473,19 +551,23 @@ const CRUDTable = <T extends Record<string, any>>(
             // eslint-disable-next-line no-console
             console.log(ex);
         } finally {
-            setLoading(false);
+            setTimeout(() => {
+                setLoading(false);
+            }, 300);
         }
     };
 
     const callbackLoadData = useCallback(
-        async (offset: number, limit: number, queryStr: string) => {
+        async (offset: number, limit: number, queryStr: string, stringFilter: string) => {
             setLoading(true);
             try {
-                const response = await fetch(`${query}?offset=${offset}&limit=${limit}${queryStr}`);
-                const data: IPagingSupport<T> = await response.json();
-                setPaging({
-                    ...data,
-                });
+                const response = await fetch(
+                    `${query}?offset=${offset}&limit=${limit}${stringFilter}${queryStr}`
+                );
+                if (response.status === 200) {
+                    const data: IPagingSupport<T> = await response.json();
+                    setPaging(data);
+                }
             } catch (ex) {
                 // eslint-disable-next-line no-console
                 console.log(ex);
@@ -497,8 +579,13 @@ const CRUDTable = <T extends Record<string, any>>(
     );
 
     useEffect(() => {
-        callbackLoadData(1, 5, param);
-    }, [callbackLoadData, param]);
+        // let stringFilter = selectedColumns
+        //     .map((column) => column.field)
+        //     .map((field) => field.charAt(0).toUpperCase() + field.slice(1))
+        //     .join(",");
+        // stringFilter = `&filtering=${stringFilter}`;
+        callbackLoadData(1, 5, param, stringFilter);
+    }, [callbackLoadData, param, stringFilter]);
 
     const handleChangePage = (event: unknown, newPage: number) => {
         loadData(newPage + 1, paging.pageSize);
@@ -544,22 +631,30 @@ const CRUDTable = <T extends Record<string, any>>(
                     {props.title}
                 </Typography>
                 {!!props?.action?.onAdd && (
-                    <Tooltip title="Thêm mới">
-                        <IconButton
-                            size="large"
-                            onClick={() => {
-                                setMutationMode(true);
-                                setMode("ADD");
-                            }}
-                        >
-                            <AddBoxRounded />
-                        </IconButton>
-                    </Tooltip>
+                    <React.Fragment>
+                        <CheckboxesHeader
+                            selectedColumns={selectedColumns}
+                            setSelectedColumns={setSelectedColumns}
+                            setStringFilter={setStringFilter}
+                            columns={columns}
+                        />
+                        <Tooltip title="Thêm mới">
+                            <IconButton
+                                size="large"
+                                onClick={() => {
+                                    setMutationMode(true);
+                                    setMode("ADD");
+                                }}
+                            >
+                                <AddBoxRounded />
+                            </IconButton>
+                        </Tooltip>
+                    </React.Fragment>
                 )}
             </Toolbar>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHeader
-                    columns={props.columns}
+                    columns={selectedColumns}
                     isHaveAction={!!props?.action?.onDelete || !!props?.action?.onEdit}
                 />
                 <TableBody>
@@ -567,7 +662,7 @@ const CRUDTable = <T extends Record<string, any>>(
                         <FilterTable
                             onChange={onHandleChange}
                             filters={filters}
-                            columns={props.columns}
+                            columns={selectedColumns}
                             isHaveAction={!!props?.action?.onDelete || !!props?.action?.onEdit}
                             inMutaionMode={isInMutaionMode}
                         />
@@ -575,8 +670,9 @@ const CRUDTable = <T extends Record<string, any>>(
                     {loading ? (
                         <Box
                             style={{
-                                height: 53 * paging.pageSize,
+                                height: 53 * (paging.pageSize || 5),
                             }}
+                            width={1}
                             display="flex"
                             justifyContent="center"
                             alignItems="center"
@@ -590,7 +686,7 @@ const CRUDTable = <T extends Record<string, any>>(
                                 loadData={loadData}
                                 query={query}
                                 rows={paging?.content}
-                                columns={props.columns}
+                                columns={selectedColumns}
                                 isHaveActionDelete={!!props?.action?.onDelete}
                                 isHaveActionEdit={!!props?.action?.onEdit}
                                 inMutaionMode={isInMutaionMode}
@@ -609,8 +705,8 @@ const CRUDTable = <T extends Record<string, any>>(
                                     <TableCell
                                         colSpan={
                                             !!props?.action?.onDelete || !!props?.action?.onEdit
-                                                ? props.columns.length + 1
-                                                : props.columns.length
+                                                ? selectedColumns.length + 1
+                                                : selectedColumns.length
                                         }
                                     />
                                 </TableRow>
@@ -622,9 +718,9 @@ const CRUDTable = <T extends Record<string, any>>(
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={paging.totalCount}
-                rowsPerPage={paging.pageSize}
-                page={paging.currentPage - 1}
+                count={paging?.totalCount}
+                rowsPerPage={paging?.pageSize}
+                page={paging?.currentPage - 1}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />

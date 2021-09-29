@@ -14,17 +14,20 @@ const DrugTypes: React.FC = () => {
             type: "index",
             disableFilter: true,
             editable: "never",
+            index: 1,
         },
         {
             field: "name",
             align: "left",
             title: "Tên loại thuốc",
+            index: 2,
         },
         {
             field: "description",
             align: "left",
             title: "Mô tả",
             disableFilter: true,
+            index: 3,
         },
     ];
 

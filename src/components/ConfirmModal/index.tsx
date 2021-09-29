@@ -10,7 +10,10 @@ import {
 export interface IConfirmModel {
     message: string;
     open: boolean;
-    handleClose: (e: any, action: "CONFIRM" | "CANCEL") => void;
+    handleClose: (
+        e: React.MouseEvent<HTMLButtonElement | MouseEvent>,
+        action: "CONFIRM" | "CANCEL"
+    ) => void;
 }
 export const ConfirmModal: React.FC<IConfirmModel> = (props: IConfirmModel) => {
     const { open, handleClose, message } = props;
