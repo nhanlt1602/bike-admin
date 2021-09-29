@@ -14,34 +14,39 @@ const Hospitals: React.FC = () => {
             type: "index",
             disableFilter: true,
             editable: "never",
+            index: 1,
         },
         {
             field: "hospitalCode",
             align: "left",
             title: "Mã Bệnh Viện",
+            index: 2,
         },
         {
             field: "name",
             align: "left",
             title: "Tên Bệnh viện",
+            index: 3,
         },
         {
             field: "address",
             align: "left",
             title: "Địa chỉ",
+            index: 4,
         },
         {
             field: "description",
             align: "left",
             title: "Mô tả",
             disableFilter: true,
+            index: 5,
             // render: (props: string) => {
             //     return <div style={{ backgroundColor: "red" }}>{props}</div>;
             // },
         },
     ];
 
-    const addRowData = async (rowData: Record<string, string>, callback: any) => {
+    const addRowData = async (rowData: Record<string, string>, callback: Function) => {
         let hospital: Hospital = {
             address: rowData["address"],
             hospitalCode: rowData["hospitalCode"],
@@ -68,7 +73,7 @@ const Hospitals: React.FC = () => {
             });
     };
 
-    const updateRowData = async (rowData: Record<string, string>, callback: any) => {
+    const updateRowData = async (rowData: Record<string, string>, callback: Function) => {
         let hospital: Hospital = {
             id: Number(rowData["id"]),
             address: rowData["address"],

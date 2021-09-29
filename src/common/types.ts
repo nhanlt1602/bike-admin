@@ -7,11 +7,3 @@ export interface IPagingSupport<T> {
     previousPage: number | null;
     content: T[];
 }
-
-export interface IError {
-    errors: any;
-    status: number;
-    title: string;
-    traceId: string;
-    type: string;
-}

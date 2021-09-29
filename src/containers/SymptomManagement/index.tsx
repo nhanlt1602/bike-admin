@@ -14,29 +14,33 @@ const Symptoms: React.FC = () => {
             type: "index",
             disableFilter: true,
             editable: "never",
+            index: 1,
         },
         {
             field: "symptomCode",
             align: "left",
             title: "Mã triệu chứng",
+            index: 2,
         },
         {
             field: "name",
             align: "left",
             title: "Tên triệu chứng",
+            index: 3,
         },
         {
             field: "description",
             align: "left",
             title: "Mô tả",
             disableFilter: true,
+            index: 4,
             // render: (props: string) => {
             //     return <div style={{ backgroundColor: "red" }}>{props}</div>;
             // },
         },
     ];
 
-    const addRowData = async (rowData: Record<string, string>, callback: any) => {
+    const addRowData = async (rowData: Record<string, string>, callback: Function) => {
         const symptom: Symptom = {
             symptomCode: rowData["symptomCode"],
             name: rowData["name"],
@@ -62,7 +66,7 @@ const Symptoms: React.FC = () => {
             });
     };
 
-    const updateRowData = async (rowData: Record<string, string>, callback: any) => {
+    const updateRowData = async (rowData: Record<string, string>, callback: Function) => {
         const symptom: Symptom = {
             id: Number(rowData["id"]),
             symptomCode: rowData["symptomCode"],
