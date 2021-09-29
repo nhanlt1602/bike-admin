@@ -1,10 +1,10 @@
 import CRUDTable, { IColumn } from "src/components/CRUDTable";
 import useSnackbar from "src/components/Snackbar/useSnackbar";
 
-import { Hospital } from "./models/Hospital.model";
-import HospitalService from "./services/Hospital.service";
+import { Drug } from "./models/Drug.model";
+import DrugService from "./services/Drug.service";
 
-const Hospitals: React.FC = () => {
+const Drugs: React.FC = () => {
     const showSnackbar = useSnackbar();
     const colums: IColumn[] = [
         {
@@ -15,40 +15,22 @@ const Hospitals: React.FC = () => {
             disableFilter: true,
             editable: "never",
         },
-        {
-            field: "hospitalCode",
-            align: "left",
-            title: "Mã Bệnh Viện",
-        },
-        {
-            field: "name",
-            align: "left",
-            title: "Tên Bệnh viện",
-        },
-        {
-            field: "address",
-            align: "left",
-            title: "Địa chỉ",
-        },
-        {
-            field: "description",
-            align: "left",
-            title: "Mô tả",
-            disableFilter: true,
-            // render: (props: string) => {
-            //     return <div style={{ backgroundColor: "red" }}>{props}</div>;
-            // },
-        },
+        { field: "name", align: "left", title: "Tên thuốc" },
+        { field: "producer", align: "left", title: "Nhà sản xuất" },
+        { field: "drugOrigin", align: "left", title: "Xuất xứ" },
+        { field: "drugForm", align: "left", title: "Định dạng" },
+        { field: "drugTypeId", align: "left", title: "Mã loại thuốc", disableFilter: true },
     ];
 
     const addRowData = async (rowData: Record<string, string>, callback: any) => {
-        const hospital: Hospital = {
-            address: rowData["address"],
-            hospitalCode: rowData["hospitalCode"],
+        const drug: Drug = {
             name: rowData["name"],
-            description: rowData["description"],
+            producer: rowData["producer"],
+            drugOrigin: rowData["drugOrigin"],
+            drugForm: rowData["drugForm"],
+            drugTypeId: Number(rowData["drugTypeId"]),
         };
-        await HospitalService.create(hospital)
+        await DrugService.create(drug)
             .then((res) => {
                 if (res.status === 201) {
                     showSnackbar({
@@ -57,6 +39,14 @@ const Hospitals: React.FC = () => {
                         severity: "success",
                     });
                     callback();
+                }
+                if (res.status === 400) {
+                    callback();
+                    showSnackbar({
+                        children: "Mã loại thuốc không tồn tại",
+                        variant: "filled",
+                        severity: "error",
+                    });
                 }
             })
             .catch(() => {
@@ -69,14 +59,15 @@ const Hospitals: React.FC = () => {
     };
 
     const updateRowData = async (rowData: Record<string, string>, callback: any) => {
-        const hospital: Hospital = {
+        const drug: Drug = {
             id: Number(rowData["id"]),
-            address: rowData["address"],
-            hospitalCode: rowData["hospitalCode"],
             name: rowData["name"],
-            description: rowData["description"],
+            producer: rowData["producer"],
+            drugOrigin: rowData["drugOrigin"],
+            drugForm: rowData["drugForm"],
+            drugTypeId: Number(rowData["drugTypeId"]),
         };
-        await HospitalService.update(hospital)
+        await DrugService.update(drug)
             .then((res) => {
                 if (res.status === 200) {
                     callback();
@@ -84,6 +75,14 @@ const Hospitals: React.FC = () => {
                         children: "Chỉnh sửa thành công",
                         variant: "filled",
                         severity: "success",
+                    });
+                }
+                if (res.status === 400) {
+                    callback();
+                    showSnackbar({
+                        children: "Mã loại thuốc không tồn tại",
+                        variant: "filled",
+                        severity: "error",
                     });
                 }
             })
@@ -97,9 +96,9 @@ const Hospitals: React.FC = () => {
     };
     return (
         <CRUDTable
-            title="Quản lí Bệnh Viện"
+            title="Quản lí Thuốc"
             enableFilter
-            query="http://52.221.193.237/api/v1/hospitals"
+            query="http://52.221.193.237/api/v1/drugs"
             columns={colums}
             action={{
                 onAdd: (rowData, callback) => addRowData(rowData, callback),
@@ -110,4 +109,4 @@ const Hospitals: React.FC = () => {
     );
 };
 
-export default Hospitals;
+export default Drugs;

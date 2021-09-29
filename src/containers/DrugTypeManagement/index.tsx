@@ -1,10 +1,10 @@
 import CRUDTable, { IColumn } from "src/components/CRUDTable";
 import useSnackbar from "src/components/Snackbar/useSnackbar";
 
-import { Hospital } from "./models/Hospital.model";
-import HospitalService from "./services/Hospital.service";
+import { DrugType } from "./models/DrugType.models";
+import DrugTypeService from "./services/DrugType.service";
 
-const Hospitals: React.FC = () => {
+const DrugTypes: React.FC = () => {
     const showSnackbar = useSnackbar();
     const colums: IColumn[] = [
         {
@@ -16,39 +16,24 @@ const Hospitals: React.FC = () => {
             editable: "never",
         },
         {
-            field: "hospitalCode",
-            align: "left",
-            title: "Mã Bệnh Viện",
-        },
-        {
             field: "name",
             align: "left",
-            title: "Tên Bệnh viện",
-        },
-        {
-            field: "address",
-            align: "left",
-            title: "Địa chỉ",
+            title: "Tên loại thuốc",
         },
         {
             field: "description",
             align: "left",
             title: "Mô tả",
             disableFilter: true,
-            // render: (props: string) => {
-            //     return <div style={{ backgroundColor: "red" }}>{props}</div>;
-            // },
         },
     ];
 
     const addRowData = async (rowData: Record<string, string>, callback: any) => {
-        const hospital: Hospital = {
-            address: rowData["address"],
-            hospitalCode: rowData["hospitalCode"],
+        const drugType: DrugType = {
             name: rowData["name"],
             description: rowData["description"],
         };
-        await HospitalService.create(hospital)
+        await DrugTypeService.create(drugType)
             .then((res) => {
                 if (res.status === 201) {
                     showSnackbar({
@@ -69,14 +54,12 @@ const Hospitals: React.FC = () => {
     };
 
     const updateRowData = async (rowData: Record<string, string>, callback: any) => {
-        const hospital: Hospital = {
+        const drugType: DrugType = {
             id: Number(rowData["id"]),
-            address: rowData["address"],
-            hospitalCode: rowData["hospitalCode"],
             name: rowData["name"],
             description: rowData["description"],
         };
-        await HospitalService.update(hospital)
+        await DrugTypeService.update(drugType)
             .then((res) => {
                 if (res.status === 200) {
                     callback();
@@ -97,9 +80,9 @@ const Hospitals: React.FC = () => {
     };
     return (
         <CRUDTable
-            title="Quản lí Bệnh Viện"
+            title="Quản lí Loại thuốc"
             enableFilter
-            query="http://52.221.193.237/api/v1/hospitals"
+            query="http://52.221.193.237/api/v1/drug-types"
             columns={colums}
             action={{
                 onAdd: (rowData, callback) => addRowData(rowData, callback),
@@ -110,4 +93,4 @@ const Hospitals: React.FC = () => {
     );
 };
 
-export default Hospitals;
+export default DrugTypes;
