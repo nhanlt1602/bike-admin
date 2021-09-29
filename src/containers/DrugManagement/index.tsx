@@ -15,36 +15,15 @@ const Drugs: React.FC = () => {
             disableFilter: true,
             editable: "never",
         },
-        {
-            field: "name",
-            align: "left",
-            title: "Tên thuốc",
-        },
-        {
-            field: "producer",
-            align: "left",
-            title: "Nhà sản xuất",
-        },
-        {
-            field: "drugOrigin",
-            align: "left",
-            title: "Xuất xứ",
-        },
-        {
-            field: "drugForm",
-            align: "left",
-            title: "Định dạng",
-        },
-        {
-            field: "drugTypeId",
-            align: "left",
-            title: "Mã loại thuốc",
-            disableFilter: true,
-        },
+        { field: "name", align: "left", title: "Tên thuốc" },
+        { field: "producer", align: "left", title: "Nhà sản xuất" },
+        { field: "drugOrigin", align: "left", title: "Xuất xứ" },
+        { field: "drugForm", align: "left", title: "Định dạng" },
+        { field: "drugTypeId", align: "left", title: "Mã loại thuốc", disableFilter: true },
     ];
 
     const addRowData = async (rowData: Record<string, string>, callback: any) => {
-        let drug: Drug = {
+        const drug: Drug = {
             name: rowData["name"],
             producer: rowData["producer"],
             drugOrigin: rowData["drugOrigin"],
@@ -80,7 +59,7 @@ const Drugs: React.FC = () => {
     };
 
     const updateRowData = async (rowData: Record<string, string>, callback: any) => {
-        let drug: Drug = {
+        const drug: Drug = {
             id: Number(rowData["id"]),
             name: rowData["name"],
             producer: rowData["producer"],

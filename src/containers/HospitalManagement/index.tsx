@@ -42,7 +42,7 @@ const Hospitals: React.FC = () => {
     ];
 
     const addRowData = async (rowData: Record<string, string>, callback: any) => {
-        let hospital: Hospital = {
+        const hospital: Hospital = {
             address: rowData["address"],
             hospitalCode: rowData["hospitalCode"],
             name: rowData["name"],
@@ -69,7 +69,7 @@ const Hospitals: React.FC = () => {
     };
 
     const updateRowData = async (rowData: Record<string, string>, callback: any) => {
-        let hospital: Hospital = {
+        const hospital: Hospital = {
             id: Number(rowData["id"]),
             address: rowData["address"],
             hospitalCode: rowData["hospitalCode"],

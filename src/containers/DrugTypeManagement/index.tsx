@@ -29,7 +29,7 @@ const DrugTypes: React.FC = () => {
     ];
 
     const addRowData = async (rowData: Record<string, string>, callback: any) => {
-        let drugType: DrugType = {
+        const drugType: DrugType = {
             name: rowData["name"],
             description: rowData["description"],
         };
@@ -54,7 +54,7 @@ const DrugTypes: React.FC = () => {
     };
 
     const updateRowData = async (rowData: Record<string, string>, callback: any) => {
-        let drugType: DrugType = {
+        const drugType: DrugType = {
             id: Number(rowData["id"]),
             name: rowData["name"],
             description: rowData["description"],
