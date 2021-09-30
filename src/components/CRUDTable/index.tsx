@@ -36,6 +36,7 @@ import {
     Checkbox,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import LocalStorageUtil from "src/utils/LocalStorageUtil";
 
 const bgColor = {
     backgroundColor: grey[300],
@@ -133,6 +134,7 @@ export const TableData = <T extends Record<string, any>>(
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
+                        Authorization: `Bearer ${LocalStorageUtil.getToken()}`,
                         // 'Content-Type': 'application/x-www-form-urlencoded',
                     },
                 });
@@ -540,7 +542,17 @@ const CRUDTable = <T extends Record<string, string | number>>(
     const loadData = async (offset: number, limit: number) => {
         setLoading(true);
         try {
-            const response = await fetch(`${query}?offset=${offset}&limit=${limit}${stringFilter}`);
+            const response = await fetch(
+                `${query}?offset=${offset}&limit=${limit}${stringFilter}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${LocalStorageUtil.getToken()}`,
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                }
+            );
             if (response.ok) {
                 const data: IPagingSupport<T> = await response.json();
                 setPaging({
@@ -560,7 +572,15 @@ const CRUDTable = <T extends Record<string, string | number>>(
             setLoading(true);
             try {
                 const response = await fetch(
-                    `${query}?offset=${offset}&limit=${limit}${stringFilter}${queryStr}`
+                    `${query}?offset=${offset}&limit=${limit}${stringFilter}${queryStr}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${LocalStorageUtil.getToken()}`,
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                    }
                 );
                 if (response.status === 200) {
                     const data: IPagingSupport<T> = await response.json();
