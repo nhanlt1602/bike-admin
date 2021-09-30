@@ -1,7 +1,9 @@
 import axios from "axios";
 
+import { API_ROOT_URL } from "./configurations";
+
 export default axios.create({
-    baseURL: "http://52.221.193.237/api/v1",
+    baseURL: API_ROOT_URL,
     headers: {
         "Content-type": "application/json",
     },

@@ -3,8 +3,6 @@ import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import RouteComponent from "src/routes";
 
-import Layout from "../Layout";
-
 import SnackbarProvider from "src/context/SnackbarProvider.context";
 
 const App = () => {
@@ -12,9 +10,7 @@ const App = () => {
         <React.Fragment>
             <BrowserRouter>
                 <SnackbarProvider>
-                    <Layout>
-                        <RouteComponent />
-                    </Layout>
+                    <RouteComponent />
                 </SnackbarProvider>
             </BrowserRouter>
         </React.Fragment>
