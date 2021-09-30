@@ -3,10 +3,10 @@ import React from "react";
 import GoogleButton from "src/components/Button/GoogleButton";
 
 import { Grid, Typography, Box } from "@mui/material";
-import useAuth, { googleProvider } from "src/hooks/useAuth";
+import useAuth, { facebookProvider, googleProvider } from "src/hooks/useAuth";
 
 const Login: React.FC = () => {
-    const { login } = useAuth(googleProvider);
+    const { login } = useAuth();
     return (
         <React.Fragment>
             <Grid
@@ -27,8 +27,20 @@ const Login: React.FC = () => {
                             Đăng nhập
                         </Typography>
                         <Box height={60} />
-                        <GoogleButton variant="outlined" onClick={login} fullWidth>
+                        <GoogleButton
+                            variant="outlined"
+                            onClick={() => login(googleProvider)}
+                            fullWidth
+                        >
                             Đăng nhập với Google
+                        </GoogleButton>
+                        <Box padding={2}></Box>
+                        <GoogleButton
+                            variant="outlined"
+                            onClick={() => login(facebookProvider)}
+                            fullWidth
+                        >
+                            Đăng nhập với Facebook
                         </GoogleButton>
                     </Box>
                 </Grid>
