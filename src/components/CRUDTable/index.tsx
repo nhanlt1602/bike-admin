@@ -26,6 +26,7 @@ import {
     TablePagination,
     TextField,
     CircularProgress,
+    Box,
     InputAdornment,
     Typography,
     Toolbar,
@@ -35,7 +36,7 @@ import {
     Checkbox,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { Box } from "@mui/system";
+import LocalStorageUtil from "src/utils/LocalStorageUtil";
 
 const bgColor = {
     backgroundColor: grey[300],
@@ -133,6 +134,7 @@ export const TableData = <T extends Record<string, any>>(
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
+                        Authorization: `Bearer ${LocalStorageUtil.getToken()}`,
                         // 'Content-Type': 'application/x-www-form-urlencoded',
                     },
                 });
@@ -540,7 +542,17 @@ const CRUDTable = <T extends Record<string, string | number>>(
     const loadData = async (offset: number, limit: number) => {
         setLoading(true);
         try {
-            const response = await fetch(`${query}?offset=${offset}&limit=${limit}${stringFilter}`);
+            const response = await fetch(
+                `${query}?offset=${offset}&limit=${limit}${stringFilter}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${LocalStorageUtil.getToken()}`,
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                }
+            );
             if (response.ok) {
                 const data: IPagingSupport<T> = await response.json();
                 setPaging({
@@ -551,9 +563,7 @@ const CRUDTable = <T extends Record<string, string | number>>(
             // eslint-disable-next-line no-console
             console.log(ex);
         } finally {
-            setTimeout(() => {
-                setLoading(false);
-            }, 300);
+            setLoading(false);
         }
     };
 
@@ -562,7 +572,15 @@ const CRUDTable = <T extends Record<string, string | number>>(
             setLoading(true);
             try {
                 const response = await fetch(
-                    `${query}?offset=${offset}&limit=${limit}${stringFilter}${queryStr}`
+                    `${query}?offset=${offset}&limit=${limit}${stringFilter}${queryStr}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${LocalStorageUtil.getToken()}`,
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                    }
                 );
                 if (response.status === 200) {
                     const data: IPagingSupport<T> = await response.json();
@@ -620,111 +638,127 @@ const CRUDTable = <T extends Record<string, string | number>>(
             : 0;
 
     return (
-        <TableContainer component={Paper}>
-            <Toolbar
-                sx={{
-                    pl: { sm: 2 },
-                    pr: { xs: 1, sm: 1 },
-                }}
-            >
-                <Typography sx={{ flex: "1 1 100%" }} variant="h6" id="tableTitle" component="div">
-                    {props.title}
-                </Typography>
-                {!!props?.action?.onAdd && (
-                    <React.Fragment>
-                        <CheckboxesHeader
-                            selectedColumns={selectedColumns}
-                            setSelectedColumns={setSelectedColumns}
-                            setStringFilter={setStringFilter}
-                            columns={columns}
-                        />
-                        <Tooltip title="Thêm mới">
-                            <IconButton
-                                size="large"
-                                onClick={() => {
-                                    setMutationMode(true);
-                                    setMode("ADD");
-                                }}
-                            >
-                                <AddBoxRounded />
-                            </IconButton>
-                        </Tooltip>
-                    </React.Fragment>
-                )}
-            </Toolbar>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHeader
-                    columns={selectedColumns}
-                    isHaveAction={!!props?.action?.onDelete || !!props?.action?.onEdit}
-                />
-                <TableBody>
-                    {props.enableFilter && (
-                        <FilterTable
-                            onChange={onHandleChange}
-                            filters={filters}
-                            columns={selectedColumns}
-                            isHaveAction={!!props?.action?.onDelete || !!props?.action?.onEdit}
-                            inMutaionMode={isInMutaionMode}
-                        />
-                    )}
-                    {loading ? (
-                        <Box
-                            style={{
-                                height: 53 * (paging.pageSize || 5),
-                            }}
-                            width={1}
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="center"
-                        >
-                            <CircularProgress />
-                        </Box>
-                    ) : (
+        <Box sx={{ width: "100%" }}>
+            <Paper sx={{ width: "100%", mb: 2 }}>
+                <Toolbar
+                    sx={{
+                        pl: { sm: 2 },
+                        pr: { xs: 1, sm: 1 },
+                    }}
+                >
+                    <Typography
+                        sx={{ flex: "1 1 100%" }}
+                        variant="h6"
+                        id="tableTitle"
+                        component="div"
+                    >
+                        {props.title}
+                    </Typography>
+                    {!!props?.action?.onAdd && (
                         <React.Fragment>
-                            <TableData
-                                rowPerPage={paging.pageSize}
-                                loadData={loadData}
-                                query={query}
-                                rows={paging?.content}
-                                columns={selectedColumns}
-                                isHaveActionDelete={!!props?.action?.onDelete}
-                                isHaveActionEdit={!!props?.action?.onEdit}
-                                inMutaionMode={isInMutaionMode}
-                                setMutationMode={setMutationMode}
-                                mode={mode}
-                                page={paging?.currentPage}
-                                setMode={setMode}
-                                action={props.action}
+                            <CheckboxesHeader
+                                selectedColumns={selectedColumns}
+                                setSelectedColumns={setSelectedColumns}
+                                setStringFilter={setStringFilter}
+                                columns={columns}
                             />
-                            {emptyRows > 0 && (
-                                <TableRow
-                                    style={{
-                                        height: 53 * emptyRows,
+                            <Tooltip title="Thêm mới">
+                                <IconButton
+                                    size="large"
+                                    onClick={() => {
+                                        setMutationMode(true);
+                                        setMode("ADD");
                                     }}
                                 >
-                                    <TableCell
-                                        colSpan={
-                                            !!props?.action?.onDelete || !!props?.action?.onEdit
-                                                ? selectedColumns.length + 1
-                                                : selectedColumns.length
-                                        }
-                                    />
-                                </TableRow>
-                            )}
+                                    <AddBoxRounded />
+                                </IconButton>
+                            </Tooltip>
                         </React.Fragment>
                     )}
-                </TableBody>
-            </Table>
-            <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={paging?.totalCount}
-                rowsPerPage={paging?.pageSize}
-                page={paging?.currentPage - 1}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-        </TableContainer>
+                </Toolbar>
+                <TableContainer>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHeader
+                            columns={selectedColumns}
+                            isHaveAction={!!props?.action?.onDelete || !!props?.action?.onEdit}
+                        />
+                        <TableBody>
+                            {props.enableFilter && (
+                                <FilterTable
+                                    onChange={onHandleChange}
+                                    filters={filters}
+                                    columns={selectedColumns}
+                                    isHaveAction={
+                                        !!props?.action?.onDelete || !!props?.action?.onEdit
+                                    }
+                                    inMutaionMode={isInMutaionMode}
+                                />
+                            )}
+                            {loading ? (
+                                <TableRow
+                                    style={{
+                                        height: 53 * (paging.pageSize || 5),
+                                    }}
+                                >
+                                    <TableCell colSpan={selectedColumns.length + 1}>
+                                        <Box
+                                            display="flex"
+                                            alignItems="center"
+                                            justifyContent="center"
+                                        >
+                                            <CircularProgress />
+                                        </Box>
+                                    </TableCell>
+                                </TableRow>
+                            ) : (
+                                <React.Fragment>
+                                    <TableData
+                                        rowPerPage={paging.pageSize}
+                                        loadData={loadData}
+                                        query={query}
+                                        rows={paging?.content}
+                                        columns={selectedColumns}
+                                        isHaveActionDelete={!!props?.action?.onDelete}
+                                        isHaveActionEdit={!!props?.action?.onEdit}
+                                        inMutaionMode={isInMutaionMode}
+                                        setMutationMode={setMutationMode}
+                                        mode={mode}
+                                        page={paging?.currentPage}
+                                        setMode={setMode}
+                                        action={props.action}
+                                    />
+                                    {emptyRows > 0 && (
+                                        <TableRow
+                                            style={{
+                                                height: 53 * emptyRows,
+                                            }}
+                                        >
+                                            <TableCell
+                                                colSpan={
+                                                    !!props?.action?.onDelete ||
+                                                    !!props?.action?.onEdit
+                                                        ? selectedColumns.length + 1
+                                                        : selectedColumns.length
+                                                }
+                                            />
+                                        </TableRow>
+                                    )}
+                                </React.Fragment>
+                            )}
+                        </TableBody>
+                    </Table>
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={paging?.totalCount}
+                        rowsPerPage={paging?.pageSize}
+                        page={paging?.currentPage - 1}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                </TableContainer>
+            </Paper>
+        </Box>
     );
 };
 

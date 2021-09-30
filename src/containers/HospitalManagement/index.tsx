@@ -1,3 +1,5 @@
+import { API_ROOT_URL } from "src/configurations";
+
 import CRUDTable, { IColumn } from "src/components/CRUDTable";
 import useSnackbar from "src/components/Snackbar/useSnackbar";
 
@@ -104,7 +106,7 @@ const Hospitals: React.FC = () => {
         <CRUDTable
             title="Quản lí Bệnh Viện"
             enableFilter
-            query="http://52.221.193.237/api/v1/hospitals"
+            query={`${API_ROOT_URL}/hospitals`}
             columns={colums}
             action={{
                 onAdd: (rowData, callback) => addRowData(rowData, callback),

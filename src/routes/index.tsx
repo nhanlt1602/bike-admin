@@ -1,11 +1,23 @@
-import { Route, Switch } from "react-router-dom";
+import { Switch } from "react-router";
+
+import { PrivateRoute } from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 
 import Drugs from "src/containers/DrugManagement";
 import DrugTypes from "src/containers/DrugTypeManagement";
 import Hospitals from "src/containers/HospitalManagement";
+import Layout from "src/containers/Layout";
+import Login from "src/containers/Login";
 import Symptoms from "src/containers/SymptomManagement";
 
-export const routes = [
+export const publicRoutes = [
+    {
+        path: "/login",
+        name: "login",
+        component: Login,
+    },
+];
+export const privateRoutes = [
     {
         path: "/",
         name: "home",
@@ -36,9 +48,24 @@ export const routes = [
 const RouteComponent = () => {
     return (
         <Switch>
-            {routes.map((route) => {
-                return <Route key={route.name} exact={true} {...route} />;
-            })}
+            {publicRoutes.map((route) => (
+                <PublicRoute
+                    key={route.name}
+                    exact={true}
+                    path={route.path}
+                    component={route.component}
+                />
+            ))}
+            <Layout>
+                {privateRoutes.map((route) => (
+                    <PrivateRoute
+                        exact={true}
+                        key={route.name}
+                        path={route.path}
+                        component={route.component}
+                    />
+                ))}
+            </Layout>
         </Switch>
     );
 };
