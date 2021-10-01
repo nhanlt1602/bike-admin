@@ -34,8 +34,10 @@ import {
     IconButton,
     Autocomplete,
     Checkbox,
+    TableSortLabel,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import { visuallyHidden } from "@mui/utils";
 import LocalStorageUtil from "src/utils/LocalStorageUtil";
 
 const bgColor = {
@@ -76,16 +78,49 @@ export interface ITableHeader {
     headerColor?: "primary" | "secondary" | "standard";
     columns: IColumn[];
     isHaveAction: boolean;
+    enableSort?: boolean;
+    orderBy: {
+        field: string;
+        order: Order;
+    };
+    createSortHandler: (field: string, direction: Order) => void;
 }
+
+type Order = "asc" | "desc";
+
 export const TableHeader: React.FC<ITableHeader> = (props: ITableHeader) => {
-    const { columns, isHaveAction } = props;
+    const { columns, isHaveAction, enableSort = false, orderBy, createSortHandler } = props;
+
     return (
         <TableHead>
             <TableRow>
                 {columns.map((column: IColumn, index: number) => {
                     return (
-                        <TableCell key={index} align={column.align || "left"}>
-                            {column.title}
+                        <TableCell
+                            sortDirection={orderBy.field === column.field ? orderBy.order : "asc"}
+                            key={index}
+                            align={column.align || "left"}
+                        >
+                            {enableSort && !column.disableSort ? (
+                                <TableSortLabel
+                                    active={orderBy.field === column.field}
+                                    direction={
+                                        orderBy.field === column.field ? orderBy.order : "asc"
+                                    }
+                                    onClick={() => createSortHandler(column.field, orderBy.order)}
+                                >
+                                    {column.title}
+                                    {orderBy.field === column.field ? (
+                                        <Box component="span" sx={visuallyHidden}>
+                                            {orderBy.order === "desc"
+                                                ? "sorted descending"
+                                                : "sorted ascending"}
+                                        </Box>
+                                    ) : null}
+                                </TableSortLabel>
+                            ) : (
+                                column.title
+                            )}
                         </TableCell>
                     );
                 })}
@@ -539,6 +574,10 @@ const CRUDTable = <T extends Record<string, string | number>>(
     const [param, setParam] = useState<string>("");
     const [isInMutaionMode, setMutationMode] = useState(false);
     const [mode, setMode] = useState<"ADD" | "EDIT" | "NORMAL">("NORMAL");
+    const [orderBy, setOrderBy] = useState<{ field: string; order: Order }>({
+        field: "Id",
+        order: "desc",
+    });
     const loadData = async (offset: number, limit: number) => {
         setLoading(true);
         try {
@@ -568,11 +607,23 @@ const CRUDTable = <T extends Record<string, string | number>>(
     };
 
     const callbackLoadData = useCallback(
-        async (offset: number, limit: number, queryStr: string, stringFilter: string) => {
+        async (
+            offset: number,
+            limit: number,
+            queryStr: string,
+            stringFilter: string,
+            orderBy: { field: string; order: Order }
+        ) => {
             setLoading(true);
             try {
+                let orderStr = "";
+                if (orderBy.field && orderBy.order) {
+                    orderStr = `&field-by=${
+                        orderBy.field.charAt(0).toUpperCase() + orderBy.field.slice(1)
+                    }&sort-by=${orderBy.order}`;
+                }
                 const response = await fetch(
-                    `${query}?offset=${offset}&limit=${limit}${stringFilter}${queryStr}`,
+                    `${query}?offset=${offset}&limit=${limit}${stringFilter}${queryStr}${orderStr}`,
                     {
                         method: "GET",
                         headers: {
@@ -602,8 +653,8 @@ const CRUDTable = <T extends Record<string, string | number>>(
         //     .map((field) => field.charAt(0).toUpperCase() + field.slice(1))
         //     .join(",");
         // stringFilter = `&filtering=${stringFilter}`;
-        callbackLoadData(1, 5, param, stringFilter);
-    }, [callbackLoadData, param, stringFilter]);
+        callbackLoadData(1, 5, param, stringFilter, orderBy);
+    }, [callbackLoadData, param, stringFilter, orderBy]);
 
     const handleChangePage = (event: unknown, newPage: number) => {
         loadData(newPage + 1, paging.pageSize);
@@ -613,6 +664,14 @@ const CRUDTable = <T extends Record<string, string | number>>(
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
         loadData(1, parseInt(event.target.value, 10));
+    };
+
+    const createSortHandler = (field: string, direction: Order) => {
+        setOrderBy({
+            ...orderBy,
+            field: field,
+            order: direction === "asc" ? "desc" : "asc",
+        });
     };
 
     const onHandleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -679,8 +738,11 @@ const CRUDTable = <T extends Record<string, string | number>>(
                 <TableContainer>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHeader
+                            enableSort={props.sort}
                             columns={selectedColumns}
                             isHaveAction={!!props?.action?.onDelete || !!props?.action?.onEdit}
+                            orderBy={orderBy}
+                            createSortHandler={createSortHandler}
                         />
                         <TableBody>
                             {props.enableFilter && (

@@ -10,13 +10,14 @@ const Hospitals: React.FC = () => {
     const showSnackbar = useSnackbar();
     const colums: IColumn[] = [
         {
-            field: "id",
+            field: "stt",
             align: "left",
-            title: "ID",
+            title: "STT",
             type: "index",
             disableFilter: true,
             editable: "never",
             index: 1,
+            disableSort: true,
         },
         {
             field: "hospitalCode",
@@ -41,6 +42,7 @@ const Hospitals: React.FC = () => {
             align: "left",
             title: "Mô tả",
             disableFilter: true,
+            disableSort: true,
             index: 5,
             // render: (props: string) => {
             //     return <div style={{ backgroundColor: "red" }}>{props}</div>;
@@ -108,6 +110,7 @@ const Hospitals: React.FC = () => {
             enableFilter
             query={`${API_ROOT_URL}/hospitals`}
             columns={colums}
+            sort
             action={{
                 onAdd: (rowData, callback) => addRowData(rowData, callback),
                 onDelete: true,
