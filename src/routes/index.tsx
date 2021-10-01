@@ -8,6 +8,7 @@ import DrugTypes from "src/containers/DrugTypeManagement";
 import Hospitals from "src/containers/HospitalManagement";
 import Layout from "src/containers/Layout";
 import Login from "src/containers/Login";
+import PatientDetail from "src/containers/PatientDetail";
 import Symptoms from "src/containers/SymptomManagement";
 
 export const publicRoutes = [
@@ -42,6 +43,11 @@ export const privateRoutes = [
         path: "/drug-types",
         name: "drugType",
         component: DrugTypes,
+    },
+    {
+        path: "/patient",
+        name: "drugType",
+        component: PatientDetail,
     },
 ];
 
