@@ -2,7 +2,9 @@ import React from "react";
 
 import GoogleButton from "src/components/Button/GoogleButton";
 
-import { Grid, Typography, Box } from "@mui/material";
+import loginImg from "../../assets/login.jpg";
+
+import { Grid, Box } from "@mui/material";
 import useAuth, { facebookProvider, googleProvider } from "src/hooks/useAuth";
 
 const Login: React.FC = () => {
@@ -11,39 +13,35 @@ const Login: React.FC = () => {
         <React.Fragment>
             <Grid
                 container
-                style={{ minHeight: "100vh" }}
+                style={{
+                    minHeight: "100vh",
+                    backgroundImage: `url(${loginImg})`,
+                    backgroundSize: "100% 100%",
+                }}
                 justifyContent="center"
                 alignItems="center"
             >
-                <Grid item>
-                    <Box
-                        display="flex"
-                        alignItems="center"
-                        flexDirection="column"
-                        minWidth={300}
-                        maxWidth={400}
-                    >
-                        <Typography variant="h3" color="primary">
-                            Đăng nhập
-                        </Typography>
-                        <Box height={60} />
+                <Grid item xs={6} sx={{ display: "flex", flexDirection: "row" }}>
+                    <Box>
                         <GoogleButton
                             variant="outlined"
                             onClick={() => login(googleProvider)}
                             fullWidth
                         >
-                            Đăng nhập với Google
+                            Google
                         </GoogleButton>
-                        <Box padding={2}></Box>
+                    </Box>
+                    <Box>
                         <GoogleButton
                             variant="outlined"
                             onClick={() => login(facebookProvider)}
                             fullWidth
                         >
-                            Đăng nhập với Facebook
+                            Facebook
                         </GoogleButton>
                     </Box>
                 </Grid>
+                <Grid item xs={6}></Grid>
             </Grid>
         </React.Fragment>
     );
