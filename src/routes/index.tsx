@@ -4,6 +4,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
 import Accounts from "src/containers/AccountManagement";
+import DoctorDetails from "src/containers/DoctorManagement";
 import Drugs from "src/containers/DrugManagement";
 import DrugTypes from "src/containers/DrugTypeManagement";
 import Hospitals from "src/containers/HospitalManagement";
@@ -48,6 +49,11 @@ export const privateRoutes = [
         path: "/drug-types",
         name: "drugType",
         component: DrugTypes,
+    },
+    {
+        path: "/doctor-detail",
+        name: "doctorDetail",
+        component: DoctorDetails,
     },
 ];
 

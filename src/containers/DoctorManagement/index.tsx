@@ -1,179 +1,43 @@
-import React from "react";
+import { useParams } from "react-router";
 
-import { Avatar, Switch, TextField } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, Container, Grid } from "@material-ui/core";
+import Certificate from "src/components/AccountProfile/Accorditon";
+import AccountProfile from "src/components/AccountProfile/AccountProfile";
 
-const DoctorDetail: React.FC = () => {
-    const label = { inputProps: { "aria-label": "Switch demo" } };
+const Doctor = () => {
+    const id = useParams<{ id: string }>();
+
+    // useEffect(() => {
+    //     const account = param.id;
+
+    //     return () => {
+    //         cleanup
+    //     }
+    // }, [])
 
     return (
-        <React.Fragment>
-            <Avatar alt="Remy Sharp" src="" />
-            <Switch {...label} defaultChecked />
+        <>
             <Box
-                component="form"
                 sx={{
-                    "& .MuiTextField-root": { m: 1, width: "25ch" },
+                    minHeight: "100%",
+                    py: 3,
                 }}
-                noValidate
-                autoComplete="off"
             >
-                <div>
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        defaultValue="Hello World"
-                    />
-                    <TextField
-                        disabled
-                        id="outlined-disabled"
-                        label="Disabled"
-                        defaultValue="Hello World"
-                    />
-                </div>
-                <div>
-                    <TextField
-                        id="outlined-password-input"
-                        label="Password"
-                        type="password"
-                        autoComplete="current-password"
-                    />
-                    <TextField
-                        id="outlined-read-only-input"
-                        label="Read Only"
-                        defaultValue="Hello World"
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                    />
-                    <TextField
-                        id="outlined-number"
-                        label="Number"
-                        type="number"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                    <TextField id="outlined-search" label="Search field" type="search" />
-                    <TextField
-                        id="outlined-helperText"
-                        label="Helper text"
-                        defaultValue="Default Value"
-                        helperText="Some important text"
-                    />
-                </div>
-                <div>
-                    <TextField
-                        required
-                        id="filled-required"
-                        label="Required"
-                        defaultValue="Hello World"
-                        variant="filled"
-                    />
-                    <TextField
-                        disabled
-                        id="filled-disabled"
-                        label="Disabled"
-                        defaultValue="Hello World"
-                        variant="filled"
-                    />
-                    <TextField
-                        id="filled-password-input"
-                        label="Password"
-                        type="password"
-                        autoComplete="current-password"
-                        variant="filled"
-                    />
-                    <TextField
-                        id="filled-read-only-input"
-                        label="Read Only"
-                        defaultValue="Hello World"
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        variant="filled"
-                    />
-                    <TextField
-                        id="filled-number"
-                        label="Number"
-                        type="number"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="filled"
-                    />
-                    <TextField
-                        id="filled-search"
-                        label="Search field"
-                        type="search"
-                        variant="filled"
-                    />
-                    <TextField
-                        id="filled-helperText"
-                        label="Helper text"
-                        defaultValue="Default Value"
-                        helperText="Some important text"
-                        variant="filled"
-                    />
-                </div>
-                <div>
-                    <TextField
-                        required
-                        id="standard-required"
-                        label="Required"
-                        defaultValue="Hello World"
-                        variant="standard"
-                    />
-                    <TextField
-                        disabled
-                        id="standard-disabled"
-                        label="Disabled"
-                        defaultValue="Hello World"
-                        variant="standard"
-                    />
-                    <TextField
-                        id="standard-password-input"
-                        label="Password"
-                        type="password"
-                        autoComplete="current-password"
-                        variant="standard"
-                    />
-                    <TextField
-                        id="standard-read-only-input"
-                        label="Read Only"
-                        defaultValue="Hello World"
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        variant="standard"
-                    />
-                    <TextField
-                        id="standard-number"
-                        label="Number"
-                        type="number"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="standard"
-                    />
-                    <TextField
-                        id="standard-search"
-                        label="Search field"
-                        type="search"
-                        variant="standard"
-                    />
-                    <TextField
-                        id="standard-helperText"
-                        label="Helper text"
-                        defaultValue="Default Value"
-                        helperText="Some important text"
-                        variant="standard"
-                    />
-                </div>
+                <Container maxWidth="lg">
+                    <Grid container spacing={3}>
+                        <Grid item lg={4} md={6} xs={12}>
+                            <AccountProfile />
+                        </Grid>
+                        <Grid item lg={8} md={6} xs={12}>
+                            {/* <AccountProfileDetails /> */}
+                            <br />
+                            <Certificate />
+                        </Grid>
+                    </Grid>
+                </Container>
             </Box>
-        </React.Fragment>
+        </>
     );
 };
 
-export default DoctorDetail;
+export default Doctor;
