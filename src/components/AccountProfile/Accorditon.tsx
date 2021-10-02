@@ -5,7 +5,7 @@ import { API_ROOT_URL } from "src/configurations";
 import CRUDTable, { IColumn } from "../CRUDTable";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Accordion, Chip } from "@mui/material";
+import { Accordion, Chip, Divider } from "@mui/material";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
@@ -77,6 +77,36 @@ const Certificate = () => {
         },
     ];
 
+    const columnHospital: IColumn[] = [
+        {
+            field: "id",
+            align: "left",
+            title: "ID",
+            type: "index",
+            disableFilter: true,
+            editable: "never",
+            index: 1,
+        },
+        {
+            field: "hospitalId",
+            align: "left",
+            title: "Mã bệnh viện",
+            index: 2,
+        },
+        {
+            field: "hospital",
+            align: "left",
+            title: "Tên bệnh viện",
+            index: 3,
+        },
+        {
+            field: "isWorking",
+            align: "left",
+            title: "Tình trạng",
+            index: 4,
+        },
+    ];
+
     return (
         <form autoComplete="off" noValidate>
             <Accordion expanded={expanded === "panel1"} onChange={handleChange("panel1")}>
@@ -119,6 +149,7 @@ const Certificate = () => {
                 >
                     <Typography sx={{ width: "33%", flexShrink: 0 }}>Chứng chỉ</Typography>
                 </AccordionSummary>
+                <Divider />
                 <AccordionDetails>
                     <CRUDTable
                         title="Chứng chỉ"
@@ -139,6 +170,7 @@ const Certificate = () => {
                 >
                     <Typography sx={{ width: "33%", flexShrink: 0 }}>Chuyên khoa</Typography>
                 </AccordionSummary>
+                <Divider />
                 <AccordionDetails>
                     <CRUDTable
                         title="Chứng chỉ"
@@ -157,13 +189,14 @@ const Certificate = () => {
                     aria-controls="panel4bh-content"
                     id="panel4bh-header"
                 >
-                    <Typography sx={{ width: "33%", flexShrink: 0 }}>Personal data</Typography>
+                    <Typography sx={{ width: "33%", flexShrink: 0 }}>Bệnh viện công tác</Typography>
                 </AccordionSummary>
+                <Divider />
                 <AccordionDetails>
                     <CRUDTable
                         title="Chứng chỉ"
                         enableFilter
-                        columns={columnMajor}
+                        columns={columnHospital}
                         query={`${API_ROOT_URL}/hospitals`}
                         action={{
                             onDelete: true,

@@ -1,5 +1,7 @@
+import { Role } from "./Role.model";
+
 export type Account = {
-    id?: string;
+    id: number;
     email: string;
     firstName: string;
     lastName: string;
@@ -8,12 +10,10 @@ export type Account = {
     city: string;
     postalCode: string;
     phone: string;
+    avatar?: string;
     dob: string;
     isMale: boolean;
-    active: boolean;
-    registerTime: string;
-    role: {
-        id: string;
-        name: string;
-    };
+    active?: boolean;
+    registerTime?: string;
+    role?: Role;
 };

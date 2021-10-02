@@ -2,6 +2,7 @@ import React from "react";
 
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import ContactsIcon from "@mui/icons-material/Contacts";
+import HomeIcon from "@mui/icons-material/Home";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import StarBorder from "@mui/icons-material/StarBorder";
 import {
@@ -12,6 +13,7 @@ import {
     Chip,
     Collapse,
     Divider,
+    Icon,
     List,
     ListItemButton,
     ListItemIcon,
@@ -20,9 +22,42 @@ import {
     Stack,
     Typography,
 } from "@mui/material";
+import { pink } from "@mui/material/colors";
 import { Box } from "@mui/system";
+import { Account } from "src/containers/AccountManagement/models/Account.model";
 
-const AccountProfile: React.FC = (props) => {
+// export interface AccountProps {
+//     account: Account;
+//     accountData: [];
+//     setAccountData: [];
+// }
+const imgLink =
+    "https://afamilycdn.com/150157425591193600/2020/10/19/base64-16030963538052065905430.png";
+
+const account: Account = {
+    id: 13,
+    email: "taylor13@gmail.com",
+    firstName: "Phạm",
+    lastName: "Thu Hà",
+    streetAddress: "21 W.",
+    locality: "46th St.",
+    city: "New York",
+    postalCode: "10001",
+    phone: "0891213001",
+    avatar: imgLink,
+    dob: "13/12/1989",
+    isMale: false,
+    active: true,
+    registerTime: "01/10/2021",
+    role: {
+        id: 2,
+        name: "patient",
+    },
+};
+
+// const AccountProfile: React.FC<Account> = (props: Account) => {
+const AccountProfile = () => {
+    // const { account, accountData } = props;
     const [openInfo, setOpenInfo] = React.useState(true);
     const [open, setOpen] = React.useState(true);
     const handleClickInfo = () => {
@@ -31,6 +66,15 @@ const AccountProfile: React.FC = (props) => {
     const handleClick = () => {
         setOpen(!open);
     };
+    let genderIcon = (
+        <Icon color="primary" sx={{ fontSize: 50 }}>
+            male_outlined_icon
+        </Icon>
+    );
+    if (!account.isMale) {
+        genderIcon = <Icon sx={{ color: pink[500], fontSize: 40 }}>female_outlined_icon</Icon>;
+    }
+
     return (
         <React.Fragment>
             <Card>
@@ -43,13 +87,13 @@ const AccountProfile: React.FC = (props) => {
                         }}
                     >
                         <Avatar
-                            src="https://www.google.com.vn/url?sa=i&url=https%3A%2F%2Fdoctor4u.vn%2F&psig=AOvVaw2I27Njk0IxLLNAaKmhJsnh&ust=1633183021091000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCLib_oCvqfMCFQAAAAAdAAAAABAJ"
+                            src={account.avatar}
                             sx={{
                                 height: 100,
                                 width: 100,
                             }}
                         />
-                        <Typography>Bs. Lê Trọng Nhân</Typography>
+                        <Typography>Bs. {`${account.firstName} ${account.lastName}`}</Typography>
                         <Rating
                             name="half-rating-read"
                             defaultValue={4.5}
@@ -74,7 +118,67 @@ const AccountProfile: React.FC = (props) => {
                                         <ListItemIcon>
                                             <StarBorder />
                                         </ListItemIcon>
-                                        <ListItemText primary="Starred" />
+                                        <ListItemText primary={`Tên: ${account.firstName}`} />
+                                    </ListItemButton>
+                                    <ListItemButton sx={{ pl: 4 }}>
+                                        <ListItemIcon>
+                                            <StarBorder />
+                                        </ListItemIcon>
+                                        <ListItemText primary={`Họ: ${account.lastName}`} />
+                                    </ListItemButton>
+                                    <ListItemButton sx={{ pl: 4 }}>
+                                        <ListItemIcon>
+                                            <StarBorder />
+                                        </ListItemIcon>
+                                        <ListItemText primary={`Ngày sinh: ${account.dob}`} />
+                                    </ListItemButton>
+                                    <ListItemButton sx={{ pl: 4 }}>
+                                        <ListItemIcon>
+                                            <StarBorder />
+                                        </ListItemIcon>
+                                        <ListItemText primary={genderIcon} />
+                                    </ListItemButton>
+                                    <ListItemButton sx={{ pl: 4 }}>
+                                        <ListItemIcon>
+                                            <StarBorder />
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary={`Ngày đăng ký: ${account.registerTime}`}
+                                        />
+                                    </ListItemButton>
+                                </List>
+                            </Collapse>
+
+                            <ListItemButton onClick={handleClick}>
+                                <ListItemIcon>
+                                    <HomeIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Địa chỉ" />
+                                {open ? <ExpandLess /> : <ExpandMore />}
+                            </ListItemButton>
+                            <Collapse in={open} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding>
+                                    <ListItemButton sx={{ pl: 4 }}>
+                                        <ListItemIcon>
+                                            <StarBorder />
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary={`Ngày đăng ký: ${account.locality}`}
+                                        />
+                                    </ListItemButton>
+                                    <ListItemButton sx={{ pl: 4 }}>
+                                        <ListItemIcon>
+                                            <StarBorder />
+                                        </ListItemIcon>
+                                        <ListItemText primary={`Thành phố: ${account.city}`} />
+                                    </ListItemButton>
+                                    <ListItemButton sx={{ pl: 4 }}>
+                                        <ListItemIcon>
+                                            <StarBorder />
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary={`Postal code: ${account.registerTime}`}
+                                        />
                                     </ListItemButton>
                                 </List>
                             </Collapse>
@@ -92,7 +196,13 @@ const AccountProfile: React.FC = (props) => {
                                         <ListItemIcon>
                                             <StarBorder />
                                         </ListItemIcon>
-                                        <ListItemText primary="Starred" />
+                                        <ListItemText primary={`Số điện thoại: ${account.phone}`} />
+                                    </ListItemButton>
+                                    <ListItemButton sx={{ pl: 4 }}>
+                                        <ListItemIcon>
+                                            <StarBorder />
+                                        </ListItemIcon>
+                                        <ListItemText primary={`Email: ${account.email}`} />
                                     </ListItemButton>
                                 </List>
                             </Collapse>
@@ -102,7 +212,6 @@ const AccountProfile: React.FC = (props) => {
                 <Divider />
                 <CardActions>
                     <Stack direction="row" spacing={1}>
-                        <Chip label="error" color="error" />
                         <Chip label="success" color="success" />
                     </Stack>
                 </CardActions>
