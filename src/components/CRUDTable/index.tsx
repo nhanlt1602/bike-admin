@@ -102,9 +102,9 @@ const CRUDTable = <T extends Record<string, string | number>>(
             try {
                 let orderStr = "";
                 if (orderBy.field && orderBy.order) {
-                    orderStr = `&field-by=${
+                    orderStr = `&order-by=${
                         orderBy.field.charAt(0).toUpperCase() + orderBy.field.slice(1)
-                    }&sort-by=${orderBy.order}`;
+                    }&order-type=${orderBy.order}`;
                 }
                 const response = await fetch(
                     `${query}?offset=${offset}&limit=${limit}${stringFilter}${queryStr}${orderStr}`,
