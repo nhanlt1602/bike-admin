@@ -3,6 +3,9 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "src/axios";
 
+import { ConfirmModal } from "src/components/ConfirmModal";
+import useSnackbar from "src/components/Snackbar/useSnackbar";
+
 import { Account } from "../AccountManagement/models/Account.model";
 import { Patient } from "./models/Patient.model";
 
@@ -31,49 +34,16 @@ import {
     Accordion,
     AccordionSummary,
     AccordionDetails,
+    Chip,
 } from "@mui/material";
 import { pink } from "@mui/material/colors";
 import { Box } from "@mui/system";
 
-const imgLink =
-    "https://celebmafia.com/wp-content/uploads/2020/01/taylor-swift-variety-magazine-sundance-issue-2020-4.jpg";
-
-// const account: Account = {
-//     id: 13,
-//     email: "taylor13@gmail.com",
-//     firstName: "Taylor",
-//     lastName: "Swift",
-//     streetAddress: "21 W.",
-//     locality: "46th St.",
-//     city: "New York",
-//     postalCode: "10001",
-//     phone: "0891213001",
-//     avatar: imgLink,
-//     dob: "13/12/1989",
-//     isMale: false,
-//     active: true,
-//     registerTime: "01/10/2021",
-//     role: {
-//         id: 1,
-//         name: "patient",
-//     },
-// };
-
-// const patient: Patient = {
-//     backgroundDisease: "none",
-//     allergy: "none",
-//     bloodGroup: "O+",
-//     healthChecks: [
-//         { createdTime: "01/05/2021", doctorName: "Dr. Smith", status: "Đang đợi" },
-//         { createdTime: "01/04/2021", doctorName: "Dr. Smith", status: "Hủy" },
-//         { createdTime: "01/03/2021", doctorName: "Dr. Smith", status: "Kết thúc" },
-//         { createdTime: "01/02/2021", doctorName: "Dr. Smith", status: "Hủy" },
-//         { createdTime: "01/01/2021", doctorName: "Dr. Smith", status: "Kết thúc" },
-//     ],
-// };
-
 const PatientDetail: React.FC = () => {
-    const [expanded, setExpanded] = React.useState<string | false>(false);
+    const showSnackbar = useSnackbar();
+    const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false);
+    const [expanded, setExpanded] = useState<string | false>(false);
+    const [isActive, setIsActive] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [account, setAccount] = useState<Account>();
     const [patient, setPatient] = useState<Patient>();
@@ -81,8 +51,45 @@ const PatientDetail: React.FC = () => {
     const params = useParams<{ id: string }>();
     const accountId = params.id;
 
+    const convertDate = (input: string) => {
+        let date = input?.slice(0, 10);
+        const [year, month, day] = date?.split("-");
+        date = day + "/" + month + "/" + year;
+        return date;
+    };
+
     const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
+    };
+
+    const handleCloseConfirmModal = async (
+        e: React.MouseEvent<HTMLButtonElement | MouseEvent>,
+        action: "CONFIRM" | "CANCEL"
+    ) => {
+        if (action === "CONFIRM") {
+            try {
+                const response = await axios.put("/accounts/change-status/" + accountId);
+                if (response.status === 200) {
+                    setIsActive(!isActive);
+                    showSnackbar({
+                        children: "Cập nhật trạng thái tài khoản thành công",
+                        variant: "filled",
+                        severity: "success",
+                    });
+                }
+            } catch (error) {
+                showSnackbar({
+                    children: "Cập nhật trạng thái tài khoản thất bại",
+                    variant: "filled",
+                    severity: "error",
+                });
+            }
+        }
+        setIsOpenConfirmModal(false);
+    };
+
+    const toggleBtnActive = () => {
+        setIsOpenConfirmModal(true);
     };
 
     const getAccountById = useCallback(async (accountId) => {
@@ -90,7 +97,10 @@ const PatientDetail: React.FC = () => {
         try {
             const response = await axios.get("/accounts/" + accountId);
             if (response.status === 200) {
-                const accountRes: Account = response.data;
+                const data: Account = response.data;
+                const convertedDob = convertDate(data.dob);
+                const accountRes: Account = { ...data, dob: convertedDob };
+                setIsActive(accountRes.active);
                 setAccount(accountRes);
 
                 const res = await axios.get("/patients/email/" + accountRes.email);
@@ -141,7 +151,7 @@ const PatientDetail: React.FC = () => {
                             <ListItemIcon>
                                 <BloodtypeOutlinedIcon />
                             </ListItemIcon>
-                            <ListItemText primary="O+" />
+                            <ListItemText primary={patient?.bloodGroup} />
                         </ListItem>
                         <ListItem>
                             <ListItemIcon>
@@ -174,8 +184,13 @@ const PatientDetail: React.FC = () => {
             </CardContent>
             <Divider />
             <CardActions>
-                <Button color={account?.active ? "error" : "success"} fullWidth variant="text">
-                    {account?.active ? "Khóa tài khoản" : "Kích hoạt tài khoản"}
+                <Button
+                    color={isActive ? "error" : "success"}
+                    fullWidth
+                    variant="text"
+                    onClick={toggleBtnActive}
+                >
+                    {isActive ? "Khóa tài khoản" : "Kích hoạt tài khoản"}
                 </Button>
             </CardActions>
         </Card>
@@ -231,53 +246,64 @@ const PatientDetail: React.FC = () => {
             <CardHeader title="Lịch sử đăng ký tư vấn khám chữa bệnh" />
             <Divider />
             <CardContent>
-                {patient?.healthChecks?.map((item, index) => (
-                    <Accordion
-                        expanded={expanded === `healthCheck${index}`}
-                        onChange={handleChange(`healthCheck${index}`)}
+                {[1, 2, 3, 4].map((item) => (
+                    <Card
                         key={item}
+                        variant="outlined"
+                        sx={{ display: "flex", flexDirection: "row", pr: 2 }}
                     >
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls={`health-check${index}-panel-content`}
-                            id={`health-check${index}-panel-header`}
-                        >
-                            <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                        <CardContent sx={{ display: "flex", flexWrap: "wrap", p: 2 }}>
+                            <Typography component="div" sx={{ mr: 1 }} color="text.secondary">
                                 Bác sĩ tư vấn
                             </Typography>
-                            <Typography sx={{ color: "text.secondary" }}>
-                                {item.doctorName}
+                            <Typography component="div" sx={{ mr: 5 }}>
+                                Nguyễn Trang
                             </Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>{`Ngày đăng ký: ${item.createdTime}`}</Typography>
-                            <Typography sx={{ color: "text.secondary" }}>
-                                {`Trạng thái: ${item.status}`}
+                            <Typography component="div" sx={{ mr: 1 }} color="text.secondary">
+                                Ngày đăng kí
                             </Typography>
-                        </AccordionDetails>
-                    </Accordion>
+                            <Typography component="div" sx={{ mr: 5 }}>
+                                01/01/2011
+                            </Typography>
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                                <Chip color="success" label="Hoàn thành" size="small" />
+                            </Box>
+                        </CardContent>
+                        <CardActions>
+                            <Button size="small">Chi tiết</Button>
+                        </CardActions>
+                    </Card>
                 ))}
             </CardContent>
             <Box sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
-                <Button size="small">Xem thêm...</Button>
+                <Button size="small" disabled={patient?.healthChecks?.length === 0}>
+                    Xem thêm...
+                </Button>
             </Box>
         </Card>
     );
 
     return (
-        <Box sx={{ backgroundColor: "background.default", minHeight: "100%", py: 3 }}>
-            <Container maxWidth="lg">
-                <Grid container spacing={3}>
-                    <Grid item lg={4} md={6} xs={12}>
-                        {profile}
+        <React.Fragment>
+            <ConfirmModal
+                open={isOpenConfirmModal}
+                message={`Bạn có muốn ${isActive ? "khóa" : "kích hoạt"} tài khoản này không?`}
+                handleClose={handleCloseConfirmModal}
+            />
+            <Box sx={{ backgroundColor: "background.default", minHeight: "100%", py: 3 }}>
+                <Container maxWidth="lg">
+                    <Grid container spacing={3}>
+                        <Grid item lg={4} md={6} xs={12}>
+                            {profile}
+                        </Grid>
+                        <Grid item lg={8} md={6} xs={12}>
+                            <Box>{healthInfo}</Box>
+                            <Box sx={{ mt: 3 }}>{consultingHistory}</Box>
+                        </Grid>
                     </Grid>
-                    <Grid item lg={8} md={6} xs={12}>
-                        <Box>{healthInfo}</Box>
-                        <Box sx={{ mt: 3 }}>{consultingHistory}</Box>
-                    </Grid>
-                </Grid>
-            </Container>
-        </Box>
+                </Container>
+            </Box>
+        </React.Fragment>
     );
 };
 

@@ -13,7 +13,7 @@ export type Account = {
     avatar?: string;
     dob: string;
     isMale: boolean;
-    active?: boolean;
+    active: boolean;
     registerTime?: string;
     role?: Role;
 };
