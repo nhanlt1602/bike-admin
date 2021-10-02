@@ -1,13 +1,11 @@
 import { API_ROOT_URL } from "src/configurations";
 
-import CRUDTable, { IColumn } from "src/components/CRUDTable";
-import useSnackbar from "src/components/Snackbar/useSnackbar";
+import CRUDTable from "src/components/CRUDTable";
+import { IColumn } from "src/components/CRUDTable/Models";
 
 import { DrugType } from "./models/DrugType.models";
-import DrugTypeService from "./services/DrugType.service";
 
 const DrugTypes: React.FC = () => {
-    const showSnackbar = useSnackbar();
     const colums: IColumn[] = [
         {
             field: "id",
@@ -33,55 +31,16 @@ const DrugTypes: React.FC = () => {
         },
     ];
 
-    const addRowData = async (rowData: Record<string, string>, callback: any) => {
-        const drugType: DrugType = {
-            name: rowData["name"],
-            description: rowData["description"],
-        };
-        await DrugTypeService.create(drugType)
-            .then((res) => {
-                if (res.status === 201) {
-                    showSnackbar({
-                        children: "Thêm mới thành công",
-                        variant: "filled",
-                        severity: "success",
-                    });
-                    callback();
-                }
-            })
-            .catch(() => {
-                showSnackbar({
-                    children: "Thêm mới thất bại",
-                    variant: "filled",
-                    severity: "error",
-                });
-            });
+    const addRowData = async (callback: Function) => {
+        // eslint-disable-next-line no-console
+        console.log("abc");
+        callback();
     };
 
-    const updateRowData = async (rowData: Record<string, string>, callback: any) => {
-        const drugType: DrugType = {
-            id: Number(rowData["id"]),
-            name: rowData["name"],
-            description: rowData["description"],
-        };
-        await DrugTypeService.update(drugType)
-            .then((res) => {
-                if (res.status === 200) {
-                    callback();
-                    showSnackbar({
-                        children: "Chỉnh sửa thành công",
-                        variant: "filled",
-                        severity: "success",
-                    });
-                }
-            })
-            .catch(() => {
-                showSnackbar({
-                    children: "Chỉnh sửa thất bại",
-                    variant: "filled",
-                    severity: "error",
-                });
-            });
+    const updateRowData = async (rowData: DrugType, callback: any) => {
+        // eslint-disable-next-line no-console
+        console.log(rowData);
+        callback();
     };
     return (
         <CRUDTable
@@ -90,7 +49,7 @@ const DrugTypes: React.FC = () => {
             query={`${API_ROOT_URL}/drug-types`}
             columns={colums}
             action={{
-                onAdd: (rowData, callback) => addRowData(rowData, callback),
+                onAdd: (callback) => addRowData(callback),
                 onDelete: true,
                 onEdit: (rowData, callback) => updateRowData(rowData, callback),
             }}

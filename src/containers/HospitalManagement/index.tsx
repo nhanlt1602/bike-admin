@@ -1,13 +1,11 @@
 import { API_ROOT_URL } from "src/configurations";
 
-import CRUDTable, { IColumn } from "src/components/CRUDTable";
-import useSnackbar from "src/components/Snackbar/useSnackbar";
+import CRUDTable from "src/components/CRUDTable";
+import { IColumn } from "src/components/CRUDTable/Models";
 
 import { Hospital } from "./models/Hospital.model";
-import HospitalService from "./services/Hospital.service";
 
 const Hospitals: React.FC = () => {
-    const showSnackbar = useSnackbar();
     const colums: IColumn[] = [
         {
             field: "stt",
@@ -50,59 +48,16 @@ const Hospitals: React.FC = () => {
         },
     ];
 
-    const addRowData = async (rowData: Record<string, string>, callback: Function) => {
-        let hospital: Hospital = {
-            address: rowData["address"],
-            hospitalCode: rowData["hospitalCode"],
-            name: rowData["name"],
-            description: rowData["description"],
-        };
-        await HospitalService.create(hospital)
-            .then((res) => {
-                if (res.status === 201) {
-                    showSnackbar({
-                        children: "Thêm mới thành công",
-                        variant: "filled",
-                        severity: "success",
-                    });
-                    callback();
-                }
-            })
-            .catch(() => {
-                showSnackbar({
-                    children: "Thêm mới thất bại",
-                    variant: "filled",
-                    severity: "error",
-                });
-            });
+    const addRowData = async (callback: Function) => {
+        // eslint-disable-next-line no-console
+        console.log("abc");
+        callback();
     };
 
-    const updateRowData = async (rowData: Record<string, string>, callback: Function) => {
-        let hospital: Hospital = {
-            id: Number(rowData["id"]),
-            address: rowData["address"],
-            hospitalCode: rowData["hospitalCode"],
-            name: rowData["name"],
-            description: rowData["description"],
-        };
-        await HospitalService.update(hospital)
-            .then((res) => {
-                if (res.status === 200) {
-                    callback();
-                    showSnackbar({
-                        children: "Chỉnh sửa thành công",
-                        variant: "filled",
-                        severity: "success",
-                    });
-                }
-            })
-            .catch(() => {
-                showSnackbar({
-                    children: "Chỉnh sửa thất bại",
-                    variant: "filled",
-                    severity: "error",
-                });
-            });
+    const updateRowData = async (rowData: Hospital, callback: any) => {
+        // eslint-disable-next-line no-console
+        console.log(rowData);
+        callback();
     };
     return (
         <CRUDTable
@@ -112,7 +67,7 @@ const Hospitals: React.FC = () => {
             columns={colums}
             sort
             action={{
-                onAdd: (rowData, callback) => addRowData(rowData, callback),
+                onAdd: (callback) => addRowData(callback),
                 onDelete: true,
                 onEdit: (rowData, callback) => updateRowData(rowData, callback),
             }}
