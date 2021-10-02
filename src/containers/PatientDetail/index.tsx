@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
-// import { useParams } from "react-router";
-// import axios from "src/axios";
+import { useParams } from "react-router";
+import axios from "src/axios";
+
 import { Account } from "../AccountManagement/models/Account.model";
 import { Patient } from "./models/Patient.model";
 
@@ -30,7 +31,6 @@ import {
     Accordion,
     AccordionSummary,
     AccordionDetails,
-    ListItemButton,
 } from "@mui/material";
 import { pink } from "@mui/material/colors";
 import { Box } from "@mui/system";
@@ -38,81 +38,80 @@ import { Box } from "@mui/system";
 const imgLink =
     "https://celebmafia.com/wp-content/uploads/2020/01/taylor-swift-variety-magazine-sundance-issue-2020-4.jpg";
 
-const account: Account = {
-    id: 13,
-    email: "taylor13@gmail.com",
-    firstName: "Taylor",
-    lastName: "Swift",
-    streetAddress: "21 W.",
-    locality: "46th St.",
-    city: "New York",
-    postalCode: "10001",
-    phone: "0891213001",
-    avatar: imgLink,
-    dob: "13/12/1989",
-    isMale: false,
-    active: true,
-    registerTime: "01/10/2021",
-    role: {
-        id: 1,
-        name: "patient",
-    },
-};
+// const account: Account = {
+//     id: 13,
+//     email: "taylor13@gmail.com",
+//     firstName: "Taylor",
+//     lastName: "Swift",
+//     streetAddress: "21 W.",
+//     locality: "46th St.",
+//     city: "New York",
+//     postalCode: "10001",
+//     phone: "0891213001",
+//     avatar: imgLink,
+//     dob: "13/12/1989",
+//     isMale: false,
+//     active: true,
+//     registerTime: "01/10/2021",
+//     role: {
+//         id: 1,
+//         name: "patient",
+//     },
+// };
 
-const patient: Patient = {
-    backgroundDisease: "none",
-    allergy: "none",
-    bloodGroup: "O+",
-    healthChecks: [
-        { createdTime: "01/05/2021", doctorName: "Dr. Smith", status: "Đang đợi" },
-        { createdTime: "01/04/2021", doctorName: "Dr. Smith", status: "Hủy" },
-        { createdTime: "01/03/2021", doctorName: "Dr. Smith", status: "Kết thúc" },
-        { createdTime: "01/02/2021", doctorName: "Dr. Smith", status: "Hủy" },
-    ],
-};
+// const patient: Patient = {
+//     backgroundDisease: "none",
+//     allergy: "none",
+//     bloodGroup: "O+",
+//     healthChecks: [
+//         { createdTime: "01/05/2021", doctorName: "Dr. Smith", status: "Đang đợi" },
+//         { createdTime: "01/04/2021", doctorName: "Dr. Smith", status: "Hủy" },
+//         { createdTime: "01/03/2021", doctorName: "Dr. Smith", status: "Kết thúc" },
+//         { createdTime: "01/02/2021", doctorName: "Dr. Smith", status: "Hủy" },
+//         { createdTime: "01/01/2021", doctorName: "Dr. Smith", status: "Kết thúc" },
+//     ],
+// };
 
 const PatientDetail: React.FC = () => {
     const [expanded, setExpanded] = React.useState<string | false>(false);
-    // const [account, setAccount] = useState<Account>();
-    // const [patient, setPatient] = useState<Patient>();
+    const [loading, setLoading] = useState<boolean>(false);
+    const [account, setAccount] = useState<Account>();
+    const [patient, setPatient] = useState<Patient>();
 
-    // const params = useParams<{ id: string }>();
+    const params = useParams<{ id: string }>();
+    const accountId = params.id;
 
-    // useEffect(() => {
-    //     // const accountId = props.match.params.id;
-    //     const accountId = params.id;
-    //     axios
-    //         .get("/accounts/" + accountId)
-    //         .then((response) => {
-    //             console.log(response.data);
-    //             // const account = response.data;
-    //             // setAccount(account);
-    //         })
-    //         .catch((error) => {
-    //             alert(error);
-    //         });
-
-    //     axios
-    //         .get("/patients/" + accountId)
-    //         .then((response) => {
-    //             // const patient = response.data;
-    //             // setPatient(patient);
-    //         })
-    //         .catch((error) => {
-    //             alert(error);
-    //         });
-    // });
     const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
     };
 
+    const getAccountById = useCallback(async (accountId) => {
+        setLoading(true);
+        try {
+            const response = await axios.get("/accounts/" + accountId);
+            if (response.status === 200) {
+                const accountRes: Account = response.data;
+                setAccount(accountRes);
+
+                const res = await axios.get("/patients/email/" + accountRes.email);
+                if (res.status === 200) {
+                    setPatient(res.data);
+                }
+            }
+        } catch (_error) {}
+    }, []);
+
+    useEffect(() => {
+        getAccountById(accountId);
+    }, [accountId, getAccountById]);
+
     let genderIcon = (
-        <Icon color="primary" sx={{ fontSize: 50 }}>
+        <Icon color="primary" sx={{ fontSize: 30 }}>
             male_outlined_icon
         </Icon>
     );
-    if (!account.isMale) {
-        genderIcon = <Icon sx={{ color: pink[500], fontSize: 40 }}>female_outlined_icon</Icon>;
+    if (!loading && !account?.isMale) {
+        genderIcon = <Icon sx={{ color: pink[500], fontSize: 30 }}>female_outlined_icon</Icon>;
     }
     const profile = (
         <Card>
@@ -125,7 +124,7 @@ const PatientDetail: React.FC = () => {
                     }}
                 >
                     <Avatar
-                        src={account.avatar}
+                        src={account?.avatar}
                         sx={{
                             height: 100,
                             width: 100,
@@ -133,8 +132,8 @@ const PatientDetail: React.FC = () => {
                     />
                     <Box sx={{ display: "flex", flexDirection: "row" }}>
                         {genderIcon}
-                        <Typography color="textPrimary" gutterBottom variant="h4">
-                            {`${account.firstName} ${account.lastName}`}
+                        <Typography color="textPrimary" gutterBottom variant="h5">
+                            {`${account?.firstName} ${account?.lastName}`}
                         </Typography>
                     </Box>
                     <List>
@@ -148,26 +147,26 @@ const PatientDetail: React.FC = () => {
                             <ListItemIcon>
                                 <CakeOutlinedIcon />
                             </ListItemIcon>
-                            <ListItemText primary={account.dob} />
+                            <ListItemText primary={account?.dob} />
                         </ListItem>
                         <ListItem>
                             <ListItemIcon>
                                 <PhoneOutlinedIcon />
                             </ListItemIcon>
-                            <ListItemText primary={account.phone} />
+                            <ListItemText primary={account?.phone} />
                         </ListItem>
                         <ListItem>
                             <ListItemIcon>
                                 <EmailOutlinedIcon />
                             </ListItemIcon>
-                            <ListItemText primary={account.email} />
+                            <ListItemText primary={account?.email} />
                         </ListItem>
                         <ListItem>
                             <ListItemIcon>
                                 <HomeOutlinedIcon />
                             </ListItemIcon>
                             <ListItemText
-                                primary={`${account.streetAddress} ${account.locality} ${account.postalCode} ${account.city}`}
+                                primary={`${account?.streetAddress}, ${account?.locality}, ${account?.city}`}
                             />
                         </ListItem>
                     </List>
@@ -175,8 +174,8 @@ const PatientDetail: React.FC = () => {
             </CardContent>
             <Divider />
             <CardActions>
-                <Button color={account?.active ? "error" : "primary"} fullWidth variant="text">
-                    {account.active ? "Khóa tài khoản" : "Kích hoạt tài khoản"}
+                <Button color={account?.active ? "error" : "success"} fullWidth variant="text">
+                    {account?.active ? "Khóa tài khoản" : "Kích hoạt tài khoản"}
                 </Button>
             </CardActions>
         </Card>
@@ -197,10 +196,10 @@ const PatientDetail: React.FC = () => {
                         aria-controls="allery-panel-content"
                         id="allery-panel-header"
                     >
-                        <Typography sx={{ width: "33%", flexShrink: 0 }}>Tiền sử dị ứng</Typography>
+                        <Typography sx={{ width: "1/3", flexShrink: 0 }}>Tiền sử dị ứng</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <Typography sx={{ color: "text.secondary" }}>{patient.allergy}</Typography>
+                        <Typography sx={{ color: "text.secondary" }}>{patient?.allergy}</Typography>
                     </AccordionDetails>
                 </Accordion>
                 {/* Background Disease Expand */}
@@ -219,7 +218,7 @@ const PatientDetail: React.FC = () => {
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography sx={{ color: "text.secondary" }}>
-                            {patient.backgroundDisease}
+                            {patient?.backgroundDisease}
                         </Typography>
                     </AccordionDetails>
                 </Accordion>
@@ -232,21 +231,35 @@ const PatientDetail: React.FC = () => {
             <CardHeader title="Lịch sử đăng ký tư vấn khám chữa bệnh" />
             <Divider />
             <CardContent>
-                <List>
-                    {patient.healthChecks?.map((item, index) => (
-                        <ListItem key={index}>
-                            <ListItemButton>
-                                <ListItemText
-                                    primary={item.doctorName}
-                                    secondary={item.createdTime}
-                                />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
+                {patient?.healthChecks?.map((item, index) => (
+                    <Accordion
+                        expanded={expanded === `healthCheck${index}`}
+                        onChange={handleChange(`healthCheck${index}`)}
+                        key={item}
+                    >
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls={`health-check${index}-panel-content`}
+                            id={`health-check${index}-panel-header`}
+                        >
+                            <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                                Bác sĩ tư vấn
+                            </Typography>
+                            <Typography sx={{ color: "text.secondary" }}>
+                                {item.doctorName}
+                            </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Typography>{`Ngày đăng ký: ${item.createdTime}`}</Typography>
+                            <Typography sx={{ color: "text.secondary" }}>
+                                {`Trạng thái: ${item.status}`}
+                            </Typography>
+                        </AccordionDetails>
+                    </Accordion>
+                ))}
             </CardContent>
-            <Box sx={{ display: "flex", justifyContent: "flex-end", pr: 2 }}>
-                <Button size="small">Xem thêm</Button>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
+                <Button size="small">Xem thêm...</Button>
             </Box>
         </Card>
     );
