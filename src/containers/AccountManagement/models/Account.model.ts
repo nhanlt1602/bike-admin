@@ -10,9 +10,10 @@ export type Account = {
     city: string;
     postalCode: string;
     phone: string;
+    avatar?: string;
     dob: string;
     isMale: boolean;
-    active: boolean;
-    registerTime: string;
+    active?: boolean;
+    registerTime?: string;
     role?: Role;
 };

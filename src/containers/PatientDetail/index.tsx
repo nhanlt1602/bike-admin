@@ -1,8 +1,16 @@
 import React from "react";
 
+// import { useParams } from "react-router";
+// import axios from "src/axios";
 import { Account } from "../AccountManagement/models/Account.model";
 import { Patient } from "./models/Patient.model";
 
+import BloodtypeOutlinedIcon from "@mui/icons-material/BloodtypeOutlined";
+import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import {
     Button,
     Avatar,
@@ -14,8 +22,21 @@ import {
     Divider,
     Grid,
     Typography,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    List,
+    Icon,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
+    ListItemButton,
 } from "@mui/material";
+import { pink } from "@mui/material/colors";
 import { Box } from "@mui/system";
+
+const imgLink =
+    "https://celebmafia.com/wp-content/uploads/2020/01/taylor-swift-variety-magazine-sundance-issue-2020-4.jpg";
 
 const account: Account = {
     id: 13,
@@ -27,6 +48,7 @@ const account: Account = {
     city: "New York",
     postalCode: "10001",
     phone: "0891213001",
+    avatar: imgLink,
     dob: "13/12/1989",
     isMale: false,
     active: true,
@@ -46,17 +68,55 @@ const patient: Patient = {
         { createdTime: "01/04/2021", doctorName: "Dr. Smith", status: "Hủy" },
         { createdTime: "01/03/2021", doctorName: "Dr. Smith", status: "Kết thúc" },
         { createdTime: "01/02/2021", doctorName: "Dr. Smith", status: "Hủy" },
-        { createdTime: "01/01/2021", doctorName: "Dr. Smith", status: "Kết thúc" },
     ],
 };
 
-const imgLink =
-    "https://celebmafia.com/wp-content/uploads/2020/01/taylor-swift-variety-magazine-sundance-issue-2020-4.jpg";
-
 const PatientDetail: React.FC = () => {
+    const [expanded, setExpanded] = React.useState<string | false>(false);
+    // const [account, setAccount] = useState<Account>();
+    // const [patient, setPatient] = useState<Patient>();
+
+    // const params = useParams<{ id: string }>();
+
+    // useEffect(() => {
+    //     // const accountId = props.match.params.id;
+    //     const accountId = params.id;
+    //     axios
+    //         .get("/accounts/" + accountId)
+    //         .then((response) => {
+    //             console.log(response.data);
+    //             // const account = response.data;
+    //             // setAccount(account);
+    //         })
+    //         .catch((error) => {
+    //             alert(error);
+    //         });
+
+    //     axios
+    //         .get("/patients/" + accountId)
+    //         .then((response) => {
+    //             // const patient = response.data;
+    //             // setPatient(patient);
+    //         })
+    //         .catch((error) => {
+    //             alert(error);
+    //         });
+    // });
+    const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+        setExpanded(isExpanded ? panel : false);
+    };
+
+    let genderIcon = (
+        <Icon color="primary" sx={{ fontSize: 50 }}>
+            male_outlined_icon
+        </Icon>
+    );
+    if (!account.isMale) {
+        genderIcon = <Icon sx={{ color: pink[500], fontSize: 40 }}>female_outlined_icon</Icon>;
+    }
     const profile = (
         <Card>
-            <CardContent>
+            <CardContent sx={{ height: 560 }}>
                 <Box
                     sx={{
                         alignItems: "center",
@@ -65,35 +125,57 @@ const PatientDetail: React.FC = () => {
                     }}
                 >
                     <Avatar
-                        src={imgLink}
+                        src={account.avatar}
                         sx={{
                             height: 100,
                             width: 100,
                         }}
                     />
-                    <Typography color="textPrimary" gutterBottom variant="h4">
-                        {`${account.firstName} ${account.lastName}`}
-                    </Typography>
-                    <Typography color="textSecondary" variant="body1">
-                        {account.email}
-                    </Typography>
-                    <Typography color="textSecondary" variant="body1">
-                        {`Điện thoại: ${account.phone}`}
-                    </Typography>
-                    <Typography color="textSecondary" variant="body1">
-                        {`Mã bưu điện: ${account.postalCode}`}
-                    </Typography>
-                    <Typography color="textSecondary" variant="body1">
-                        {`${account.streetAddress} ${account.locality} ${account.city}`}
-                    </Typography>
-                    <Typography color="textSeconda" variant="caption">
-                        {`Ngày đăng ký: ${account.registerTime}`}
-                    </Typography>
+                    <Box sx={{ display: "flex", flexDirection: "row" }}>
+                        {genderIcon}
+                        <Typography color="textPrimary" gutterBottom variant="h4">
+                            {`${account.firstName} ${account.lastName}`}
+                        </Typography>
+                    </Box>
+                    <List>
+                        <ListItem>
+                            <ListItemIcon>
+                                <BloodtypeOutlinedIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="O+" />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemIcon>
+                                <CakeOutlinedIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={account.dob} />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemIcon>
+                                <PhoneOutlinedIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={account.phone} />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemIcon>
+                                <EmailOutlinedIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={account.email} />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemIcon>
+                                <HomeOutlinedIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                                primary={`${account.streetAddress} ${account.locality} ${account.postalCode} ${account.city}`}
+                            />
+                        </ListItem>
+                    </List>
                 </Box>
             </CardContent>
             <Divider />
             <CardActions>
-                <Button color="primary" fullWidth variant="text">
+                <Button color={account?.active ? "error" : "primary"} fullWidth variant="text">
                     {account.active ? "Khóa tài khoản" : "Kích hoạt tài khoản"}
                 </Button>
             </CardActions>
@@ -105,24 +187,42 @@ const PatientDetail: React.FC = () => {
             <CardHeader title="Thông tin về sức khỏe" />
             <Divider />
             <CardContent>
-                <Grid container>
-                    <Grid item lg={7}>
-                        <Typography color="textSecondary" variant="body1">
-                            {`Ngày sinh: ${account.dob}`}
+                {/* Allery Expand */}
+                <Accordion
+                    expanded={expanded === "alleryPanel"}
+                    onChange={handleChange("alleryPanel")}
+                >
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="allery-panel-content"
+                        id="allery-panel-header"
+                    >
+                        <Typography sx={{ width: "33%", flexShrink: 0 }}>Tiền sử dị ứng</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Typography sx={{ color: "text.secondary" }}>{patient.allergy}</Typography>
+                    </AccordionDetails>
+                </Accordion>
+                {/* Background Disease Expand */}
+                <Accordion
+                    expanded={expanded === "bkgDiseasePanel"}
+                    onChange={handleChange("bkgDiseasePanel")}
+                >
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="bkg-disease-panel-content"
+                        id="bkg-disease-panel-header"
+                    >
+                        <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                            Danh sách bệnh nền
                         </Typography>
-                    </Grid>
-                    <Grid item lg={5}>
-                        <Typography color="textSecondary" variant="body1">
-                            {`Nhóm máu: ${patient.bloodGroup}`}
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Typography sx={{ color: "text.secondary" }}>
+                            {patient.backgroundDisease}
                         </Typography>
-                    </Grid>
-                </Grid>
-                <Typography color="textSecondary" variant="body1">
-                    {`Danh sách bệnh nền: ${patient.backgroundDisease}`}
-                </Typography>
-                <Typography color="textSecondary" variant="body1">
-                    {`Tiền sử dị ứng: ${patient.allergy}`}
-                </Typography>
+                    </AccordionDetails>
+                </Accordion>
             </CardContent>
         </Card>
     );
@@ -132,26 +232,20 @@ const PatientDetail: React.FC = () => {
             <CardHeader title="Lịch sử đăng ký tư vấn khám chữa bệnh" />
             <Divider />
             <CardContent>
-                <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
+                <List>
                     {patient.healthChecks?.map((item, index) => (
-                        <Card variant="outlined" sx={{ m: 2 }} key={index}>
-                            <CardContent>
-                                <Typography variant="h5" component="div">
-                                    {item.doctorName}
-                                </Typography>
-                                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                                    {item.createdTime}
-                                </Typography>
-                                <Typography variant="body2">{item.status}</Typography>
-                            </CardContent>
-                            <CardActions>
-                                <Button size="small">Chi tiết</Button>
-                            </CardActions>
-                        </Card>
+                        <ListItem key={index}>
+                            <ListItemButton>
+                                <ListItemText
+                                    primary={item.doctorName}
+                                    secondary={item.createdTime}
+                                />
+                            </ListItemButton>
+                        </ListItem>
                     ))}
-                </Box>
+                </List>
             </CardContent>
-            <Box sx={{ display: "flex", justifyContent: "flex-end", p: 2 }}>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", pr: 2 }}>
                 <Button size="small">Xem thêm</Button>
             </Box>
         </Card>
@@ -164,9 +258,9 @@ const PatientDetail: React.FC = () => {
                     <Grid item lg={4} md={6} xs={12}>
                         {profile}
                     </Grid>
-                    <Grid item lg={8} md={6} xs={12} spacing={3}>
-                        <Grid>{healthInfo}</Grid>
-                        <Grid sx={{ mt: 3 }}>{consultingHistory}</Grid>
+                    <Grid item lg={8} md={6} xs={12}>
+                        <Box>{healthInfo}</Box>
+                        <Box sx={{ mt: 3 }}>{consultingHistory}</Box>
                     </Grid>
                 </Grid>
             </Container>
