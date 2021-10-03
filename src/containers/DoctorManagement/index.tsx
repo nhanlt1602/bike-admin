@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 
+import Moment from "moment";
 import { useParams } from "react-router";
 import axios from "src/axios";
+import { API_ROOT_URL } from "src/configurations";
 
 import { Box } from "@material-ui/core";
 
@@ -73,8 +75,13 @@ const DoctorDetails: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [account, setAccount] = useState<Account>();
     const [doctor, setDoctor] = useState<Doctors>();
+    const [verifyDoctor, setVerifyDoctor] = useState<boolean>(false);
     const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
+    };
+
+    const handleClick = () => (event: React.SyntheticEvent) => {
+        verifyAccount(accountId);
     };
 
     const params = useParams<{ id: string }>();
@@ -99,9 +106,23 @@ const DoctorDetails: React.FC = () => {
             }
         } catch (_error) {}
     }, []);
+    const verifyAccount = useCallback(async (accountId) => {
+        setLoading(true);
+        try {
+            const response = await axios.patch(`${API_ROOT_URL}/doctors/` + accountId);
+            if (response.status === 200) {
+                console.log(response.data.message);
+                // if(response.dât)
+                if (response.data.message === "success") {
+                    setVerifyDoctor(true);
+                }
+            }
+        } catch (_error) {}
+    }, []);
 
     useEffect(() => {
         getAccountById(accountId);
+        // verifyAccount(accountId);
     }, [accountId, getAccountById]);
 
     const profile = (
@@ -132,7 +153,7 @@ const DoctorDetails: React.FC = () => {
                             <ListItemIcon>
                                 <CakeOutlinedIcon />
                             </ListItemIcon>
-                            <ListItemText primary={account?.dob} />
+                            <ListItemText primary={Moment(account?.dob).format("d MMM yy")} />
                         </ListItem>
                         <ListItem>
                             <ListItemIcon>
@@ -162,8 +183,13 @@ const DoctorDetails: React.FC = () => {
                 <Button color={account?.active ? "error" : "success"} fullWidth variant="text">
                     {account?.active ? "Khóa tài khoản" : "Kích hoạt tài khoản"}
                 </Button>
-                <Button color={account?.active ? "error" : "success"} fullWidth variant="text">
-                    {doctor?.isVerify ? "Chưa xác thực" : "Xác thực"}
+                <Button
+                    color={verifyDoctor ? "error" : "success"}
+                    fullWidth
+                    variant="text"
+                    onClick={handleClick()}
+                >
+                    {verifyDoctor ? "Chưa xác thực" : "Xác thực"}
                 </Button>
             </CardActions>
         </Card>
@@ -234,7 +260,9 @@ const DoctorDetails: React.FC = () => {
                                             {item.certification?.name}
                                         </TableCell>
                                         <TableCell align="left">{item.evidence}</TableCell>
-                                        <TableCell align="left">{item.dateOfIssue}</TableCell>
+                                        <TableCell align="left">
+                                            {Moment(item.dateOfIssue).format("d MMM yy")}
+                                        </TableCell>
                                         <TableCell align="left">
                                             {item.certification?.description}
                                         </TableCell>
