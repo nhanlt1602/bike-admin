@@ -199,7 +199,7 @@ const DoctorDetails: React.FC = () => {
             <Divider />
             <CardActions>
                 <Button
-                    color={lockAccount ? "error" : "success"}
+                    color={lockAccount ? "success" : "error"}
                     fullWidth
                     variant="text"
                     onClick={handleClickLock()}
