@@ -9,6 +9,7 @@ import Hospitals from "src/containers/HospitalManagement";
 import Layout from "src/containers/Layout";
 import Login from "src/containers/Login";
 import Symptoms from "src/containers/SymptomManagement";
+import TimeFrames from "src/containers/TimeFrame";
 
 export const publicRoutes = [
     {
@@ -42,6 +43,11 @@ export const privateRoutes = [
         path: "/drug-types",
         name: "drugType",
         component: DrugTypes,
+    },
+    {
+        path: "/time-frames",
+        name: "timeFrame",
+        component: TimeFrames,
     },
 ];
 
