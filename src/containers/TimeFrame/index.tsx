@@ -2,9 +2,10 @@ import React from "react";
 
 import { useForm } from "react-hook-form";
 
-import CRUDTable, { IColumn } from "../../components/CRUDTable";
 import { makeStyles, TextField } from "@material-ui/core";
 import ButtonBase from "src/components/Button/ButtonBase";
+import CRUDTable from "src/components/CRUDTable";
+import { IColumn } from "src/components/CRUDTable/Models";
 
 import { API_ROOT_URL } from "../../configurations";
 
