@@ -11,6 +11,7 @@ import Login from "src/containers/Login";
 import NotFound from "src/containers/NotFound";
 import PatientDetail from "src/containers/PatientDetail";
 import Symptoms from "src/containers/SymptomManagement";
+import TimeFrames from "src/containers/TimeFrame";
 
 export const publicRoutes = [
     {
@@ -54,6 +55,11 @@ export const privateRoutes = [
         path: "/not-found",
         name: "NotFound",
         component: NotFound,
+    },
+    {
+        path: "/time-frames",
+        name: "timeFrame",
+        component: TimeFrames,
     },
 ];
 

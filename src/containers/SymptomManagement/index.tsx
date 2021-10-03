@@ -1,13 +1,11 @@
 import { API_ROOT_URL } from "src/configurations";
 
-import CRUDTable, { IColumn } from "src/components/CRUDTable";
-import useSnackbar from "src/components/Snackbar/useSnackbar";
+import CRUDTable from "src/components/CRUDTable";
+import { IColumn } from "src/components/CRUDTable/Models";
 
 import { Symptom } from "./models/Symptom.model";
-import SymptomService from "./services/Symtom.service";
 
 const Symptoms: React.FC = () => {
-    const showSnackbar = useSnackbar();
     const colums: IColumn[] = [
         {
             field: "id",
@@ -42,57 +40,16 @@ const Symptoms: React.FC = () => {
         },
     ];
 
-    const addRowData = async (rowData: Record<string, string>, callback: Function) => {
-        const symptom: Symptom = {
-            symptomCode: rowData["symptomCode"],
-            name: rowData["name"],
-            description: rowData["description"],
-        };
-        await SymptomService.create(symptom)
-            .then((res) => {
-                if (res.status === 201) {
-                    showSnackbar({
-                        children: "Thêm mới thành công",
-                        variant: "filled",
-                        severity: "success",
-                    });
-                    callback();
-                }
-            })
-            .catch(() => {
-                showSnackbar({
-                    children: "Thêm mới thất bại",
-                    variant: "filled",
-                    severity: "error",
-                });
-            });
+    const addRowData = async (callback: Function) => {
+        // eslint-disable-next-line no-console
+        console.log("abc");
+        callback();
     };
 
-    const updateRowData = async (rowData: Record<string, string>, callback: Function) => {
-        const symptom: Symptom = {
-            id: Number(rowData["id"]),
-            symptomCode: rowData["symptomCode"],
-            name: rowData["name"],
-            description: rowData["description"],
-        };
-        await SymptomService.update(symptom)
-            .then((res) => {
-                if (res.status === 200) {
-                    showSnackbar({
-                        children: "Chỉnh sửa thành công",
-                        variant: "filled",
-                        severity: "success",
-                    });
-                    callback();
-                }
-            })
-            .catch(() => {
-                showSnackbar({
-                    children: "Chỉnh sửa thất bại",
-                    variant: "filled",
-                    severity: "error",
-                });
-            });
+    const updateRowData = async (rowData: Symptom, callback: any) => {
+        // eslint-disable-next-line no-console
+        console.log(rowData);
+        callback();
     };
 
     return (
@@ -102,7 +59,7 @@ const Symptoms: React.FC = () => {
             query={`${API_ROOT_URL}/symptoms`}
             columns={colums}
             action={{
-                onAdd: (rowData, callback) => addRowData(rowData, callback),
+                onAdd: (callback) => addRowData(callback),
                 onDelete: true,
                 onEdit: (rowData, callback) => updateRowData(rowData, callback),
             }}
