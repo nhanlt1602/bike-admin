@@ -58,6 +58,7 @@ const account: Account = {
 // const AccountProfile: React.FC<Account> = (props: Account) => {
 const AccountProfile = () => {
     // const { account, accountData } = props;
+    // const { account } = props;
     const [openInfo, setOpenInfo] = React.useState(true);
     const [open, setOpen] = React.useState(true);
     const handleClickInfo = () => {
@@ -75,6 +76,35 @@ const AccountProfile = () => {
         genderIcon = <Icon sx={{ color: pink[500], fontSize: 40 }}>female_outlined_icon</Icon>;
     }
 
+    // / const [account, setAccount] = useState<Account>();
+    // const [patient, setPatient] = useState<Doc>();
+
+    // const params = useParams<{ id: string }>();
+
+    // useEffect(() => {
+    //     // const accountId = props.match.params.id;
+    //     const accountId = params.id;
+    //     axios
+    //         .get("/accounts/" + accountId)
+    //         .then((response) => {
+    //             console.log(response.data);
+    //             // const account = response.data;
+    //             // setAccount(account);
+    //         })
+    //         .catch((error) => {
+    //             alert(error);
+    //         });
+
+    //     axios
+    //         .get("/patients/" + accountId)
+    //         .then((response) => {
+    //             // const patient = response.data;
+    //             // setPatient(patient);
+    //         })
+    //         .catch((error) => {
+    //             alert(error);
+    //         });
+    // });
     return (
         <React.Fragment>
             <Card>

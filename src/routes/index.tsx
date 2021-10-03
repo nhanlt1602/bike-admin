@@ -51,7 +51,7 @@ export const privateRoutes = [
         component: DrugTypes,
     },
     {
-        path: "/doctor-detail",
+        path: "/doctor-detail/:id",
         name: "doctorDetail",
         component: DoctorDetails,
     },
