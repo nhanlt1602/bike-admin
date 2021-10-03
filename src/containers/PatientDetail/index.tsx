@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import axios from "src/axios";
 
 import ConsultationHistory from "./components/ConsultationHistory";
@@ -18,6 +18,7 @@ import { Box } from "@mui/system";
 
 const PatientDetail: React.FC = () => {
     const showSnackbar = useSnackbar();
+    const history = useHistory();
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false);
     const [isActive, setIsActive] = useState<boolean>(false);
     const [account, setAccount] = useState<Account>();
@@ -73,14 +74,10 @@ const PatientDetail: React.FC = () => {
                     }
                 }
             } catch (_error) {
-                showSnackbar({
-                    children: "Có lỗi xảy ra! Không thể lấy dữ liệu từ hệ thống!",
-                    variant: "filled",
-                    severity: "error",
-                });
+                history.push("/not-found");
             }
         },
-        [showSnackbar]
+        [history]
     );
 
     useEffect(() => {

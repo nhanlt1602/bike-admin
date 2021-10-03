@@ -8,6 +8,7 @@ import DrugTypes from "src/containers/DrugTypeManagement";
 import Hospitals from "src/containers/HospitalManagement";
 import Layout from "src/containers/Layout";
 import Login from "src/containers/Login";
+import NotFound from "src/containers/NotFound";
 import PatientDetail from "src/containers/PatientDetail";
 import Symptoms from "src/containers/SymptomManagement";
 
@@ -48,6 +49,11 @@ export const privateRoutes = [
         path: "/patients/:id",
         name: "patientDetail",
         component: PatientDetail,
+    },
+    {
+        path: "/not-found",
+        name: "NotFound",
+        component: NotFound,
     },
 ];
 
