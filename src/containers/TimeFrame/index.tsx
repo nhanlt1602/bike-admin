@@ -61,7 +61,7 @@ const TimeFrames: React.FC = () => {
     } = useForm();
 
     const convert_minutes = (time: string) => {
-        var a = time.split(":");
+        let a = time.split(":");
         return +a[0] * 60 + +a[1];
     };
 
