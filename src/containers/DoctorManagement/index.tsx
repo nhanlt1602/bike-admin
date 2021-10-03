@@ -76,12 +76,16 @@ const DoctorDetails: React.FC = () => {
     const [account, setAccount] = useState<Account>();
     const [doctor, setDoctor] = useState<Doctors>();
     const [verifyDoctor, setVerifyDoctor] = useState<boolean>(false);
+    const [lockAccount, setLockAccount] = useState<boolean>(false);
     const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
     };
 
-    const handleClick = () => (event: React.SyntheticEvent) => {
+    const handleClickVerify = () => (event: React.SyntheticEvent) => {
         verifyAccount(accountId);
+    };
+    const handleClickLock = () => (event: React.SyntheticEvent) => {
+        lockAccountDoctor(accountId);
     };
 
     const params = useParams<{ id: string }>();
@@ -115,6 +119,20 @@ const DoctorDetails: React.FC = () => {
                 // if(response.dât)
                 if (response.data.message === "success") {
                     setVerifyDoctor(true);
+                }
+            }
+        } catch (_error) {}
+    }, []);
+
+    const lockAccountDoctor = useCallback(async (accountId) => {
+        setLoading(true);
+        try {
+            const response = await axios.patch(`${API_ROOT_URL}/delete/` + accountId);
+            if (response.status === 200) {
+                console.log(response.data);
+                // if(response.dât)
+                if (response.data.message === "success") {
+                    setLockAccount(true);
                 }
             }
         } catch (_error) {}
@@ -180,14 +198,19 @@ const DoctorDetails: React.FC = () => {
             </CardContent>
             <Divider />
             <CardActions>
-                <Button color={account?.active ? "error" : "success"} fullWidth variant="text">
+                <Button
+                    color={lockAccount ? "error" : "success"}
+                    fullWidth
+                    variant="text"
+                    onClick={handleClickLock()}
+                >
                     {account?.active ? "Khóa tài khoản" : "Kích hoạt tài khoản"}
                 </Button>
                 <Button
                     color={verifyDoctor ? "error" : "success"}
                     fullWidth
                     variant="text"
-                    onClick={handleClick()}
+                    onClick={handleClickVerify()}
                 >
                     {verifyDoctor ? "Chưa xác thực" : "Xác thực"}
                 </Button>
