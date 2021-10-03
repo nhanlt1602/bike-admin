@@ -8,14 +8,17 @@ let timeFrameList: TimeFrame[] = [];
 const useGenerateTimeFrame = () => {
     const showSnackbar = useSnackbar();
     const time_convert = (num: number) => {
-        let hours = Math.floor(num / 60);
-        let minutes = num % 60;
+        const hours = Math.floor(num / 60);
+        const minutes = num % 60;
         return `0${hours}`.slice(-2) + ":" + `0${minutes}`.slice(-2) + ":" + `00`;
     };
 
     const convert_minutes = (time: string) => {
-        let a = time.split(":");
-        return +a[0] * 60 + +a[1];
+        const array = time.split(":");
+        if (array.length == 2 && Number.isInteger(array[0]) && Number.isInteger(array[1])) {
+            return +array[0] * 60 + +array[1];
+        }
+        return 0;
     };
 
     const handleGenerateTimeFrame = (startTime: string, endTime: string, rangeTime: string) => {

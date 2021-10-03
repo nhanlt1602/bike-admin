@@ -61,8 +61,11 @@ const TimeFrames: React.FC = () => {
     } = useForm();
 
     const convert_minutes = (time: string) => {
-        let a = time.split(":");
-        return +a[0] * 60 + +a[1];
+        const array = time.split(":");
+        if (array.length == 2 && Number.isInteger(array[0]) && Number.isInteger(array[1])) {
+            return +array[0] * 60 + +array[1];
+        }
+        return 0;
     };
 
     const submitHandler = () => {
