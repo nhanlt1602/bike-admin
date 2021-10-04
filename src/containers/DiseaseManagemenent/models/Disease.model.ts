@@ -6,5 +6,5 @@ export type Disease = {
     name: string;
     description: string;
     diseaseGroupId: string;
-    diseaseGroup: DiseaseGroup;
+    diseaseGroup?: DiseaseGroup;
 };

@@ -1,19 +1,19 @@
-import React from "react";
+import { useEffect } from "react";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { DiseaseGroup } from "../models/DiseaseGroup.model";
+import { Disease } from "../models/Disease.model";
 
 import { Button, Card, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-export interface IDiseaseGroupForm {
+export interface IDiseaseForm {
     open: boolean;
-    data: DiseaseGroup;
-    handleClose: (type: "SAVE" | "CANCEL", data?: DiseaseGroup, callback?: Function) => void;
+    data: Disease;
+    handleClose: (type: "SAVE" | "CANCEL", data?: Disease, callback?: Function) => void;
 }
 
-const DiseaseGroupForm: React.FC<IDiseaseGroupForm> = (props: IDiseaseGroupForm) => {
+const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
     const { data } = props;
     const {
         register,
@@ -21,14 +21,17 @@ const DiseaseGroupForm: React.FC<IDiseaseGroupForm> = (props: IDiseaseGroupForm)
         formState: { errors },
         setValue,
         clearErrors,
-    } = useForm<DiseaseGroup>({});
+    } = useForm<Disease>({});
 
-    React.useEffect(() => {
+    useEffect(() => {
         setValue("id", data.id);
-        setValue("groupName", data.groupName);
+        setValue("diseaseCode", data.diseaseCode);
+        setValue("name", data.name);
+        setValue("description", data.description);
+        setValue("diseaseGroupId", data.diseaseGroupId);
     }, [data, setValue]);
 
-    const submitHandler: SubmitHandler<DiseaseGroup> = (data: DiseaseGroup) => {
+    const submitHandler: SubmitHandler<Disease> = (data: Disease) => {
         // eslint-disable-next-line no-console
         console.log(data);
         if (data) {
@@ -72,11 +75,34 @@ const DiseaseGroupForm: React.FC<IDiseaseGroupForm> = (props: IDiseaseGroupForm)
                     >
                         <TextField
                             id="outlined-basic"
-                            label="Tên nhóm dịch bệnh"
+                            label="Mã dịch bệnh"
                             variant="outlined"
-                            {...register("groupName", { required: true })}
+                            {...register("diseaseCode", { required: true })}
                         />
-                        {errors.groupName && <p>Name is required.</p>}
+                        {errors.diseaseCode && <p>Disease code is required.</p>}
+                        <TextField
+                            id="outlined-basic"
+                            label="Tên dịch bệnh"
+                            variant="outlined"
+                            {...register("name", { required: true })}
+                        />
+                        {errors.name && <p>Name is required.</p>}
+                        <TextField
+                            id="outlined-basic"
+                            label="Tên dịch bệnh"
+                            variant="outlined"
+                            {...register("diseaseGroupId", { required: true })}
+                        />
+                        {errors.diseaseGroupId && <p>Disease group id is required.</p>}
+                        <TextField
+                            id="outlined-basic"
+                            label="Mô tả"
+                            variant="outlined"
+                            defaultValue={props.data.description}
+                            {...register("description")}
+                            multiline
+                            rows={5}
+                        />
                     </Box>
                     <Box
                         sx={{
@@ -102,4 +128,4 @@ const DiseaseGroupForm: React.FC<IDiseaseGroupForm> = (props: IDiseaseGroupForm)
     );
 };
 
-export default DiseaseGroupForm;
+export default DiseaseForm;
