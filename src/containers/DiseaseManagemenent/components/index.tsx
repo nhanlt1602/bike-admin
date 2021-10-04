@@ -89,11 +89,20 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                         {errors.name && <p>Name is required.</p>}
                         <TextField
                             id="outlined-basic"
-                            label="Tên dịch bệnh"
+                            label="Tên nhóm dịch bệnh"
                             variant="outlined"
                             {...register("diseaseGroupId", { required: true })}
                         />
                         {errors.diseaseGroupId && <p>Disease group id is required.</p>}
+                        {/* <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            // value={age}
+                            label="Age"
+                            {...register("diseaseGroupId")}
+                        >
+                            <MenuItem value={"33"}>33</MenuItem>
+                        </Select> */}
                         <TextField
                             id="outlined-basic"
                             label="Mô tả"

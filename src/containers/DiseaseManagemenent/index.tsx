@@ -16,7 +16,7 @@ const Diseases: React.FC = () => {
         diseaseCode: "",
         name: "",
         description: "",
-        diseaseGroupId: "",
+        diseaseGroupId: 0,
     };
 
     const [data, setData] = useState<Disease>(initDisease);

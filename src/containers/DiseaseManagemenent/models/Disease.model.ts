@@ -5,6 +5,6 @@ export type Disease = {
     diseaseCode: string;
     name: string;
     description: string;
-    diseaseGroupId: string;
+    diseaseGroupId: number;
     diseaseGroup?: DiseaseGroup;
 };
