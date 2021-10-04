@@ -1,6 +1,6 @@
 import useSnackbar from "src/components/Snackbar/useSnackbar";
 
-import { ICheckBoxHeader } from "../Models";
+import { ICheckBoxHeader, IColumn } from "../Models";
 
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -17,7 +17,7 @@ export const CheckboxesHeader: React.FC<ICheckBoxHeader> = (props: ICheckBoxHead
             id="checkbox header"
             options={props.columns}
             disableCloseOnSelect
-            value={props.selectedColumns}
+            value={props.selectedColumns as IColumn[]}
             getOptionLabel={(option) => option.title}
             onChange={(event, newValue) => {
                 if (newValue.length !== 0) {
