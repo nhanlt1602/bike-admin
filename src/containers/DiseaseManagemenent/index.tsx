@@ -1,32 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { API_ROOT_URL } from "src/configurations";
 
 import CRUDTable from "src/components/CRUDTable";
 import { IColumn } from "src/components/CRUDTable/Models";
 
-import { DiseaseGroup } from "../DiseaseGroupManagement/models/DiseaseGroup.model";
 import { Disease } from "./models/Disease.model";
 
-// interface IFormInput {
-//     id: number;
-//     diseaseCode: string;
-//     name: string;
-//     description: string;
-//     diseaseGroupId: string;
-//     diseaseGroup: DiseaseGroup;
-// }
-
 const Diseases: React.FC = () => {
-    const [open, setOpen] = useState<boolean>(false);
-
-    const initDiseaseGroup: DiseaseGroup = {
-        groupName: "",
-    };
-
-    const [data, setData] = useState<DiseaseGroup>(initDiseaseGroup);
-    const [reload, setReload] = useState<Function>(() => {});
-
     const colums: IColumn[] = [
         {
             field: "id",
@@ -86,13 +67,6 @@ const Diseases: React.FC = () => {
         // eslint-disable-next-line no-console
         console.log(rowData);
         callback();
-    };
-    const postDrugGroup = async (data: DiseaseGroup) => {
-        try {
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.log(error);
-        }
     };
 
     return (

@@ -1,9 +1,24 @@
+import React, { useState } from "react";
+
+import { API_ROOT_URL } from "src/configurations";
+
+import DiseaseGroupForm from "./components";
 import CRUDTable from "src/components/CRUDTable";
 import { IColumn } from "src/components/CRUDTable/Models";
 
 import { DiseaseGroup } from "./models/DiseaseGroup.model";
+import DiseaseGroupService from "./services/DiseaseGroup.service";
 
 const DiseaseGroups: React.FC = () => {
+    const [open, setOpen] = useState<boolean>(false);
+
+    const initDiseaseGroup: DiseaseGroup = {
+        groupName: "",
+    };
+
+    const [data, setData] = useState<DiseaseGroup>(initDiseaseGroup);
+    const [reload, setReload] = useState<Function>(() => {});
+
     const colums: IColumn[] = [
         {
             field: "id",
@@ -22,28 +37,72 @@ const DiseaseGroups: React.FC = () => {
         },
     ];
     const addRowData = async (callback: Function) => {
-        // eslint-disable-next-line no-console
-        console.log("abc");
-        callback();
+        setOpen(true);
+        setData(initDiseaseGroup);
+        setReload(() => callback);
     };
 
-    const updateRowData = async (rowData: DiseaseGroup, callback: any) => {
-        // eslint-disable-next-line no-console
-        console.log(rowData);
-        callback();
+    const updateRowData = async (rowData: DiseaseGroup, callback: Function) => {
+        setOpen(true);
+        setData(rowData);
+        setReload(() => callback);
     };
+
+    const postDiseaseGroup = async (data: DiseaseGroup) => {
+        try {
+            const response = await DiseaseGroupService.create(data);
+            if (response.status === 201) {
+                reload();
+            }
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.log(error);
+        }
+    };
+
+    const updateDiseaseGroup = async (data: DiseaseGroup) => {
+        try {
+            const response = await DiseaseGroupService.update(data);
+            if (response.status === 200) {
+                reload();
+            }
+        } catch (ex) {
+            // eslint-disable-next-line no-console
+            console.log(ex);
+        }
+    };
+
+    const handleClose = (type: "SAVE" | "CANCEL", data?: DiseaseGroup, clearErrors?: Function) => {
+        if (type === "SAVE") {
+            if (data) {
+                if (data.id) {
+                    updateDiseaseGroup(data);
+                } else {
+                    postDiseaseGroup(data);
+                }
+            }
+        }
+        if (clearErrors) {
+            clearErrors();
+        }
+        setOpen(false);
+    };
+
     return (
-        <CRUDTable
-            title="Quản lí nhóm dịch bệnh"
-            enableFilter
-            query="http://52.221.193.237/api/v1/disease-groups"
-            columns={colums}
-            action={{
-                onAdd: (callback) => addRowData(callback),
-                onDelete: true,
-                onEdit: (rowData, callback) => updateRowData(rowData, callback),
-            }}
-        />
+        <React.Fragment>
+            <DiseaseGroupForm data={data} open={open} handleClose={handleClose} />
+            <CRUDTable
+                title="Quản lí nhóm dịch bệnh"
+                enableFilter
+                query={`${API_ROOT_URL}/disease-groups`}
+                columns={colums}
+                action={{
+                    onAdd: (callback) => addRowData(callback),
+                    onDelete: true,
+                    onEdit: (rowData, callback) => updateRowData(rowData, callback),
+                }}
+            />
+        </React.Fragment>
     );
 };
 
