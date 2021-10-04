@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { API_ROOT_URL } from "src/configurations";
 
-import DrugDialog from "./components/DrugDialog";
+import DrugTypeForm from "./components/DrugTypeForm";
 import CRUDTable from "src/components/CRUDTable";
 import { IColumn } from "src/components/CRUDTable/Models";
 
@@ -99,7 +99,7 @@ const DrugTypes: React.FC = () => {
 
     return (
         <React.Fragment>
-            <DrugDialog data={data} open={open} handleClose={handleClose} />
+            <DrugTypeForm data={data} open={open} handleClose={handleClose} />
             <CRUDTable
                 title="Quản lí Loại thuốc"
                 enableFilter
