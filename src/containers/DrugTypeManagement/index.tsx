@@ -44,8 +44,6 @@ const DrugTypes: React.FC = () => {
     ];
 
     const addRowData = async (callback: Function) => {
-        // eslint-disable-next-line no-console
-        console.log("abc");
         setOpen(true);
         setData(initDrugType);
         setReload(() => callback);
@@ -53,8 +51,6 @@ const DrugTypes: React.FC = () => {
     };
 
     const updateRowData = async (rowData: DrugType, callback: Function) => {
-        // eslint-disable-next-line no-console
-        console.log(rowData);
         // callback();
         setOpen(true);
         setData(rowData);

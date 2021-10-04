@@ -44,7 +44,7 @@ export interface IColumn {
     align?: "left" | "right" | "center";
     title: string;
     field: string;
-    render?: (data?: Record<number, string | number>) => React.ReactElement;
+    render?: (data?: any) => React.ReactElement;
     disableSort?: boolean;
     disableFilter?: boolean;
     customSort?: (data?: Record<number, string | number>) => React.ReactElement;
