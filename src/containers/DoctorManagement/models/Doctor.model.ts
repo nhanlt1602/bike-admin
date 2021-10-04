@@ -8,7 +8,7 @@ export type Doctors = {
     scopeOfPractice: string;
     description: string;
     numberOfConsultants: string;
-    rating: string;
+    rating: number;
     isVerify: string;
     certificationDoctors: Cetification[];
     hospitalDoctors: HospitalDoctor[];
@@ -32,6 +32,7 @@ export type HospitalDoctor = {
     isWorking: string;
     hospital: {
         id: string;
+        hospitalCode: string;
         name: string;
         address: string;
         description: string;

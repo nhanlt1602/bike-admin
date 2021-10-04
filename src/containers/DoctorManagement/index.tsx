@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { MouseEvent, useCallback, useEffect, useState } from "react";
 
 import Moment from "moment";
 import { useParams } from "react-router";
@@ -6,9 +6,10 @@ import axios from "src/axios";
 import { API_ROOT_URL } from "src/configurations";
 
 import { Box } from "@material-ui/core";
+import { ConfirmModal } from "src/components/ConfirmModal";
+import useSnackbar from "src/components/Snackbar/useSnackbar";
 
 import { Account } from "../AccountManagement/models/Account.model";
-import { Cetification } from "../Cetifcation/Cetification.model";
 import { Doctors } from "./models/Doctor.model";
 
 import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
@@ -16,7 +17,7 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
-import { Accordion } from "@mui/material";
+import { Accordion, Dialog, DialogContent, DialogTitle, Rating } from "@mui/material";
 import {
     Button,
     Avatar,
@@ -34,6 +35,7 @@ import {
 } from "@mui/material";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
+import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -42,101 +44,109 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-// import { Cetification } from "src/containers/Cetifcation/Cetification.model";
-
-const imgLink =
-    "https://afamilycdn.com/150157425591193600/2020/10/19/base64-16030963538052065905430.png";
-
-const account: Account = {
-    id: 13,
-    email: "taylor13@gmail.com",
-    firstName: "Phạm",
-    lastName: "Thu Hà",
-    streetAddress: "21 W.",
-    locality: "46th St.",
-    city: "New York",
-    postalCode: "10001",
-    phone: "0891213001",
-    avatar: imgLink,
-    dob: "13/12/1989",
-    isMale: false,
-    active: true,
-    registerTime: "01/10/2021",
-    role: {
-        id: 2,
-        name: "patient",
-    },
-};
-
 const DoctorDetails: React.FC = () => {
-    const id = useParams<{ id: string }>();
-    const [cetifi, setCetifi] = useState<Cetification>();
     const [expanded, setExpanded] = React.useState<string | false>("panel1");
     const [loading, setLoading] = useState<boolean>(false);
     const [account, setAccount] = useState<Account>();
     const [doctor, setDoctor] = useState<Doctors>();
     const [verifyDoctor, setVerifyDoctor] = useState<boolean>(false);
     const [lockAccount, setLockAccount] = useState<boolean>(false);
+    const showSnackbar = useSnackbar();
+    const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false);
+    const [isOpenLockConfirmModal, setIsOpenLockConfirmModal] = useState<boolean>(false);
     const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
     };
-
-    const handleClickVerify = () => (event: React.SyntheticEvent) => {
-        verifyAccount(accountId);
+    const handleClickVerify = () => {
+        setIsOpenConfirmModal(true);
     };
-    const handleClickLock = () => (event: React.SyntheticEvent) => {
-        lockAccountDoctor(accountId);
+
+    const handleClickLock = () => {
+        setIsOpenLockConfirmModal(true);
     };
 
     const params = useParams<{ id: string }>();
     const accountId = params.id;
 
+    let gender = "Mr. ";
+    if (!loading && !account?.isMale) {
+        gender = "Mrs. ";
+    }
     const getAccountById = useCallback(async (accountId) => {
         setLoading(true);
         try {
             const response = await axios.get("/accounts/" + accountId);
             if (response.status === 200) {
                 const accountRes: Account = response.data;
-                // console.log(accountRes);
                 setAccount(accountRes);
-                // setDoctor(accountRes);
-                // setCetifi(response.data.cetificationDoctors);
                 const res = await axios.get("/doctors/email/" + "Nhannt@gmail.com");
                 if (res.status === 200) {
-                    console.log(res.data);
                     setDoctor(res.data);
-                    // setCetifi(res.data.cetificationDoctors);
-                }
-            }
-        } catch (_error) {}
-    }, []);
-    const verifyAccount = useCallback(async (accountId) => {
-        setLoading(true);
-        try {
-            const response = await axios.patch(`${API_ROOT_URL}/doctors/` + accountId);
-            if (response.status === 200) {
-                console.log(response.data.message);
-                // if(response.dât)
-                if (response.data.message === "success") {
-                    setVerifyDoctor(true);
                 }
             }
         } catch (_error) {}
     }, []);
 
-    const lockAccountDoctor = useCallback(async (accountId) => {
-        setLoading(true);
-        try {
-            const response = await axios.patch(`${API_ROOT_URL}/delete/` + accountId);
-            if (response.status === 200) {
-                console.log(response.data);
-                // if(response.dât)
-                if (response.data.message === "success") {
-                    setLockAccount(true);
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleCloseVerifyConfirmModal = async (
+        e: React.MouseEvent<HTMLButtonElement | MouseEvent>,
+        action: "CONFIRM" | "CANCEL"
+    ) => {
+        if (action === "CONFIRM") {
+            try {
+                const response = await axios.patch(`${API_ROOT_URL}/doctors/` + accountId);
+                if (response.status === 200) {
+                    setVerifyDoctor(!verifyDoctor);
+                    showSnackbar({
+                        children: "Cập nhật trạng thái tài khoản thành công",
+                        variant: "filled",
+                        severity: "success",
+                    });
                 }
+            } catch (error) {
+                showSnackbar({
+                    children: "Cập nhật trạng thái tài khoản thất bại",
+                    variant: "filled",
+                    severity: "error",
+                });
             }
-        } catch (_error) {}
-    }, []);
+        }
+        setIsOpenConfirmModal(false);
+    };
+
+    const handleLockConfirmModal = async (
+        e: React.MouseEvent<HTMLButtonElement | MouseEvent>,
+        action: "CONFIRM" | "CANCEL"
+    ) => {
+        if (action === "CONFIRM") {
+            try {
+                const response = await axios.patch(`${API_ROOT_URL}/delete/` + accountId);
+                if (response.status === 200) {
+                    setLockAccount(!lockAccount);
+                    showSnackbar({
+                        children: "Cập nhật trạng thái tài khoản thành công",
+                        variant: "filled",
+                        severity: "success",
+                    });
+                }
+            } catch (error) {
+                showSnackbar({
+                    children: "Cập nhật trạng thái tài khoản thất bại",
+                    variant: "filled",
+                    severity: "error",
+                });
+            }
+        }
+        setIsOpenLockConfirmModal(false);
+    };
 
     useEffect(() => {
         getAccountById(accountId);
@@ -161,11 +171,11 @@ const DoctorDetails: React.FC = () => {
                         }}
                     />
                     <Box sx={{ display: "flex", flexDirection: "row" }}>
-                        {/* {genderIcon} */}
                         <Typography color="textPrimary" gutterBottom variant="h5">
-                            Mr. {`${account?.firstName} ${account?.lastName}`}
+                            {`${gender} ${account?.firstName} ${account?.lastName}`}
                         </Typography>
                     </Box>
+                    <Rating name="read-only" value={doctor?.rating} readOnly />
                     <List>
                         <ListItem>
                             <ListItemIcon>
@@ -202,7 +212,7 @@ const DoctorDetails: React.FC = () => {
                     color={lockAccount ? "success" : "error"}
                     fullWidth
                     variant="text"
-                    onClick={handleClickLock()}
+                    onClick={handleClickLock}
                 >
                     {account?.active ? "Khóa tài khoản" : "Kích hoạt tài khoản"}
                 </Button>
@@ -210,7 +220,7 @@ const DoctorDetails: React.FC = () => {
                     color={verifyDoctor ? "error" : "success"}
                     fullWidth
                     variant="text"
-                    onClick={handleClickVerify()}
+                    onClick={handleClickVerify}
                 >
                     {verifyDoctor ? "Chưa xác thực" : "Xác thực"}
                 </Button>
@@ -233,27 +243,41 @@ const DoctorDetails: React.FC = () => {
                     <Grid container spacing={3}>
                         <Grid item md={6} xs={12}>
                             <Typography color="textPrimary" gutterBottom>
-                                Chứng chỉ hành nghề: {doctor?.practisingCertificate}
+                                Mã chứng chỉ: {doctor?.certificateCode}
                             </Typography>
                             <Typography color="textPrimary" gutterBottom>
-                                Mã chứng chỉ: {doctor?.practisingCertificate}
+                                Chứng chỉ hành nghề:
+                                <Link variant="body2" underline="none" onClick={handleClickOpen}>
+                                    View
+                                </Link>
+                                <Dialog open={open} onClose={handleClose}>
+                                    <DialogTitle>Chứng chỉ</DialogTitle>
+                                    <DialogContent>
+                                        <img
+                                            width="100%"
+                                            height="100%"
+                                            src={doctor?.practisingCertificate}
+                                            loading="lazy"
+                                        />
+                                    </DialogContent>
+                                </Dialog>
                             </Typography>
                             <Typography color="textPrimary" gutterBottom>
-                                Nơi cấp chứng chỉ: {doctor?.practisingCertificate}
+                                Mô tả: {doctor?.description}
                             </Typography>
                         </Grid>
                         <Grid item md={6} xs={12}>
                             <Typography color="textPrimary" gutterBottom>
-                                Phạm vi thực hành: {doctor?.practisingCertificate}
+                                Nơi cấp chứng chỉ: {doctor?.placeOfCertificate}
                             </Typography>
                             <Typography color="textPrimary" gutterBottom>
-                                Số lượng người tư vấn: {doctor?.practisingCertificate}
+                                Phạm vi thực hành: {doctor?.scopeOfPractice}
+                            </Typography>
+                            <Typography color="textPrimary" gutterBottom>
+                                Số lượng người tư vấn: {doctor?.numberOfConsultants}
                             </Typography>
                         </Grid>
                     </Grid>
-                    <Typography color="textPrimary" gutterBottom>
-                        Mô tả: {doctor?.practisingCertificate}
-                    </Typography>
                 </AccordionDetails>
             </Accordion>
             <Accordion expanded={expanded === "panel2"} onChange={handleChange("panel2")}>
@@ -273,30 +297,22 @@ const DoctorDetails: React.FC = () => {
                                     <TableCell align="left">Chuyên khoa</TableCell>
                                     <TableCell align="left">Bằng chứng</TableCell>
                                     <TableCell align="left">Ngày cấp</TableCell>
-                                    <TableCell align="left">Mô tả</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {doctor?.certificationDoctors?.map((item, index) => (
+                                {doctor?.certificationDoctors?.map((item) => (
                                     <TableRow key={item.id}>
                                         <TableCell align="left">
                                             {item.certification?.name}
                                         </TableCell>
-                                        <TableCell align="left">{item.evidence}</TableCell>
+                                        <TableCell align="left">
+                                            <img width="50%" height="130" src={item.evidence} />
+                                        </TableCell>
                                         <TableCell align="left">
                                             {Moment(item.dateOfIssue).format("d MMM yy")}
                                         </TableCell>
-                                        <TableCell align="left">
-                                            {item.certification?.description}
-                                        </TableCell>
                                     </TableRow>
                                 ))}
-                                {/* {doctor?.majorDoctors?.map((item) => (
-                                    <TableRow key={item.id}>
-                                        <TableCell align="right">{item.evidence}</TableCell>
-                                        <TableCell align="right">{item.dateOfIssue}</TableCell>
-                                    </TableRow>
-                                ))} */}
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -318,18 +334,13 @@ const DoctorDetails: React.FC = () => {
                                 <TableRow>
                                     <TableCell align="left">Mã chuyên khoa</TableCell>
                                     <TableCell align="left">Tên chuyên khoa</TableCell>
-                                    <TableCell align="left">Mô tả</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {doctor?.majorDoctors?.map((item, index) => (
+                                {doctor?.majorDoctors?.map((item) => (
                                     <TableRow key={item.id}>
                                         <TableCell align="left">{item.majorId}</TableCell>
                                         <TableCell align="left">{item.major?.name}</TableCell>
-
-                                        <TableCell align="left">
-                                            {item.major?.description}
-                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -354,18 +365,16 @@ const DoctorDetails: React.FC = () => {
                                     <TableCell align="left">Mã bệnh viện bệnh viện</TableCell>
                                     <TableCell align="left">Tên bệnh viện</TableCell>
                                     <TableCell align="left">Tình trạng làm việc</TableCell>
-                                    <TableCell align="left">Mô tả</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {doctor?.hospitalDoctors?.map((item, index) => (
+                                {doctor?.hospitalDoctors?.map((item) => (
                                     <TableRow key={item.id}>
-                                        <TableCell align="left">{item.hospitalId}</TableCell>
+                                        <TableCell align="left">
+                                            {item.hospital?.hospitalCode}
+                                        </TableCell>
                                         <TableCell align="left">{item.hospital?.name}</TableCell>
                                         <TableCell align="left">{item.isWorking}</TableCell>
-                                        <TableCell align="left">
-                                            {item.hospital?.description}
-                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -377,7 +386,17 @@ const DoctorDetails: React.FC = () => {
     );
 
     return (
-        <>
+        <React.Fragment>
+            <ConfirmModal
+                open={isOpenConfirmModal}
+                message="Bạn có muốn thực hiện thay đổi?"
+                handleClose={() => handleCloseVerifyConfirmModal}
+            />
+            <ConfirmModal
+                open={isOpenLockConfirmModal}
+                message="Bạn có muốn thực hiện thay đổi?"
+                handleClose={() => handleLockConfirmModal}
+            />
             <Box
                 sx={{
                     minHeight: "100%",
@@ -397,7 +416,7 @@ const DoctorDetails: React.FC = () => {
                     </Grid>
                 </Container>
             </Box>
-        </>
+        </React.Fragment>
     );
 };
 
