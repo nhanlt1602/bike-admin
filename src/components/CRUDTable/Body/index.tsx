@@ -83,7 +83,10 @@ export const TableData = <T extends Record<string, any>>(
                                                 props.setMutationMode(true);
                                                 if (props.action?.onEdit) {
                                                     props.action?.onEdit(row, () => {
-                                                        props.loadData(1, props.rowPerPage);
+                                                        props.loadData(
+                                                            props.page,
+                                                            props.rowPerPage
+                                                        );
                                                         props.setMode("NORMAL");
                                                         props.setMutationMode(false);
                                                     });
