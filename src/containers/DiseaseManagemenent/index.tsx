@@ -127,7 +127,7 @@ const Diseases: React.FC = () => {
             <CRUDTable
                 title="Quản lí dịch bệnh"
                 enableFilter
-                query={`${API_ROOT_URL}/disease-groups`}
+                query={`${API_ROOT_URL}/diseases`}
                 columns={colums}
                 action={{
                     onAdd: (callback) => addRowData(callback),
