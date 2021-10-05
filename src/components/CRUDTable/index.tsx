@@ -68,7 +68,7 @@ const CRUDTable = <T extends Record<string, string | number>>(
         setLoading(true);
         try {
             const response = await fetch(
-                `${query}?pageOffset=${offset}&limit=${limit}${stringFilter}`,
+                `${query}?page-offset=${offset}&limit=${limit}${stringFilter}`,
                 {
                     method: "GET",
                     headers: {

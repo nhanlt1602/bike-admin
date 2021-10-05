@@ -37,6 +37,11 @@ export const routes = [
         path: "/time-frames",
         icon: <InboxIcon />,
     },
+    {
+        name: "Certifications",
+        path: "/certifications",
+        icon: <InboxIcon />,
+    },
 ];
 
 export const routesControlApp = [
