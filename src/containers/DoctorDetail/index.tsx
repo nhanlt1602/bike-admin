@@ -79,7 +79,7 @@ const DoctorDetails: React.FC = () => {
             if (response.status === 200) {
                 const accountRes: Account = response.data;
                 setAccount(accountRes);
-                const res = await axios.get("/doctors/email/" + "Nhannt@gmail.com");
+                const res = await axios.get("/doctors/email/" + accountRes?.email);
                 if (res.status === 200) {
                     setDoctor(res.data);
                 }
@@ -175,7 +175,7 @@ const DoctorDetails: React.FC = () => {
                             {`${gender} ${account?.firstName} ${account?.lastName}`}
                         </Typography>
                     </Box>
-                    <Rating name="read-only" value={doctor?.rating} readOnly />
+                    <Rating name="read-only" value={doctor?.rating || 0} readOnly />
                     <List>
                         <ListItem>
                             <ListItemIcon>
@@ -271,10 +271,10 @@ const DoctorDetails: React.FC = () => {
                                 Nơi cấp chứng chỉ: {doctor?.placeOfCertificate}
                             </Typography>
                             <Typography color="textPrimary" gutterBottom>
-                                Phạm vi thực hành: {doctor?.scopeOfPractice}
+                                Số lượng người tư vấn: {doctor?.numberOfConsultants}
                             </Typography>
                             <Typography color="textPrimary" gutterBottom>
-                                Số lượng người tư vấn: {doctor?.numberOfConsultants}
+                                Phạm vi thực hành: {doctor?.scopeOfPractice}
                             </Typography>
                         </Grid>
                     </Grid>
