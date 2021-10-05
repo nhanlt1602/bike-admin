@@ -63,20 +63,18 @@ const DrugTypeForm: React.FC<IDrugTypeForm> = (props: IDrugTypeForm) => {
                         </Typography>
                     </Box>
                     <Box
-                        component="form"
                         sx={{
                             "& > :not(style)": { m: 2, display: "flex", justifyContent: "center" },
                         }}
-                        noValidate
-                        autoComplete="off"
                     >
                         <TextField
                             id="outlined-basic"
-                            label="Tên loại thuốc"
+                            label="Tên loại thuốc *"
                             variant="outlined"
+                            error={!!errors.name}
+                            helperText={errors.name && "Tên loại thuốc là bắt buộc"}
                             {...register("name", { required: true })}
                         />
-                        {errors.name && <p>Name is required.</p>}
                         <TextField
                             id="outlined-basic"
                             label="Mô tả"

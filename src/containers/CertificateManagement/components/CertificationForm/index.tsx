@@ -29,10 +29,7 @@ const CertificationForm: React.FC<ICertificationForm> = (props: ICertificationFo
         setValue("description", data.description);
     }, [data, setValue]);
 
-    const submitHandler: SubmitHandler<Certificate> = (data: Certificate, e) => {
-        // eslint-disable-next-line no-console
-        console.log(data);
-        e?.preventDefault();
+    const submitHandler: SubmitHandler<Certificate> = (data: Certificate) => {
         // reset();
         if (data) {
             props.handleClose("SAVE", data, clearErrors);
