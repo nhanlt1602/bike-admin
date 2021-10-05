@@ -9,7 +9,6 @@ import { DrugType } from "../DrugTypeManagement/models/DrugType.models";
 import { Drug } from "./models/Drug.model";
 
 const Drugs: React.FC = () => {
-    // const showSnackbar = useSnackbar();
     const colums: IColumn[] = [
         {
             field: "id",
@@ -19,6 +18,7 @@ const Drugs: React.FC = () => {
             disableFilter: true,
             editable: "never",
             index: 1,
+            width: "100",
         },
         { field: "name", align: "left", title: "Tên thuốc", index: 2 },
         { field: "producer", align: "left", title: "Nhà sản xuất", index: 3 },
@@ -33,6 +33,7 @@ const Drugs: React.FC = () => {
             render: (props: DrugType) => {
                 return <React.Fragment>{props.name}</React.Fragment>;
             },
+            width: "250",
         },
     ];
 

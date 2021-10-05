@@ -196,7 +196,7 @@ const CRUDTable = <T extends Record<string, string | number>>(
 
     return (
         <Box sx={{ width: "100%" }}>
-            <Paper sx={{ width: "100%", mb: 2 }}>
+            <Paper sx={{ width: "100%", mb: 2, overflowX: "auto" }}>
                 <Toolbar
                     sx={{
                         pl: { sm: 2 },
@@ -211,24 +211,24 @@ const CRUDTable = <T extends Record<string, string | number>>(
                     >
                         {props.title}
                     </Typography>
-                    {!!props?.action?.onAdd && (
-                        <React.Fragment>
-                            <CheckboxesHeader
-                                selectedColumns={selectedColumns}
-                                setSelectedColumns={setSelectedColumns}
-                                setStringFilter={setStringFilter}
-                                columns={columns}
-                            />
+                    <React.Fragment>
+                        <CheckboxesHeader
+                            selectedColumns={selectedColumns}
+                            setSelectedColumns={setSelectedColumns}
+                            setStringFilter={setStringFilter}
+                            columns={columns}
+                        />
+                        {!!props?.action?.onAdd && (
                             <Tooltip title="Thêm mới">
                                 <IconButton size="large" onClick={() => onAddHandler()}>
                                     <AddBoxRounded />
                                 </IconButton>
                             </Tooltip>
-                        </React.Fragment>
-                    )}
+                        )}
+                    </React.Fragment>
                 </Toolbar>
-                <TableContainer>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableContainer style={{ width: "100%" }}>
+                    <Table sx={{ minWidth: 1000 }} aria-label="simple table">
                         <TableHeader
                             enableSort={props.sort}
                             columns={selectedColumns}

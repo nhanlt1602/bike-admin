@@ -8,10 +8,10 @@ export const FilterTable: React.FC<IFilterTable> = (props: IFilterTable) => {
         <TableRow>
             {props.columns?.map((column: IColumn, index: number) => {
                 if (column.disableFilter) {
-                    return <TableCell key={index}></TableCell>;
+                    return <TableCell width={column.width || undefined} key={index}></TableCell>;
                 }
                 return (
-                    <TableCell key={index}>
+                    <TableCell key={index} width={column.width || undefined}>
                         <TextField
                             size="small"
                             variant="standard"
@@ -30,7 +30,7 @@ export const FilterTable: React.FC<IFilterTable> = (props: IFilterTable) => {
                     </TableCell>
                 );
             })}
-            {props.isHaveAction && <TableCell></TableCell>}
+            {props.isHaveAction && <TableCell width={160}></TableCell>}
         </TableRow>
     );
 };
