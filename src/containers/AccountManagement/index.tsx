@@ -1,6 +1,7 @@
 import { API_ROOT_URL } from "src/configurations";
 
-import CRUDTable, { IColumn } from "src/components/CRUDTable";
+import CRUDTable from "src/components/CRUDTable";
+import { IColumn } from "src/components/CRUDTable/Models";
 
 const Accounts: React.FC = () => {
     const colums: IColumn[] = [

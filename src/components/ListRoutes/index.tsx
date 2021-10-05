@@ -32,6 +32,16 @@ export const routes = [
         path: "/drug-types",
         icon: <InboxIcon />,
     },
+    {
+        name: "Time Frames",
+        path: "/time-frames",
+        icon: <InboxIcon />,
+    },
+    {
+        name: "Certifications",
+        path: "/certifications",
+        icon: <InboxIcon />,
+    },
 ];
 
 export const routesControlApp = [
