@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import axios from "src/axios";
+import { API_ROOT_URL } from "src/configurations";
 
 import { Disease } from "../models/Disease.model";
 
-import { Button, Card, Modal, TextField, Typography } from "@mui/material";
+import { Button, Card, MenuItem, Modal, Select, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 export interface IDiseaseForm {
@@ -22,6 +24,7 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
         setValue,
         clearErrors,
     } = useForm<Disease>({});
+    const [dataDiseaseGroup, setDataDiseaseGroup] = useState([]);
 
     useEffect(() => {
         setValue("id", data.id);
@@ -29,6 +32,7 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
         setValue("name", data.name);
         setValue("description", data.description);
         setValue("diseaseGroupId", data.diseaseGroupId);
+        setValue("diseaseGroup", data.diseaseGroup);
     }, [data, setValue]);
 
     const submitHandler: SubmitHandler<Disease> = (data: Disease) => {
@@ -36,6 +40,19 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
         console.log(data);
         if (data) {
             props.handleClose("SAVE", data, clearErrors);
+        }
+    };
+
+    const getDiseaseGroup = async () => {
+        try {
+            const response = await axios.get(`${API_ROOT_URL}/disease-groups?limit=1&offset=20`);
+            console.log(response.data);
+            if (response.status === 200) {
+                setDataDiseaseGroup(response.data.content);
+            }
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.log(error);
         }
     };
 
@@ -77,6 +94,8 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                             id="outlined-basic"
                             label="Mã dịch bệnh"
                             variant="outlined"
+                            error={!!errors.diseaseCode}
+                            helperText={errors.diseaseCode && "Mã dịch bệnh là bắt buộc"}
                             {...register("diseaseCode", { required: true })}
                         />
                         {errors.diseaseCode && <p>Disease code is required.</p>}
@@ -84,6 +103,8 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                             id="outlined-basic"
                             label="Tên dịch bệnh"
                             variant="outlined"
+                            error={!!errors.name}
+                            helperText={errors.name && "Tên dịch bệnh là bắt buộc"}
                             {...register("name", { required: true })}
                         />
                         {errors.name && <p>Name is required.</p>}
@@ -94,6 +115,18 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                             {...register("diseaseGroupId", { required: true })}
                         />
                         {errors.diseaseGroupId && <p>Disease group id is required.</p>}
+
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            // value={age}
+                            label="Age"
+                            {...register("diseaseGroupId")}
+                        >
+                            <MenuItem value={data.diseaseGroup?.id}>
+                                {data.diseaseGroup?.groupName}
+                            </MenuItem>
+                        </Select>
 
                         <TextField
                             id="outlined-basic"
