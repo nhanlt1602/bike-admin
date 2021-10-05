@@ -1,20 +1,14 @@
 import { useEffect, useState } from "react";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-// import Select from "react-select";
 import axios from "src/axios";
 import { API_ROOT_URL } from "src/configurations";
 
 import { Disease } from "../models/Disease.model";
 import { Group } from "../models/Group.model";
 
-import { Button, Card, Modal, SelectChangeEvent, TextField, Typography } from "@mui/material";
+import { Button, Card, MenuItem, Modal, Select, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-
-// import DiseaseGroups from "src/containers/DiseaseGroupManagement";
-// import { DiseaseGroup } from "src/containers/DiseaseGroupManagement/models/DiseaseGroup.model";
-
-// import { DiseaseGroup } from "src/containers/DiseaseGroupManagement/models/DiseaseGroup.model";
 
 export interface IDiseaseForm {
     open: boolean;
@@ -24,15 +18,6 @@ export interface IDiseaseForm {
 
 const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
     const { data } = props;
-    const Grouptype = [
-        { id: 1, groupName: "hi4" },
-        { id: 2, groupName: "hi1" },
-        { id: 3, groupName: "hi2" },
-    ];
-    const init = {
-        id: 0,
-        groupName: "heloo",
-    };
     const {
         register,
         handleSubmit,
@@ -40,16 +25,7 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
         setValue,
         clearErrors,
     } = useForm<Disease>({});
-    const [dataDiseaseGroup, setDataDiseaseGroup] = useState([]);
-    const [age, setAge] = useState("");
-    const handleChange = (event: SelectChangeEvent) => {
-        setAge(event.target.value as string);
-    };
-    const options = [
-        { value: "chocolate", label: "Chocolate" },
-        { value: "strawberry", label: "Strawberry" },
-        { value: "vanilla", label: "Vanilla" },
-    ];
+
     const [group, setGroup] = useState<Group[]>();
 
     useEffect(() => {
@@ -58,15 +34,15 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
         setValue("name", data.name);
         setValue("description", data.description);
         setValue("diseaseGroupId", data.diseaseGroupId);
-        setValue("diseaseGroup", data.diseaseGroup);
+        // setValue("diseaseGroup", data.diseaseGroup);
     }, [data, setValue]);
 
     const submitHandler: SubmitHandler<Disease> = (data: Disease) => {
         // eslint-disable-next-line no-console
         console.log(data);
-        // if (data) {
-        //     props.handleClose("SAVE", data, clearErrors);
-        // }
+        if (data) {
+            props.handleClose("SAVE", data, clearErrors);
+        }
     };
 
     const getDiseaseGroup = async () => {
@@ -74,14 +50,10 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
             const response = await axios.get(
                 `${API_ROOT_URL}/disease-groups?page-offset=1&limit=10`
             );
-            // console.log(response.data.content);
             if (response.status === 200) {
-                // setDataDiseaseGroup(response.data.content);
-                // setGroup(response.data.content);
-
-                response.data.map((item) => {
-                    console.log(item);
-                });
+                // eslint-disable-next-line no-console
+                console.log(response.data.content);
+                setGroup(response.data.content);
             }
         } catch (error) {
             // eslint-disable-next-line no-console
@@ -144,60 +116,18 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                             helperText={errors.name && "Tên dịch bệnh là bắt buộc"}
                             {...register("name", { required: true })}
                         />
-                        <TextField
-                            id="outlined-basic"
-                            label="Tên nhóm dịch bệnh"
-                            variant="outlined"
-                            error={!!errors.name}
-                            helperText={errors.name && "Tên nhóm dịch bệnh là bắt buộc"}
-                            {...register("diseaseGroupId", { required: true })}
-                        />
-
-                        {/* <Select
+                        <Select
+                            sx={{ maxWidth: 180 }}
+                            label="Nhóm dịch bệnh"
                             labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={age}
-                            label="Age"
                             {...register("diseaseGroupId")}
                         >
-                            <option disabled selected>
-                                -- Select --
-                            </option>
-                            <option>12</option>
-                            {group?.content?.map((item) => {
-                                return <option key={item?.id}>{item?.groupName}</option>;
-                            })}
-                        </Select> */}
-                        {/* <Select options={options} {...register("diseaseGroupId")} /> */}
-                        <select {...register("diseaseGroupId")}>
-                            {group?.map((item) => {
-                                <option value={item?.content?.id} key={item?.content?.id}>
-                                    {item?.content?.groupName}
-                                </option>;
-                            })}
-
-                            <option value="male">ID Group</option>
-                            <option value="other">Disease Group</option>
-                        </select>
-                        {/* <FormControl>
-                            <InputLabel id="demo-simple-select-label">Nhóm dịch bệnh</InputLabel>
-
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                variant="outlined"
-                                value={age}
-                                label="Age"
-                                {...register("diseaseGroupId")}
-                            >
-                                {group?.content?.map((item) => {
-                                    <MenuItem value={item.id}>{item.groupName}</MenuItem>;
-                                })}
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
-                            </Select>
-                        </FormControl> */}
+                            {group?.map((item) => (
+                                <MenuItem value={item?.id} key={item?.id}>
+                                    {item?.groupName}
+                                </MenuItem>
+                            ))}
+                        </Select>
 
                         <TextField
                             id="outlined-basic"
