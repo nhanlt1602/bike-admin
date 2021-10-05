@@ -4,6 +4,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "src/axios";
 import { API_ROOT_URL } from "src/configurations";
 
+import CustomizeAutocomplete from "src/components/CustomizeAutocomplete";
+
 import { Disease } from "../models/Disease.model";
 import { Group } from "../models/Group.model";
 
@@ -47,13 +49,14 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
 
     const getDiseaseGroup = async () => {
         try {
-            const response = await axios.get(
-                `${API_ROOT_URL}/disease-groups?page-offset=1&limit=89`
-            );
+            const response = await axios.get(`/disease-groups?page-offset=1&limit=89`);
 
             if (response.status === 200) {
+                const res = await axios.get(
+                    `${API_ROOT_URL}/disease-groups?page-offset=1&limit=89`
+                );
                 // eslint-disable-next-line no-console
-                console.log(response.data.content);
+                // console.log(response.data.content);
                 setGroup(response.data.content);
             }
         } catch (error) {
@@ -129,6 +132,11 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                                 </MenuItem>
                             ))}
                         </Select>
+                        <CustomizeAutocomplete
+                            query="/disease-groups"
+                            limit={77}
+                            {...register("diseaseGroupId")}
+                        />
 
                         <TextField
                             id="outlined-basic"
