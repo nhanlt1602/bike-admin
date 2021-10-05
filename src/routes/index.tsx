@@ -4,7 +4,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
 import Accounts from "src/containers/AccountManagement";
-import DoctorDetails from "src/containers/DoctorManagement";
+import DoctorDetails from "src/containers/DoctoDetail";
 import Drugs from "src/containers/DrugManagement";
 import DrugTypes from "src/containers/DrugTypeManagement";
 import Hospitals from "src/containers/HospitalManagement";
