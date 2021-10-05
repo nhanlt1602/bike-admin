@@ -59,7 +59,7 @@ const DiseaseGroupForm: React.FC<IDiseaseGroupForm> = (props: IDiseaseGroupForm)
                 >
                     <Box sx={{ display: "flex", justifyContent: "center", m: 3 }}>
                         <Typography variant="h6" component="h2">
-                            Thông tin dịch bệnh
+                            Thông tin nhóm dịch bệnh
                         </Typography>
                     </Box>
                     <Box
@@ -75,10 +75,9 @@ const DiseaseGroupForm: React.FC<IDiseaseGroupForm> = (props: IDiseaseGroupForm)
                             label="Tên nhóm dịch bệnh"
                             variant="outlined"
                             error={!!errors.groupName}
-                            helperText={errors.groupName && "Tên chứng chỉ là bắt buộc"}
+                            helperText={errors.groupName && "Tên nhóm dịch bệnh là bắt buộc"}
                             {...register("groupName", { required: true })}
                         />
-                        {errors.groupName && <p>Group name is required.</p>}
                     </Box>
                     <Box
                         sx={{

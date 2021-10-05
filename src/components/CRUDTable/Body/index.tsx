@@ -15,7 +15,6 @@ export const TableData = <T extends Record<string, any>>(
     const showSnackbar = useSnackbar();
     const [open, setOpen] = useState<boolean>(false);
     const [selectedToDeleteId, setSelectedToDeleteId] = useState<number>(0);
-
     const handleClose = async (
         e: React.MouseEvent<HTMLButtonElement | MouseEvent>,
         action: "CONFIRM" | "CANCEL"
@@ -62,19 +61,31 @@ export const TableData = <T extends Record<string, any>>(
                     <TableRow key={row.id}>
                         {props.columns.map((column: IColumn, index: number) => {
                             if (column.type === "index") {
-                                return <TableCell key={index}>{indexRow + 1}</TableCell>;
+                                return (
+                                    <TableCell width={column.width || undefined} key={index}>
+                                        {indexRow + 1}
+                                    </TableCell>
+                                );
                             }
-                            const { render } = column;
+                            const { render, link, renderLink } = column;
                             return (
-                                <TableCell key={index}>
-                                    {render !== undefined
-                                        ? render(row[column.field])
-                                        : row[column.field]}
+                                <TableCell width={column.width || undefined} key={index}>
+                                    {render !== undefined ? (
+                                        render(row[column.field])
+                                    ) : link ? (
+                                        <a href={`${link}/${row.id}`}>{row[column.field]}</a>
+                                    ) : renderLink !== undefined ? (
+                                        <a href={`${renderLink(row)}/${row.id}`}>
+                                            {row[column.field]}
+                                        </a>
+                                    ) : (
+                                        row[column.field]
+                                    )}
                                 </TableCell>
                             );
                         })}
                         {(props.isHaveActionDelete || props.isHaveActionEdit) && (
-                            <TableCell>
+                            <TableCell width={160}>
                                 {props.isHaveActionEdit && (
                                     <Tooltip title="Chỉnh sửa">
                                         <IconButton

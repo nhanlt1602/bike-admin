@@ -3,9 +3,11 @@ import { Switch } from "react-router";
 import { PrivateRoute } from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
+import Accounts from "src/containers/AccountManagement";
 import Certifications from "src/containers/CertificateManagement";
 import DiseaseGroups from "src/containers/DiseaseGroupManagement";
 import Diseases from "src/containers/DiseaseManagemenent";
+import DoctorDetails from "src/containers/DoctorDetail";
 import Drugs from "src/containers/DrugManagement";
 import DrugTypes from "src/containers/DrugTypeManagement";
 import Hospitals from "src/containers/HospitalManagement";
@@ -28,6 +30,11 @@ export const privateRoutes = [
         path: "/",
         name: "home",
         component: Hospitals,
+    },
+    {
+        path: "/accounts",
+        name: "accounts",
+        component: Accounts,
     },
     {
         path: "/hospitals",
@@ -53,6 +60,11 @@ export const privateRoutes = [
         path: "/patients/:id",
         name: "patientDetail",
         component: PatientDetail,
+    },
+    {
+        path: "/doctors/:id",
+        name: "doctorDetail",
+        component: DoctorDetails,
     },
     {
         path: "/not-found",

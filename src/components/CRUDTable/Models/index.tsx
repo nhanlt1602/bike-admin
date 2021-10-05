@@ -45,6 +45,7 @@ export interface IColumn {
     title: string;
     field: string;
     render?: (data?: any) => React.ReactElement;
+    renderLink?: (data?: any) => string;
     disableSort?: boolean;
     disableFilter?: boolean;
     customSort?: (data?: Record<number, string | number>) => React.ReactElement;
@@ -52,6 +53,8 @@ export interface IColumn {
     type?: "index";
     editable?: "never" | "onAdd" | "onEdit";
     index: number;
+    link?: string;
+    width?: string;
 }
 
 export interface ITableHeader {

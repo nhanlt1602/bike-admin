@@ -6,7 +6,7 @@ import { API_ROOT_URL } from "src/configurations";
 
 import { Disease } from "../models/Disease.model";
 
-import { Button, Card, MenuItem, Modal, Select, TextField, Typography } from "@mui/material";
+import { Button, Card, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 export interface IDiseaseForm {
@@ -98,7 +98,6 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                             helperText={errors.diseaseCode && "Mã dịch bệnh là bắt buộc"}
                             {...register("diseaseCode", { required: true })}
                         />
-                        {errors.diseaseCode && <p>Disease code is required.</p>}
                         <TextField
                             id="outlined-basic"
                             label="Tên dịch bệnh"
@@ -107,16 +106,16 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                             helperText={errors.name && "Tên dịch bệnh là bắt buộc"}
                             {...register("name", { required: true })}
                         />
-                        {errors.name && <p>Name is required.</p>}
                         <TextField
                             id="outlined-basic"
                             label="Tên nhóm dịch bệnh"
                             variant="outlined"
+                            error={!!errors.name}
+                            helperText={errors.name && "Tên nhóm dịch bệnh là bắt buộc"}
                             {...register("diseaseGroupId", { required: true })}
                         />
-                        {errors.diseaseGroupId && <p>Disease group id is required.</p>}
 
-                        <Select
+                        {/* <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             // value={age}
@@ -126,7 +125,7 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                             <MenuItem value={data.diseaseGroup?.id}>
                                 {data.diseaseGroup?.groupName}
                             </MenuItem>
-                        </Select>
+                        </Select> */}
 
                         <TextField
                             id="outlined-basic"
