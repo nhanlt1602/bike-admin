@@ -8,10 +8,11 @@ export const TableHeader: React.FC<ITableHeader> = (props: ITableHeader) => {
 
     return (
         <TableHead>
-            <TableRow>
+            <TableRow style={{ width: "100%" }}>
                 {columns.map((column: IColumn, index: number) => {
                     return (
                         <TableCell
+                            width={column.width || undefined}
                             sortDirection={orderBy.field === column.field ? orderBy.order : "asc"}
                             key={index}
                             align={column.align || "left"}
@@ -39,7 +40,7 @@ export const TableHeader: React.FC<ITableHeader> = (props: ITableHeader) => {
                         </TableCell>
                     );
                 })}
-                {isHaveAction && <TableCell>Thao tác</TableCell>}
+                {isHaveAction && <TableCell width={160}>Thao tác</TableCell>}
             </TableRow>
         </TableHead>
     );

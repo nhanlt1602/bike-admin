@@ -3,6 +3,7 @@ import { Switch } from "react-router";
 import { PrivateRoute } from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
+import Accounts from "src/containers/AccountManagement";
 import Certifications from "src/containers/CertificateManagement";
 import Drugs from "src/containers/DrugManagement";
 import DrugTypes from "src/containers/DrugTypeManagement";
@@ -28,6 +29,11 @@ export const privateRoutes = [
         component: Hospitals,
     },
     {
+        path: "/accounts",
+        name: "account",
+        component: Accounts,
+    },
+    {
         path: "/hospitals",
         name: "hospital",
         component: Hospitals,
@@ -50,6 +56,11 @@ export const privateRoutes = [
     {
         path: "/patients/:id",
         name: "patientDetail",
+        component: PatientDetail,
+    },
+    {
+        path: "/doctors/:id",
+        name: "doctorDetail",
         component: PatientDetail,
     },
     {
