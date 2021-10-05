@@ -5,7 +5,7 @@ import PublicRoute from "./PublicRoute";
 
 import Accounts from "src/containers/AccountManagement";
 import Certifications from "src/containers/CertificateManagement";
-import DoctorDetails from "src/containers/DoctoDetail";
+import DoctorDetails from "src/containers/DoctorDetail";
 import Drugs from "src/containers/DrugManagement";
 import DrugTypes from "src/containers/DrugTypeManagement";
 import Hospitals from "src/containers/HospitalManagement";
