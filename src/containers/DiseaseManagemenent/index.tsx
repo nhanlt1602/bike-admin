@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import axios from "src/axios";
 import { API_ROOT_URL } from "src/configurations";
 
 import DiseaseForm from "./components";
@@ -17,27 +16,17 @@ export type initDiseaseGroup = {
 };
 const Diseases: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
-    const initDiseaseGroup = {
-        id: 0,
-        groupName: "hi",
-    };
+
     const initDisease: Disease = {
         diseaseCode: "",
         name: "",
         description: "",
         diseaseGroupId: 0,
-    };
-    const initDiseaseGroups = {
-        diseaseCode: "",
-        name: "",
-        description: "",
-        diseaseGroupId: 0,
-        diseaseGroup: [{ 1: "Oke" }, { 2: "Good" }],
+        // diseaseGroup: [{ 1: "Oke" }, { 2: "Good" }],
     };
 
-    const [dataDiseaseGroup, setDataDiseaseGroup] = useState(initDiseaseGroups);
-    // const [data, setData] = useState<Disease>(initDisease);
-    const [data, setData] = useState(initDiseaseGroups);
+    // const [dataDiseaseGroup, setDataDiseaseGroup] = useState<DiseaseGroup>(initDiseaseGroup);
+    const [data, setData] = useState<Disease>(initDisease);
     const [reload, setReload] = useState<Function>(() => {});
     const colums: IColumn[] = [
         {
@@ -85,22 +74,22 @@ const Diseases: React.FC = () => {
             },
         },
     ];
-    const getDiseaseGroup = async () => {
-        try {
-            const response = await axios.get(`${API_ROOT_URL}/disease-groups?limit=1&offset=20`);
-            console.log(response.data);
-            if (response.status === 200) {
-                setDataDiseaseGroup(response.data.content);
-            }
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.log(error);
-        }
-    };
+    // const getDiseaseGroup = async () => {
+    //     try {
+    //         const response = await axios.get(`${API_ROOT_URL}/disease-groups?limit=1&offset=20`);
+    //         console.log(response.data);
+    //         if (response.status === 200) {
+    //             setDataDiseaseGroup(response.data.content);
+    //         }
+    //     } catch (error) {
+    //         // eslint-disable-next-line no-console
+    //         console.log(error);
+    //     }
+    // };
 
     const addRowData = async (callback: Function) => {
         setOpen(true);
-        setData(setDataDiseaseGroup);
+        setData(initDisease);
         setReload(() => callback);
     };
 

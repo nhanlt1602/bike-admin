@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+// import Select from "react-select";
 import axios from "src/axios";
 import { API_ROOT_URL } from "src/configurations";
 
 import { Disease } from "../models/Disease.model";
+import { Group } from "../models/Group.model";
 
-import { Button, Card, Modal, TextField, Typography } from "@mui/material";
+import { Button, Card, Modal, SelectChangeEvent, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+
+// import DiseaseGroups from "src/containers/DiseaseGroupManagement";
+// import { DiseaseGroup } from "src/containers/DiseaseGroupManagement/models/DiseaseGroup.model";
+
+// import { DiseaseGroup } from "src/containers/DiseaseGroupManagement/models/DiseaseGroup.model";
 
 export interface IDiseaseForm {
     open: boolean;
@@ -17,6 +24,15 @@ export interface IDiseaseForm {
 
 const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
     const { data } = props;
+    const Grouptype = [
+        { id: 1, groupName: "hi4" },
+        { id: 2, groupName: "hi1" },
+        { id: 3, groupName: "hi2" },
+    ];
+    const init = {
+        id: 0,
+        groupName: "heloo",
+    };
     const {
         register,
         handleSubmit,
@@ -25,6 +41,16 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
         clearErrors,
     } = useForm<Disease>({});
     const [dataDiseaseGroup, setDataDiseaseGroup] = useState([]);
+    const [age, setAge] = useState("");
+    const handleChange = (event: SelectChangeEvent) => {
+        setAge(event.target.value as string);
+    };
+    const options = [
+        { value: "chocolate", label: "Chocolate" },
+        { value: "strawberry", label: "Strawberry" },
+        { value: "vanilla", label: "Vanilla" },
+    ];
+    const [group, setGroup] = useState<Group[]>();
 
     useEffect(() => {
         setValue("id", data.id);
@@ -38,23 +64,35 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
     const submitHandler: SubmitHandler<Disease> = (data: Disease) => {
         // eslint-disable-next-line no-console
         console.log(data);
-        if (data) {
-            props.handleClose("SAVE", data, clearErrors);
-        }
+        // if (data) {
+        //     props.handleClose("SAVE", data, clearErrors);
+        // }
     };
 
     const getDiseaseGroup = async () => {
         try {
-            const response = await axios.get(`${API_ROOT_URL}/disease-groups?limit=1&offset=20`);
-            console.log(response.data);
+            const response = await axios.get(
+                `${API_ROOT_URL}/disease-groups?page-offset=1&limit=10`
+            );
+            // console.log(response.data.content);
             if (response.status === 200) {
-                setDataDiseaseGroup(response.data.content);
+                // setDataDiseaseGroup(response.data.content);
+                // setGroup(response.data.content);
+
+                response.data.map((item) => {
+                    console.log(item);
+                });
             }
         } catch (error) {
             // eslint-disable-next-line no-console
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        getDiseaseGroup();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Modal
@@ -118,14 +156,48 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                         {/* <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            // value={age}
+                            value={age}
                             label="Age"
                             {...register("diseaseGroupId")}
                         >
-                            <MenuItem value={data.diseaseGroup?.id}>
-                                {data.diseaseGroup?.groupName}
-                            </MenuItem>
+                            <option disabled selected>
+                                -- Select --
+                            </option>
+                            <option>12</option>
+                            {group?.content?.map((item) => {
+                                return <option key={item?.id}>{item?.groupName}</option>;
+                            })}
                         </Select> */}
+                        {/* <Select options={options} {...register("diseaseGroupId")} /> */}
+                        <select {...register("diseaseGroupId")}>
+                            {group?.map((item) => {
+                                <option value={item?.content?.id} key={item?.content?.id}>
+                                    {item?.content?.groupName}
+                                </option>;
+                            })}
+
+                            <option value="male">ID Group</option>
+                            <option value="other">Disease Group</option>
+                        </select>
+                        {/* <FormControl>
+                            <InputLabel id="demo-simple-select-label">Nhóm dịch bệnh</InputLabel>
+
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                variant="outlined"
+                                value={age}
+                                label="Age"
+                                {...register("diseaseGroupId")}
+                            >
+                                {group?.content?.map((item) => {
+                                    <MenuItem value={item.id}>{item.groupName}</MenuItem>;
+                                })}
+                                <MenuItem value={10}>Ten</MenuItem>
+                                <MenuItem value={20}>Twenty</MenuItem>
+                                <MenuItem value={30}>Thirty</MenuItem>
+                            </Select>
+                        </FormControl> */}
 
                         <TextField
                             id="outlined-basic"
