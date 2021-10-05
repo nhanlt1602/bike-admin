@@ -9,7 +9,6 @@ import { DrugType } from "../DrugTypeManagement/models/DrugType.models";
 import { Drug } from "./models/Drug.model";
 
 const Drugs: React.FC = () => {
-    // const showSnackbar = useSnackbar();
     const colums: IColumn[] = [
         {
             field: "id",

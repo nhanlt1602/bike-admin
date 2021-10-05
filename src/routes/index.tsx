@@ -5,6 +5,7 @@ import PublicRoute from "./PublicRoute";
 
 import Accounts from "src/containers/AccountManagement";
 import Certifications from "src/containers/CertificateManagement";
+import DoctorDetails from "src/containers/DoctorDetail";
 import Drugs from "src/containers/DrugManagement";
 import DrugTypes from "src/containers/DrugTypeManagement";
 import Hospitals from "src/containers/HospitalManagement";
@@ -30,7 +31,7 @@ export const privateRoutes = [
     },
     {
         path: "/accounts",
-        name: "account",
+        name: "accounts",
         component: Accounts,
     },
     {
@@ -61,7 +62,7 @@ export const privateRoutes = [
     {
         path: "/doctors/:id",
         name: "doctorDetail",
-        component: PatientDetail,
+        component: DoctorDetails,
     },
     {
         path: "/not-found",
