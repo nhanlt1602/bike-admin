@@ -3,7 +3,7 @@ import { DiseaseGroup } from "../models/DiseaseGroup.model";
 
 class DiseaseGroupService {
     getAll(limit: number, offset: number) {
-        return axios.get(`/disease-groups?limit=${limit}&offset=${offset}`);
+        return axios.get(`/disease-groups?page-offset=${offset}&limit=${limit}`);
     }
 
     getId(id: number) {

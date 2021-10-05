@@ -1,7 +1,7 @@
 import React, { MouseEvent, useCallback, useEffect, useState } from "react";
 
 import Moment from "moment";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import axios from "src/axios";
 import { API_ROOT_URL } from "src/configurations";
 
@@ -47,6 +47,7 @@ import TableRow from "@mui/material/TableRow";
 const DoctorDetails: React.FC = () => {
     const [expanded, setExpanded] = React.useState<string | false>("panel1");
     const [loading, setLoading] = useState<boolean>(false);
+    const history = useHistory();
     const [account, setAccount] = useState<Account>();
     const [doctor, setDoctor] = useState<Doctors>();
     const [verifyDoctor, setVerifyDoctor] = useState<boolean>(false);
@@ -72,20 +73,25 @@ const DoctorDetails: React.FC = () => {
     if (!loading && !account?.isMale) {
         gender = "Mrs. ";
     }
-    const getAccountById = useCallback(async (accountId) => {
-        setLoading(true);
-        try {
-            const response = await axios.get("/accounts/" + accountId);
-            if (response.status === 200) {
-                const accountRes: Account = response.data;
-                setAccount(accountRes);
-                const res = await axios.get("/doctors/email/" + accountRes?.email);
-                if (res.status === 200) {
-                    setDoctor(res.data);
+    const getAccountById = useCallback(
+        async (accountId) => {
+            setLoading(true);
+            try {
+                const response = await axios.get("/accounts/" + accountId);
+                if (response.status === 200) {
+                    const accountRes: Account = response.data;
+                    setAccount(accountRes);
+                    const res = await axios.get("/doctors/email/" + accountRes?.email);
+                    if (res.status === 200) {
+                        setDoctor(res.data);
+                    }
                 }
+            } catch (_error) {
+                history.push("/not-found");
             }
-        } catch (_error) {}
-    }, []);
+        },
+        [history]
+    );
 
     const [open, setOpen] = React.useState(false);
 

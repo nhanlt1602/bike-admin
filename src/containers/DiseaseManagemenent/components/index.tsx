@@ -7,6 +7,7 @@ import { API_ROOT_URL } from "src/configurations";
 import { Disease } from "../models/Disease.model";
 import { Group } from "../models/Group.model";
 
+// import DiseaseService from "../services/Disease.service";
 import { Button, Card, MenuItem, Modal, Select, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
@@ -25,7 +26,6 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
         setValue,
         clearErrors,
     } = useForm<Disease>({});
-
     const [group, setGroup] = useState<Group[]>();
 
     useEffect(() => {
@@ -48,8 +48,9 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
     const getDiseaseGroup = async () => {
         try {
             const response = await axios.get(
-                `${API_ROOT_URL}/disease-groups?page-offset=1&limit=10`
+                `${API_ROOT_URL}/disease-groups?page-offset=1&limit=89`
             );
+
             if (response.status === 200) {
                 // eslint-disable-next-line no-console
                 console.log(response.data.content);
