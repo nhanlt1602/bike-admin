@@ -50,9 +50,6 @@ const Diseases: React.FC = () => {
             title: "Mô tả",
             disableFilter: true,
             index: 4,
-            // render: (props: string) => {
-            //     return <div style={{ backgroundColor: "red" }}>{props}</div>;
-            // },
         },
         {
             field: "diseaseGroupId",
