@@ -1,16 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import axios from "src/axios";
-import { API_ROOT_URL } from "src/configurations";
 
 import CustomizeAutocomplete from "src/components/CustomizeAutocomplete";
 
 import { Disease } from "../models/Disease.model";
-import { Group } from "../models/Group.model";
 
-// import DiseaseService from "../services/Disease.service";
-import { Button, Card, MenuItem, Modal, Select, TextField, Typography } from "@mui/material";
+import { Button, Card, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 export interface IDiseaseForm {
@@ -28,7 +24,7 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
         setValue,
         clearErrors,
     } = useForm<Disease>({});
-    const [group, setGroup] = useState<Group[]>();
+    // const [group, setGroup] = useState<Group[]>();
 
     useEffect(() => {
         setValue("id", data.id);
@@ -46,29 +42,6 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
             props.handleClose("SAVE", data, clearErrors);
         }
     };
-
-    const getDiseaseGroup = async () => {
-        try {
-            const response = await axios.get(`/disease-groups?page-offset=1&limit=89`);
-
-            if (response.status === 200) {
-                const res = await axios.get(
-                    `${API_ROOT_URL}/disease-groups?page-offset=1&limit=89`
-                );
-                // eslint-disable-next-line no-console
-                // console.log(response.data.content);
-                setGroup(response.data.content);
-            }
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.log(error);
-        }
-    };
-
-    useEffect(() => {
-        getDiseaseGroup();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Modal
@@ -120,7 +93,7 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                             helperText={errors.name && "Tên dịch bệnh là bắt buộc"}
                             {...register("name", { required: true })}
                         />
-                        <Select
+                        {/* <Select
                             sx={{ maxWidth: 180 }}
                             label="Nhóm dịch bệnh"
                             labelId="demo-simple-select-label"
@@ -131,7 +104,7 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                                     {item?.groupName}
                                 </MenuItem>
                             ))}
-                        </Select>
+                        </Select> */}
                         <CustomizeAutocomplete
                             query="/disease-groups"
                             limit={77}
