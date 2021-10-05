@@ -2,15 +2,10 @@ import { IFilterTable, IColumn } from "../Models";
 
 import { FilterList } from "@mui/icons-material";
 import { TableRow, TableCell, TextField, InputAdornment } from "@mui/material";
-import { grey } from "@mui/material/colors";
-
-const bgColor = {
-    backgroundColor: grey[300],
-};
 
 export const FilterTable: React.FC<IFilterTable> = (props: IFilterTable) => {
     return (
-        <TableRow style={props.inMutaionMode ? bgColor : undefined}>
+        <TableRow>
             {props.columns?.map((column: IColumn, index: number) => {
                 if (column.disableFilter) {
                     return <TableCell key={index}></TableCell>;

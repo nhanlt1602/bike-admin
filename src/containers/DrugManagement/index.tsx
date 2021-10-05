@@ -1,8 +1,11 @@
+import React from "react";
+
 import { API_ROOT_URL } from "src/configurations";
 
 import CRUDTable from "src/components/CRUDTable";
 import { IColumn } from "src/components/CRUDTable/Models";
 
+import { DrugType } from "../DrugTypeManagement/models/DrugType.models";
 import { Drug } from "./models/Drug.model";
 
 const Drugs: React.FC = () => {
@@ -22,11 +25,14 @@ const Drugs: React.FC = () => {
         { field: "drugOrigin", align: "left", title: "Xuất xứ", index: 4 },
         { field: "drugForm", align: "left", title: "Định dạng", index: 5 },
         {
-            field: "drugTypeId",
+            field: "drugType",
             align: "left",
-            title: "Mã loại thuốc",
+            title: "Loại thuốc",
             disableFilter: true,
             index: 6,
+            render: (props: DrugType) => {
+                return <React.Fragment>{props.name}</React.Fragment>;
+            },
         },
     ];
 

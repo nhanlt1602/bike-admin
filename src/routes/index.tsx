@@ -3,6 +3,7 @@ import { Switch } from "react-router";
 import { PrivateRoute } from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
+import Certifications from "src/containers/CertificateManagement";
 import DiseaseGroups from "src/containers/DiseaseGroupManagement";
 import Diseases from "src/containers/DiseaseManagemenent";
 import Drugs from "src/containers/DrugManagement";
@@ -72,6 +73,11 @@ export const privateRoutes = [
         path: "/disease-group",
         name: "diseaseGroup",
         component: DiseaseGroups,
+    },
+    {
+        path: "/certifications",
+        name: "certifications",
+        component: Certifications,
     },
 ];
 

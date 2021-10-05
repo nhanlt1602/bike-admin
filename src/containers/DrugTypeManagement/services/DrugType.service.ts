@@ -3,7 +3,7 @@ import { DrugType } from "../models/DrugType.models";
 
 class DrugTypeService {
     get(limit: number, offset: number) {
-        return axios.get(`/drug-types?limit=${limit}&offset=${offset}`);
+        return axios.get(`/drug-types?limit=${limit}&pageOffset=${offset}`);
     }
 
     getId(id: number) {

@@ -2,21 +2,21 @@ import React, { useState } from "react";
 
 import { API_ROOT_URL } from "src/configurations";
 
-import DrugTypeForm from "./components/DrugTypeForm";
+import CertificationForm from "./components/CertificationForm";
 import CRUDTable from "src/components/CRUDTable";
 import { IColumn } from "src/components/CRUDTable/Models";
 
-import { DrugType } from "./models/DrugType.models";
-import DrugTypeService from "./services/DrugType.service";
+import { Certificate } from "./models/Certificate.models";
+import CertificateService from "./services/Certificate.service";
 
-const DrugTypes: React.FC = () => {
+const Certifications: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
 
-    const initDrugType: DrugType = {
+    const initDrugType: Certificate = {
         name: "",
         description: "",
     };
-    const [data, setData] = useState<DrugType>(initDrugType);
+    const [data, setData] = useState<Certificate>(initDrugType);
     const [reload, setReload] = useState<Function>(() => {});
     const colums: IColumn[] = [
         {
@@ -27,17 +27,18 @@ const DrugTypes: React.FC = () => {
             disableFilter: true,
             editable: "never",
             index: 1,
+            disableSort: true,
         },
         {
             field: "name",
             align: "left",
-            title: "Tên loại thuốc",
+            title: "Tên chứng nhận",
             index: 2,
         },
         {
             field: "description",
             align: "left",
-            title: "Mô tả",
+            title: "Mô tả chứng nhận",
             disableFilter: true,
             index: 3,
         },
@@ -50,16 +51,16 @@ const DrugTypes: React.FC = () => {
         // callback();
     };
 
-    const updateRowData = async (rowData: DrugType, callback: Function) => {
+    const updateRowData = async (rowData: Certificate, callback: Function) => {
         // callback();
         setOpen(true);
         setData(rowData);
         setReload(() => callback);
     };
 
-    const postDrug = async (data: DrugType) => {
+    const postDrug = async (data: Certificate) => {
         try {
-            const response = await DrugTypeService.create(data);
+            const response = await CertificateService.create(data);
             if (response.status === 201) {
                 reload();
             }
@@ -69,9 +70,9 @@ const DrugTypes: React.FC = () => {
         }
     };
 
-    const updateDrug = async (data: DrugType) => {
+    const updateDrug = async (data: Certificate) => {
         try {
-            const response = await DrugTypeService.update(data);
+            const response = await CertificateService.update(data);
             if (response.status === 200) {
                 reload();
             }
@@ -81,7 +82,7 @@ const DrugTypes: React.FC = () => {
         }
     };
 
-    const handleClose = (type: "SAVE" | "CANCEL", data?: DrugType, clearErrors?: Function) => {
+    const handleClose = (type: "SAVE" | "CANCEL", data?: Certificate, clearErrors?: Function) => {
         if (type === "SAVE") {
             if (data) {
                 if (data.id) {
@@ -99,11 +100,11 @@ const DrugTypes: React.FC = () => {
 
     return (
         <React.Fragment>
-            <DrugTypeForm data={data} open={open} handleClose={handleClose} />
+            <CertificationForm data={data} open={open} handleClose={handleClose} />
             <CRUDTable
-                title="Quản lí Loại thuốc"
+                title="Quản lí Chứng nhận Bác sĩ"
                 enableFilter
-                query={`${API_ROOT_URL}/drug-types`}
+                query={`${API_ROOT_URL}/certifications`}
                 columns={colums}
                 action={{
                     onAdd: (callback) => addRowData(callback),
@@ -115,4 +116,4 @@ const DrugTypes: React.FC = () => {
     );
 };
 
-export default DrugTypes;
+export default Certifications;

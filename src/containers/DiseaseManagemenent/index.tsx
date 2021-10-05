@@ -6,6 +6,7 @@ import DiseaseForm from "./components";
 import CRUDTable from "src/components/CRUDTable";
 import { IColumn } from "src/components/CRUDTable/Models";
 
+import { DiseaseGroup } from "../DiseaseGroupManagement/models/DiseaseGroup.model";
 import { Disease } from "./models/Disease.model";
 import DiseaseService from "./services/Disease.service";
 
@@ -59,15 +60,16 @@ const Diseases: React.FC = () => {
             title: "Mã nhóm dịch bệnh",
             index: 5,
         },
-        // {
-        //     field: "diseaseGroup",
-        //     align: "left",
-        //     title: "Nhóm dịch bệnh",
-        //     disableFilter: true,
-        //     render: (props: string) => {
-        //         return <div style={{ backgroundColor: "red" }}>{props}</div>;
-        //     },
-        // },
+        {
+            field: "diseaseGroup",
+            align: "left",
+            title: "Nhóm dịch bệnh",
+            disableFilter: true,
+            index: 6,
+            render: (props: DiseaseGroup) => {
+                return <React.Fragment>{props.groupName}</React.Fragment>;
+            },
+        },
     ];
 
     const addRowData = async (callback: Function) => {

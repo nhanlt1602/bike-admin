@@ -54,6 +54,7 @@ const CRUDTable = <T extends Record<string, string | number>>(
         });
         return obj;
     };
+
     const [filters, setFilters] = useState(generateFilter());
     const [param, setParam] = useState<string>("");
     const [isInMutaionMode, setMutationMode] = useState(false);
@@ -62,11 +63,12 @@ const CRUDTable = <T extends Record<string, string | number>>(
         field: "Id",
         order: "desc",
     });
+
     const loadData = async (offset: number, limit: number) => {
         setLoading(true);
         try {
             const response = await fetch(
-                `${query}?offset=${offset}&limit=${limit}${stringFilter}`,
+                `${query}?page-offset=${offset}&limit=${limit}${stringFilter}`,
                 {
                     method: "GET",
                     headers: {
@@ -176,13 +178,13 @@ const CRUDTable = <T extends Record<string, string | number>>(
     };
 
     const onAddHandler = () => {
-        setMutationMode(true);
-        setMode("ADD");
+        // setMutationMode(true);
+        // setMode("ADD");
         if (props.action?.onAdd) {
             props.action?.onAdd(() => {
                 loadData(1, paging.pageSize);
-                setMode("NORMAL");
-                setMutationMode(false);
+                // setMode("NORMAL");
+                // setMutationMode(false);
             });
         }
     };
