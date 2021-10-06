@@ -13,6 +13,7 @@ import DrugTypes from "src/containers/DrugTypeManagement";
 import Hospitals from "src/containers/HospitalManagement";
 import Layout from "src/containers/Layout";
 import Login from "src/containers/Login";
+import Majors from "src/containers/MajorManagement";
 import NotFound from "src/containers/NotFound";
 import PatientDetail from "src/containers/PatientDetail";
 import Symptoms from "src/containers/SymptomManagement";
@@ -90,6 +91,11 @@ export const privateRoutes = [
         path: "/certifications",
         name: "certifications",
         component: Certifications,
+    },
+    {
+        path: "/majors",
+        name: "majors",
+        component: Majors,
     },
 ];
 
