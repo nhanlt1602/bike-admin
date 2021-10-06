@@ -10,6 +10,7 @@ export interface ICustomizeAuto<T> {
     limit: number;
     field: keyof T;
     searchField: string;
+    label: string;
     errors?: FieldError;
     inputRef: React.Ref<HTMLInputElement>;
     errorMessage: string;
@@ -54,7 +55,7 @@ const CustomizeAutocomplete = <T extends Record<string, string>>(props: ICustomi
         <Autocomplete
             id="select-customize"
             options={data}
-            sx={{ width: 300 }}
+            // sx={{ width: 300 }}
             getOptionLabel={(option) => option[field]}
             loading={loading}
             onChange={(_, newValue) => {
@@ -66,8 +67,7 @@ const CustomizeAutocomplete = <T extends Record<string, string>>(props: ICustomi
                 <TextField
                     {...params}
                     value={data}
-                    label="Nhóm dịch bệnh"
-                    placeholder="Nhóm dịch bệnh"
+                    label={props.label}
                     onChange={onChange}
                     inputRef={inputRef}
                     helperText={errors && errorMessage}

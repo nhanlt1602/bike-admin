@@ -117,6 +117,7 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                         <CustomizeAutocomplete
                             query="/disease-groups"
                             field="groupName"
+                            label="Nhóm dịch bệnh"
                             searchField="group-name"
                             limit={10}
                             errors={errors.diseaseGroupId}
