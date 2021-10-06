@@ -35,13 +35,25 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
         // setValue("diseaseGroup", data.diseaseGroup);
     }, [data, setValue]);
 
+    const changeValue = (value: number) => {
+        setValue("diseaseGroupId", value);
+        clearErrors("diseaseGroupId");
+    };
+
     const submitHandler: SubmitHandler<Disease> = (data: Disease) => {
         // eslint-disable-next-line no-console
         console.log(data);
-        if (data) {
-            props.handleClose("SAVE", data, clearErrors);
-        }
+        // if (data) {
+        //     props.handleClose("SAVE", data, clearErrors);
+        // }
     };
+
+    const { ref: diseaseGroupIdRef, ...diseaseGroupIdRefProps } = register("diseaseGroupId", {
+        min: {
+            value: 1,
+            message: "Mã dịch bệnh không được để trống",
+        },
+    });
 
     return (
         <Modal
@@ -70,12 +82,9 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                         </Typography>
                     </Box>
                     <Box
-                        component="form"
                         sx={{
                             "& > :not(style)": { m: 2, display: "flex", justifyContent: "center" },
                         }}
-                        noValidate
-                        autoComplete="off"
                     >
                         <TextField
                             id="outlined-basic"
@@ -107,8 +116,14 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                         </Select> */}
                         <CustomizeAutocomplete
                             query="/disease-groups"
-                            limit={77}
-                            {...register("diseaseGroupId")}
+                            field="groupName"
+                            searchField="group-name"
+                            limit={10}
+                            errors={errors.diseaseGroupId}
+                            errorMessage={"Nhóm bệnh dịch là bắt buộc"}
+                            inputRef={diseaseGroupIdRef}
+                            {...diseaseGroupIdRefProps}
+                            changeValue={changeValue}
                         />
 
                         <TextField
