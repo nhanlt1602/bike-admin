@@ -15,7 +15,7 @@ class DrugService {
     }
 
     update(data: Drug) {
-        return axios.put(`/drugs/${data.id}`, data);
+        return axios.put("/drugs", data);
     }
 
     delete(id: number) {
