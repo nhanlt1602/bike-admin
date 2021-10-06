@@ -1,11 +1,25 @@
+import React, { useState } from "react";
+
 import { API_ROOT_URL } from "src/configurations";
 
+import HospitalForm from "./components/HospitalForm";
 import CRUDTable from "src/components/CRUDTable";
 import { IColumn } from "src/components/CRUDTable/Models";
 
 import { Hospital } from "./models/Hospital.model";
+import HospitalService from "./services/Hospital.service";
 
 const Hospitals: React.FC = () => {
+    const [open, setOpen] = useState<boolean>(false);
+
+    const initHospital: Hospital = {
+        hospitalCode: "",
+        name: "",
+        address: "",
+        description: "",
+    };
+    const [data, setData] = useState<Hospital>(initHospital);
+    const [reload, setReload] = useState<Function>(() => {});
     const colums: IColumn[] = [
         {
             field: "stt",
@@ -49,29 +63,73 @@ const Hospitals: React.FC = () => {
     ];
 
     const addRowData = async (callback: Function) => {
-        // eslint-disable-next-line no-console
-        console.log("abc");
-        callback();
+        setOpen(true);
+        setData(initHospital);
+        setReload(() => callback);
     };
 
     const updateRowData = async (rowData: Hospital, callback: any) => {
-        // eslint-disable-next-line no-console
-        console.log(rowData);
-        callback();
+        setOpen(true);
+        setData(rowData);
+        setReload(() => callback);
     };
+
+    const postHospital = async (data: Hospital) => {
+        try {
+            const response = await HospitalService.create(data);
+            if (response.status === 201) {
+                reload();
+            }
+        } catch (ex) {
+            // eslint-disable-next-line no-console
+            console.log(ex);
+        }
+    };
+
+    const updateHospital = async (data: Hospital) => {
+        try {
+            const response = await HospitalService.update(data);
+            if (response.status === 200) {
+                reload();
+            }
+        } catch (ex) {
+            // eslint-disable-next-line no-console
+            console.log(ex);
+        }
+    };
+
+    const handleClose = (type: "SAVE" | "CANCEL", data?: Hospital, clearErrors?: Function) => {
+        if (type === "SAVE") {
+            if (data) {
+                if (data.id) {
+                    updateHospital(data);
+                } else {
+                    postHospital(data);
+                }
+            }
+        }
+        if (clearErrors) {
+            clearErrors();
+        }
+        setOpen(false);
+    };
+
     return (
-        <CRUDTable
-            title="Quản lí Bệnh Viện"
-            enableFilter
-            query={`${API_ROOT_URL}/hospitals`}
-            columns={colums}
-            sort
-            action={{
-                onAdd: (callback) => addRowData(callback),
-                onDelete: true,
-                onEdit: (rowData, callback) => updateRowData(rowData, callback),
-            }}
-        />
+        <React.Fragment>
+            <HospitalForm opened={open} data={data} handleClose={handleClose} />
+            <CRUDTable
+                title="Quản lí Bệnh Viện"
+                enableFilter
+                query={`${API_ROOT_URL}/hospitals`}
+                columns={colums}
+                sort
+                action={{
+                    onAdd: (callback) => addRowData(callback),
+                    onDelete: true,
+                    onEdit: (rowData, callback) => updateRowData(rowData, callback),
+                }}
+            />
+        </React.Fragment>
     );
 };
 
