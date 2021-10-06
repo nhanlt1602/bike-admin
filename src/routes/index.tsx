@@ -5,6 +5,8 @@ import PublicRoute from "./PublicRoute";
 
 import Accounts from "src/containers/AccountManagement";
 import Certifications from "src/containers/CertificateManagement";
+import DiseaseGroups from "src/containers/DiseaseGroupManagement";
+import Diseases from "src/containers/DiseaseManagemenent";
 import DoctorDetails from "src/containers/DoctorDetail";
 import Drugs from "src/containers/DrugManagement";
 import DrugTypes from "src/containers/DrugTypeManagement";
@@ -73,6 +75,16 @@ export const privateRoutes = [
         path: "/time-frames",
         name: "timeFrame",
         component: TimeFrames,
+    },
+    {
+        path: "/disease",
+        name: "disease",
+        component: Diseases,
+    },
+    {
+        path: "/disease-group",
+        name: "diseaseGroup",
+        component: DiseaseGroups,
     },
     {
         path: "/certifications",

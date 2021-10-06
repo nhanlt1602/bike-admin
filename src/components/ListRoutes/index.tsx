@@ -33,6 +33,16 @@ export const routes = [
         icon: <InboxIcon />,
     },
     {
+        name: "Disease",
+        path: "/disease",
+        icon: <InboxIcon />,
+    },
+    {
+        name: "Disease Group",
+        path: "/disease-group",
+        icon: <InboxIcon />,
+    },
+    {
         name: "Time Frames",
         path: "/time-frames",
         icon: <InboxIcon />,
