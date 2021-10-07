@@ -16,6 +16,7 @@ import Login from "src/containers/Login";
 import Majors from "src/containers/MajorManagement";
 import NotFound from "src/containers/NotFound";
 import PatientDetail from "src/containers/PatientDetail";
+import Patients from "src/containers/PatientManagement";
 import Symptoms from "src/containers/SymptomManagement";
 import TimeFrames from "src/containers/TimeFrame";
 
@@ -58,7 +59,12 @@ export const privateRoutes = [
         component: DrugTypes,
     },
     {
-        path: "/patients/:id",
+        path: "/patients",
+        name: "patients",
+        component: Patients,
+    },
+    {
+        path: "/patients/:email",
         name: "patientDetail",
         component: PatientDetail,
     },

@@ -13,6 +13,11 @@ export const routes = [
         icon: <InboxIcon />,
     },
     {
+        name: "Patients",
+        path: "/patients",
+        icon: <InboxIcon />,
+    },
+    {
         name: "Hospitals",
         path: "/hospitals",
         icon: <InboxIcon />,

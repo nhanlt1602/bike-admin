@@ -112,14 +112,14 @@ const HospitalForm: React.FC<IHospitalForm> = (props: IHospitalForm) => {
                             "& > :not(style)": { m: 1 },
                         }}
                     >
-                        <Button variant="contained" onClick={handleSubmit(submitHandler)} autoFocus>
-                            Lưu
-                        </Button>
                         <Button
                             variant="outlined"
                             onClick={() => props.handleClose("CANCEL", undefined, clearErrors)}
                         >
                             Hủy
+                        </Button>
+                        <Button variant="contained" onClick={handleSubmit(submitHandler)} autoFocus>
+                            Lưu
                         </Button>
                     </Box>
                 </Box>

@@ -1,8 +1,10 @@
+import { HealthCheck } from "./HealthCheck.model";
+
 export type Patient = {
     id?: number;
-    email?: string;
+    email: string;
     backgroundDisease: string;
     allergy: string;
     bloodGroup: string;
-    healthChecks?: any[];
+    healthChecks?: HealthCheck[];
 };
