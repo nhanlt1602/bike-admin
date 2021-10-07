@@ -24,8 +24,8 @@ const PatientDetail: React.FC = () => {
     const [account, setAccount] = useState<Account>();
     const [patient, setPatient] = useState<Patient>();
 
-    const params = useParams<{ id: string }>();
-    const accountId = params.id;
+    const params = useParams<{ email: string }>();
+    const email = params.email;
 
     const toggleBtnActive = () => {
         setIsOpenConfirmModal(true);
@@ -37,7 +37,7 @@ const PatientDetail: React.FC = () => {
     ) => {
         if (action === "CONFIRM") {
             try {
-                const response = await axios.put("/accounts/change-status/" + accountId);
+                const response = await axios.patch("/accounts/" + account?.id);
                 if (response.status === 200) {
                     setIsActive(!isActive);
                     showSnackbar({
@@ -57,10 +57,10 @@ const PatientDetail: React.FC = () => {
         setIsOpenConfirmModal(false);
     };
 
-    const getAccountById = useCallback(
-        async (accountId) => {
+    const getAccountByEmail = useCallback(
+        async (email) => {
             try {
-                const response = await axios.get("/accounts/" + accountId);
+                const response = await axios.get(`/accounts/${email}?search-type=Email`);
                 if (response.status === 200) {
                     const data: Account = response.data;
                     const convertedDob = Util.convertDate(data.dob);
@@ -68,7 +68,7 @@ const PatientDetail: React.FC = () => {
                     setIsActive(accountRes.active);
                     setAccount(accountRes);
 
-                    const res = await axios.get("/patients/email/" + accountRes.email);
+                    const res = await axios.get(`/patients/${email}?search-type=Email`);
                     if (res.status === 200) {
                         setPatient(res.data);
                     }
@@ -81,8 +81,8 @@ const PatientDetail: React.FC = () => {
     );
 
     useEffect(() => {
-        getAccountById(accountId);
-    }, [accountId, getAccountById]);
+        getAccountByEmail(email);
+    }, [email, getAccountByEmail]);
 
     return (
         <React.Fragment>

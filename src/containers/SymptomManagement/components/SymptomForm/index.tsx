@@ -2,18 +2,18 @@ import React from "react";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { Hospital } from "../../models/Hospital.model";
+import { Symptom } from "../../models/Symptom.model";
 
 import { Button, Card, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-export interface IHospitalForm {
-    data: Hospital;
+export interface ISymptomForm {
+    data: Symptom;
     opened: boolean;
-    handleClose: (type: "SAVE" | "CANCEL", data?: Hospital, callback?: Function) => void;
+    handleClose: (type: "SAVE" | "CANCEL", data?: Symptom, callback?: Function) => void;
 }
 
-const HospitalForm: React.FC<IHospitalForm> = (props: IHospitalForm) => {
+const SymptomForm: React.FC<ISymptomForm> = (props: ISymptomForm) => {
     const { data } = props;
     const {
         register,
@@ -21,17 +21,16 @@ const HospitalForm: React.FC<IHospitalForm> = (props: IHospitalForm) => {
         formState: { errors },
         setValue,
         clearErrors,
-    } = useForm<Hospital>({});
+    } = useForm<Symptom>({});
 
     React.useEffect(() => {
         setValue("id", data.id);
-        setValue("hospitalCode", data.hospitalCode);
+        setValue("symptomCode", data.symptomCode);
         setValue("name", data.name);
-        setValue("address", data.address);
         setValue("description", data.description);
     }, [data, setValue]);
 
-    const submitHandler: SubmitHandler<Hospital> = (data: Hospital) => {
+    const submitHandler: SubmitHandler<Symptom> = (data: Symptom) => {
         // eslint-disable-next-line no-console
         console.log(data);
         if (data) {
@@ -57,7 +56,7 @@ const HospitalForm: React.FC<IHospitalForm> = (props: IHospitalForm) => {
             >
                 <Box sx={{ display: "flex", justifyContent: "center", m: 3 }}>
                     <Typography variant="h6" component="h2">
-                        Thông tin Bệnh viện
+                        Thông tin Triệu chứng
                     </Typography>
                 </Box>
                 <Box
@@ -71,29 +70,22 @@ const HospitalForm: React.FC<IHospitalForm> = (props: IHospitalForm) => {
                     }}
                 >
                     <TextField
-                        id="hospital-code"
-                        label="Mã bệnh viện *"
+                        id="symptom-code"
+                        label="Mã triệu chứng *"
                         variant="outlined"
-                        defaultValue={props.data.hospitalCode}
-                        error={!!errors.hospitalCode}
-                        helperText={errors.hospitalCode && "Mã bệnh viện là bắt buộc"}
-                        {...register("hospitalCode", { required: true })}
+                        defaultValue={props.data.symptomCode}
+                        error={!!errors.symptomCode}
+                        helperText={errors.symptomCode && "Mã triệu chứng là bắt buộc"}
+                        {...register("symptomCode", { required: true })}
                     />
                     <TextField
-                        id="hospital-name"
-                        label="Tên bệnh viện *"
+                        id="symptom-name"
+                        label="Tên triệu chứng *"
                         variant="outlined"
                         defaultValue={props.data.name}
                         error={!!errors.name}
-                        helperText={errors.name && "Tên bệnh viện là bắt buộc"}
+                        helperText={errors.name && "Tên triệu chứng là bắt buộc"}
                         {...register("name", { required: true })}
-                    />
-                    <TextField
-                        id="hospital-address"
-                        label="Địa chỉ"
-                        variant="outlined"
-                        defaultValue={props.data.address}
-                        {...register("address")}
                     />
                     <TextField
                         id="description"
@@ -128,4 +120,4 @@ const HospitalForm: React.FC<IHospitalForm> = (props: IHospitalForm) => {
     );
 };
 
-export default HospitalForm;
+export default SymptomForm;

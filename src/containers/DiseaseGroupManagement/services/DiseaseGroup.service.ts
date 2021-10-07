@@ -15,7 +15,7 @@ class DiseaseGroupService {
     }
 
     update(data: DiseaseGroup) {
-        return axios.put(`/disease-groups/${data.id}`, data);
+        return axios.put("/disease-groups", data);
     }
 
     delete(id: number) {

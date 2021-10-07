@@ -30,7 +30,9 @@ const Accounts: React.FC = () => {
             title: "Email",
             index: 2,
             renderLink: (props: Account) => {
-                return props?.role?.id === 1 ? "/doctors" : "/patients";
+                return props?.role?.id === 1
+                    ? `/doctors/${props.email}`
+                    : `/patients/${props.email}`;
             },
             width: "250",
         },

@@ -3,7 +3,7 @@ import { Certificate } from "../models/Certificate.models";
 
 class CertificateService {
     get(limit: number, offset: number) {
-        return axios.get(`/certifications?limit=${limit}&offset=${offset}`);
+        return axios.get(`/certifications?limit=${limit}&page-offset=${offset}`);
     }
 
     getId(id: number) {
@@ -15,7 +15,7 @@ class CertificateService {
     }
 
     update(data: Certificate) {
-        return axios.put(`/certifications/${data.id}`, data);
+        return axios.put("/certifications", data);
     }
 
     delete(id: number) {

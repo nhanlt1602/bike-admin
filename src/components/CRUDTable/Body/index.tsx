@@ -75,9 +75,7 @@ export const TableData = <T extends Record<string, any>>(
                                     ) : link ? (
                                         <a href={`${link}/${row.id}`}>{row[column.field]}</a>
                                     ) : renderLink !== undefined ? (
-                                        <a href={`${renderLink(row)}/${row.id}`}>
-                                            {row[column.field]}
-                                        </a>
+                                        <a href={`${renderLink(row)}`}>{row[column.field]}</a>
                                     ) : (
                                         row[column.field]
                                     )}

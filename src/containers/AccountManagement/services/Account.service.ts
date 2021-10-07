@@ -3,7 +3,7 @@ import { Account } from "../models/Account.model";
 
 class AccountService {
     get(limit: number, offset: number) {
-        return axios.get(`/accounts?limit=${limit}&offset=${offset}`);
+        return axios.get(`/accounts?limit=${limit}&page-offset=${offset}`);
     }
 
     getId(id: number) {
@@ -15,7 +15,7 @@ class AccountService {
     }
 
     update(data: Account) {
-        return axios.put(`/accounts/${data.id}`, data);
+        return axios.put("/accounts", data);
     }
 
     delete(id: number) {

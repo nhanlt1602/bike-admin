@@ -3,7 +3,7 @@ import { Major } from "../models/Major.model";
 
 class MajorService {
     getAll(limit: number, pageOffset: number) {
-        return axios.get(`/majors?limit=${limit}&pageOffset=${pageOffset}`);
+        return axios.get(`/majors?limit=${limit}&page-offset=${pageOffset}`);
     }
 
     getId(id: number) {

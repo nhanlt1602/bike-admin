@@ -3,7 +3,7 @@ import { Disease } from "../models/Disease.model";
 
 class DiseaseService {
     getAll(limit: number, offset: number) {
-        return axios.get(`/diseases?limit=${limit}&pageOffset=${offset}`);
+        return axios.get(`/diseases?limit=${limit}&page-offset=${offset}`);
     }
 
     getId(id: number) {
@@ -15,7 +15,7 @@ class DiseaseService {
     }
 
     update(data: Disease) {
-        return axios.put(`/diseases/${data.id}`, data);
+        return axios.put("/diseases", data);
     }
 
     delete(id: number) {

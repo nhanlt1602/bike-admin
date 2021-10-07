@@ -3,7 +3,7 @@ import { TimeFrame } from "../models/TimeFrame.models";
 
 class TimeFrameService {
     getAll(pageOffset: number, limit: number) {
-        return axios.get(`/time-frames?limit=${limit}&pageOffset=${pageOffset}`);
+        return axios.get(`/time-frames?limit=${limit}&page-offset=${pageOffset}`);
     }
     getId(id: number) {
         return axios.get(`/time-frames/${id}`);
@@ -12,7 +12,7 @@ class TimeFrameService {
         return axios.post(`/time-frames`, data);
     }
     update(data: TimeFrame) {
-        return axios.put(`/time-frames/${data.id}`, data);
+        return axios.put("/time-frames", data);
     }
     delete(id: number) {
         return axios.delete(`/time-frames/${id}`);

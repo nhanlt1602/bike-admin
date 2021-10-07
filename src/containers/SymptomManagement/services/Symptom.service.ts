@@ -3,7 +3,7 @@ import { Symptom } from "../models/Symptom.model";
 
 class SymptomService {
     getAll(limit: number, offset: number) {
-        return axios.get(`/symptoms?limit=${limit}&offset=${offset}`);
+        return axios.get(`/symptoms?limit=${limit}&page-offset=${offset}`);
     }
 
     getId(id: number) {
@@ -15,7 +15,7 @@ class SymptomService {
     }
 
     update(data: Symptom) {
-        return axios.put(`/symptoms/${data.id}`, data);
+        return axios.put("/symptoms", data);
     }
 
     delete(id: number) {
