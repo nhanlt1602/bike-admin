@@ -7,7 +7,7 @@ import { diseaseManage } from "../../data";
 
 import { Grid } from "@mui/material";
 
-const DiseaseManage = () => {
+const DiseaseManage: React.FC = () => {
     return (
         <Container maxWidth="xl">
             <Box sx={{ pb: 5 }}>

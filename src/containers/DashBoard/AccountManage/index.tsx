@@ -7,7 +7,7 @@ import { accountManageItems } from "../data";
 
 import { Grid } from "@mui/material";
 
-const AccountManage = () => {
+const AccountManage: React.FC = () => {
     return (
         <Container maxWidth="xl">
             <Box sx={{ pb: 5 }}>

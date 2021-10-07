@@ -7,7 +7,7 @@ import { doctorManageItems } from "../data";
 
 import { Grid } from "@mui/material";
 
-const DoctorManage = () => {
+const DoctorManage: React.FC = () => {
     return (
         <Container maxWidth="xl">
             <Box sx={{ pb: 5 }}>

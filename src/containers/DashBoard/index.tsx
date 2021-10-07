@@ -7,7 +7,7 @@ import { mainDashBoard } from "./data";
 
 import { Grid } from "@mui/material";
 
-const DashBoard = () => {
+const DashBoard: React.FC = () => {
     return (
         <Container maxWidth="xl">
             <Box sx={{ pb: 5 }}>
