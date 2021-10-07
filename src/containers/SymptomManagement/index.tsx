@@ -1,19 +1,33 @@
+import React, { useState } from "react";
+
 import { API_ROOT_URL } from "src/configurations";
 
+import SymptomForm from "./components/SymptomForm";
 import CRUDTable from "src/components/CRUDTable";
 import { IColumn } from "src/components/CRUDTable/Models";
 
 import { Symptom } from "./models/Symptom.model";
+import SymptomService from "./services/Symptom.service";
 
 const Symptoms: React.FC = () => {
+    const [open, setOpen] = useState<boolean>(false);
+
+    const initSymptom: Symptom = {
+        symptomCode: "",
+        name: "",
+        description: "",
+    };
+    const [data, setData] = useState<Symptom>(initSymptom);
+    const [reload, setReload] = useState<Function>(() => {});
     const colums: IColumn[] = [
         {
             field: "id",
             align: "left",
-            title: "ID",
+            title: "STT",
             type: "index",
             disableFilter: true,
             editable: "never",
+            disableSort: true,
             index: 1,
         },
         {
@@ -41,29 +55,72 @@ const Symptoms: React.FC = () => {
     ];
 
     const addRowData = async (callback: Function) => {
-        // eslint-disable-next-line no-console
-        console.log("abc");
-        callback();
+        setOpen(true);
+        setData(initSymptom);
+        setReload(() => callback);
     };
 
-    const updateRowData = async (rowData: Symptom, callback: any) => {
-        // eslint-disable-next-line no-console
-        console.log(rowData);
-        callback();
+    const updateRowData = async (rowData: Symptom, callback: Function) => {
+        setOpen(true);
+        setData(rowData);
+        setReload(() => callback);
+    };
+
+    const postSymptom = async (data: Symptom) => {
+        try {
+            const response = await SymptomService.create(data);
+            if (response.status === 201) {
+                reload();
+            }
+        } catch (ex) {
+            // eslint-disable-next-line no-console
+            console.log(ex);
+        }
+    };
+
+    const updateSymptom = async (data: Symptom) => {
+        try {
+            const response = await SymptomService.update(data);
+            if (response.status === 200) {
+                reload();
+            }
+        } catch (ex) {
+            // eslint-disable-next-line no-console
+            console.log(ex);
+        }
+    };
+
+    const handleClose = (type: "SAVE" | "CANCEL", data?: Symptom, clearErrors?: Function) => {
+        if (type === "SAVE") {
+            if (data) {
+                if (data.id) {
+                    updateSymptom(data);
+                } else {
+                    postSymptom(data);
+                }
+            }
+        }
+        if (clearErrors) {
+            clearErrors();
+        }
+        setOpen(false);
     };
 
     return (
-        <CRUDTable
-            title="Quản lí Triệu Chứng"
-            enableFilter
-            query={`${API_ROOT_URL}/symptoms`}
-            columns={colums}
-            action={{
-                onAdd: (callback) => addRowData(callback),
-                onDelete: true,
-                onEdit: (rowData, callback) => updateRowData(rowData, callback),
-            }}
-        />
+        <React.Fragment>
+            <SymptomForm opened={open} data={data} handleClose={handleClose} />
+            <CRUDTable
+                title="Quản lí Triệu Chứng"
+                enableFilter
+                query={`${API_ROOT_URL}/symptoms`}
+                columns={colums}
+                action={{
+                    onAdd: (callback) => addRowData(callback),
+                    onDelete: true,
+                    onEdit: (rowData, callback) => updateRowData(rowData, callback),
+                }}
+            />
+        </React.Fragment>
     );
 };
 
