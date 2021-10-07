@@ -36,7 +36,7 @@ export const privateRoutes = [
     {
         path: "/",
         name: "home",
-        component: Hospitals,
+        component: DashBoard,
     },
     {
         path: "/dash-boards",

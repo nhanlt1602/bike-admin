@@ -16,13 +16,13 @@ import TimelapseIcon from "@mui/icons-material/Timelapse";
 export const routes = [
     {
         id: 1,
-        name: "Dash Board",
+        name: "Bảng điều khiển",
         path: "/dash-boards",
         icon: <DashboardIcon />,
     },
     {
         id: 2,
-        name: "Accounts",
+        name: "Tài khoản",
         icon: <AccountCircleIcon />,
         children: [
             {
@@ -47,7 +47,7 @@ export const routes = [
     },
     {
         id: 6,
-        name: "Doctor Settings",
+        name: "Cấu hình bác sĩ",
         icon: <LocalHospitalIcon />,
         children: [
             {
@@ -72,13 +72,13 @@ export const routes = [
     },
     {
         id: 10,
-        name: "History",
+        name: "Lịch sử tư vấn",
         path: "/settings",
         icon: <HistoryIcon />,
     },
     {
         id: 11,
-        name: "General Setting",
+        name: "Cấu hình chung",
         icon: <Settings />,
         children: [
             {

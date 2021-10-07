@@ -11,7 +11,7 @@ const DashBoard: React.FC = () => {
     return (
         <Container maxWidth="xl">
             <Box sx={{ pb: 5 }}>
-                <Typography variant="h4">Hi, Welcome back</Typography>
+                <Typography variant="h5">Xin chào, mừng bạn đã trở lại!</Typography>
             </Box>
             <Grid container spacing={3}>
                 {mainDashBoard?.map((item, index) => (
