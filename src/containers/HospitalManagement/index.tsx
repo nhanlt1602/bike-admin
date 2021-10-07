@@ -68,7 +68,7 @@ const Hospitals: React.FC = () => {
         setReload(() => callback);
     };
 
-    const updateRowData = async (rowData: Hospital, callback: any) => {
+    const updateRowData = async (rowData: Hospital, callback: Function) => {
         setOpen(true);
         setData(rowData);
         setReload(() => callback);

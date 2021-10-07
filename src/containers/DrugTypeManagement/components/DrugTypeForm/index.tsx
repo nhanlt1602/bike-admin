@@ -68,7 +68,7 @@ const DrugTypeForm: React.FC<IDrugTypeForm> = (props: IDrugTypeForm) => {
                         }}
                     >
                         <TextField
-                            id="outlined-basic"
+                            id="drug-type-name"
                             label="Tên loại thuốc *"
                             variant="outlined"
                             error={!!errors.name}
@@ -76,7 +76,7 @@ const DrugTypeForm: React.FC<IDrugTypeForm> = (props: IDrugTypeForm) => {
                             {...register("name", { required: true })}
                         />
                         <TextField
-                            id="outlined-basic"
+                            id="description"
                             label="Mô tả"
                             variant="outlined"
                             defaultValue={props.data.description}
@@ -93,14 +93,14 @@ const DrugTypeForm: React.FC<IDrugTypeForm> = (props: IDrugTypeForm) => {
                                 "& > :not(style)": { m: 1 },
                             }}
                         >
-                            <Button variant="contained" type="submit" autoFocus>
-                                Lưu
-                            </Button>
                             <Button
                                 variant="outlined"
                                 onClick={() => props.handleClose("CANCEL", undefined, clearErrors)}
                             >
                                 Hủy
+                            </Button>
+                            <Button variant="contained" type="submit" autoFocus>
+                                Lưu
                             </Button>
                         </Box>
                     </Box>

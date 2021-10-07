@@ -70,7 +70,7 @@ const MajorForm: React.FC<IMajorForm> = (props: IMajorForm) => {
                 >
                     <TextField
                         id="major-name"
-                        label="Tên chuyên ngành"
+                        label="Tên chuyên ngành *"
                         variant="outlined"
                         error={!!errors.name}
                         helperText={errors.name && "Tên chuyên ngành là bắt buộc"}

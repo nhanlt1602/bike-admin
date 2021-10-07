@@ -67,7 +67,7 @@ const CertificationForm: React.FC<ICertificationForm> = (props: ICertificationFo
                         }}
                     >
                         <TextField
-                            id="outlined-basic"
+                            id="certi-name"
                             label="Tên chứng chỉ *"
                             variant="outlined"
                             error={!!errors.name}
@@ -75,7 +75,7 @@ const CertificationForm: React.FC<ICertificationForm> = (props: ICertificationFo
                             {...register("name", { required: true })}
                         />
                         <TextField
-                            id="outlined-basic"
+                            id="description"
                             label="Mô tả"
                             variant="outlined"
                             defaultValue={props.data.description}
@@ -92,14 +92,14 @@ const CertificationForm: React.FC<ICertificationForm> = (props: ICertificationFo
                                 "& > :not(style)": { m: 1 },
                             }}
                         >
-                            <Button variant="contained" type="submit" autoFocus>
-                                Lưu
-                            </Button>
                             <Button
                                 variant="outlined"
                                 onClick={() => props.handleClose("CANCEL", undefined, clearErrors)}
                             >
                                 Hủy
+                            </Button>
+                            <Button variant="contained" type="submit" autoFocus>
+                                Lưu
                             </Button>
                         </Box>
                     </Box>

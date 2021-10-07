@@ -42,43 +42,41 @@ const DiseaseGroupForm: React.FC<IDiseaseGroupForm> = (props: IDiseaseGroupForm)
             aria-labelledby="drugtype-dialog"
             aria-describedby="alert-drugtype-description"
         >
-            <form onSubmit={handleSubmit(submitHandler)}>
-                <Card
+            <Card
+                sx={{
+                    position: "absolute" as "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "50%",
+                    minWidth: 275,
+                    mx: "auto",
+                    p: 1,
+                    m: 2,
+                    borderRadius: 1,
+                }}
+            >
+                <Box sx={{ display: "flex", justifyContent: "center", m: 3 }}>
+                    <Typography variant="h6" component="h2">
+                        Thông tin nhóm dịch bệnh
+                    </Typography>
+                </Box>
+                <Box
+                    component="form"
+                    onSubmit={handleSubmit(submitHandler)}
                     sx={{
-                        position: "absolute" as "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        width: "50%",
-                        minWidth: 275,
-                        mx: "auto",
-                        p: 1,
-                        m: 2,
-                        borderRadius: 1,
+                        "& > :not(style)": { m: 2, display: "flex", justifyContent: "center" },
                     }}
                 >
-                    <Box sx={{ display: "flex", justifyContent: "center", m: 3 }}>
-                        <Typography variant="h6" component="h2">
-                            Thông tin nhóm dịch bệnh
-                        </Typography>
-                    </Box>
-                    <Box
-                        component="form"
-                        sx={{
-                            "& > :not(style)": { m: 2, display: "flex", justifyContent: "center" },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                    >
-                        <TextField
-                            id="outlined-basic"
-                            label="Tên nhóm dịch bệnh"
-                            variant="outlined"
-                            error={!!errors.groupName}
-                            helperText={errors.groupName && "Tên nhóm dịch bệnh là bắt buộc"}
-                            {...register("groupName", { required: true })}
-                        />
-                    </Box>
+                    <TextField
+                        id="outlined-basic"
+                        label="Tên nhóm dịch bệnh *"
+                        variant="outlined"
+                        error={!!errors.groupName}
+                        helperText={errors.groupName && "Tên nhóm dịch bệnh là bắt buộc"}
+                        {...register("groupName", { required: true })}
+                    />
+
                     <Box
                         sx={{
                             mx: "auto",
@@ -87,18 +85,18 @@ const DiseaseGroupForm: React.FC<IDiseaseGroupForm> = (props: IDiseaseGroupForm)
                             "& > :not(style)": { m: 1 },
                         }}
                     >
-                        <Button variant="contained" type="submit" autoFocus>
-                            Lưu
-                        </Button>
                         <Button
                             variant="outlined"
                             onClick={() => props.handleClose("CANCEL", undefined, clearErrors)}
                         >
                             Hủy
                         </Button>
+                        <Button variant="contained" type="submit" autoFocus>
+                            Lưu
+                        </Button>
                     </Box>
-                </Card>
-            </form>
+                </Box>
+            </Card>
         </Modal>
     );
 };

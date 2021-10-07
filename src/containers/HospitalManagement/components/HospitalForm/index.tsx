@@ -71,8 +71,8 @@ const HospitalForm: React.FC<IHospitalForm> = (props: IHospitalForm) => {
                     }}
                 >
                     <TextField
-                        id="outlined-basic"
-                        label="Mã bệnh viện"
+                        id="hospital-code"
+                        label="Mã bệnh viện *"
                         variant="outlined"
                         defaultValue={props.data.hospitalCode}
                         error={!!errors.hospitalCode}
@@ -80,8 +80,8 @@ const HospitalForm: React.FC<IHospitalForm> = (props: IHospitalForm) => {
                         {...register("hospitalCode", { required: true })}
                     />
                     <TextField
-                        id="outlined-basic"
-                        label="Tên bệnh viện"
+                        id="hospital-name"
+                        label="Tên bệnh viện *"
                         variant="outlined"
                         defaultValue={props.data.name}
                         error={!!errors.name}
@@ -89,14 +89,14 @@ const HospitalForm: React.FC<IHospitalForm> = (props: IHospitalForm) => {
                         {...register("name", { required: true })}
                     />
                     <TextField
-                        id="outlined-basic"
+                        id="hospital-address"
                         label="Địa chỉ"
                         variant="outlined"
                         defaultValue={props.data.address}
                         {...register("address")}
                     />
                     <TextField
-                        id="outlined-basic"
+                        id="description"
                         label="Mô tả"
                         variant="outlined"
                         defaultValue={props.data.description}

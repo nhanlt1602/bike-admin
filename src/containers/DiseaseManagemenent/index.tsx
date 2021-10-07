@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { API_ROOT_URL } from "src/configurations";
 
-import DiseaseForm from "./components";
+import DiseaseForm from "./components/DiseaseForm";
 import CRUDTable from "src/components/CRUDTable";
 import { IColumn } from "src/components/CRUDTable/Models";
 
