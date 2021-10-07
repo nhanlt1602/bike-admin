@@ -7,7 +7,7 @@ import { generalSettingManage } from "../data";
 
 import { Grid } from "@mui/material";
 
-const GeneralSettingManage = () => {
+const GeneralSettingManage: React.FC = () => {
     return (
         <Container maxWidth="xl">
             <Box sx={{ pb: 5 }}>
