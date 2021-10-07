@@ -5,6 +5,12 @@ import PublicRoute from "./PublicRoute";
 
 import Accounts from "src/containers/AccountManagement";
 import Certifications from "src/containers/CertificateManagement";
+import DashBoard from "src/containers/DashBoard";
+import AccountManage from "src/containers/DashBoard/AccountManage";
+import DoctorManage from "src/containers/DashBoard/DoctorManage";
+import GeneralSettingManage from "src/containers/DashBoard/GeneralSetting";
+import DiseaseManage from "src/containers/DashBoard/GeneralSetting/DiseaseManage";
+import DrugManage from "src/containers/DashBoard/GeneralSetting/DrugManage";
 import DiseaseGroups from "src/containers/DiseaseGroupManagement";
 import Diseases from "src/containers/DiseaseManagemenent";
 import DoctorDetails from "src/containers/DoctorDetail";
@@ -31,6 +37,36 @@ export const privateRoutes = [
         path: "/",
         name: "home",
         component: Hospitals,
+    },
+    {
+        path: "/dash-boards",
+        name: "dash board",
+        component: DashBoard,
+    },
+    {
+        path: "/dash-board/account-manage",
+        name: "account management",
+        component: AccountManage,
+    },
+    {
+        path: "/dash-board/doctor-manage",
+        name: "doctor management",
+        component: DoctorManage,
+    },
+    {
+        path: "/dash-board/general-setting",
+        name: "general settings",
+        component: GeneralSettingManage,
+    },
+    {
+        path: "/dash-board/general-setting/drug-manage",
+        name: "drug management",
+        component: DrugManage,
+    },
+    {
+        path: "/dash-board/general-setting/disease-manage",
+        name: "disease management",
+        component: DiseaseManage,
     },
     {
         path: "/accounts",
