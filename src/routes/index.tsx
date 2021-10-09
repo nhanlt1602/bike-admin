@@ -153,7 +153,7 @@ export const privateRoutes = [
         component: HealthChecks,
     },
     {
-        path: "/healthChecks-detail/:id",
+        path: "/health-checks/:id",
         name: "healthCheckDetail",
         component: HealthCheckDetail,
     },

@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { HealthCheckDiseases } from "../models/HealthCheckDetail.model";
 
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
     Accordion,
     AccordionDetails,
@@ -22,7 +21,9 @@ export interface IHealthCheckDisease {
     healthCheckDisease: HealthCheckDiseases[];
 }
 
-const HealthCheckDisease: React.FC<IHealthCheckDisease> = (props: IHealthCheckDisease) => {
+const HealthCheckDisease: React.FC<IHealthCheckDisease> = (
+    props: IHealthCheckDisease & { children?: React.ReactNode }
+) => {
     const [expanded, setExpanded] = useState<string | false>("panel1");
     const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
@@ -31,11 +32,11 @@ const HealthCheckDisease: React.FC<IHealthCheckDisease> = (props: IHealthCheckDi
         <form autoComplete="off" noValidate>
             <Accordion expanded={expanded === "panel1"} onChange={handleChange("panel1")}>
                 <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
+                    // expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1bh-content"
                     id="panel1bh-header"
                 >
-                    <Typography>Thông tin dịch bệnh</Typography>
+                    <Typography fontWeight="bold">Thông tin dịch bệnh</Typography>
                 </AccordionSummary>
                 <Divider />
                 <AccordionDetails>
@@ -43,21 +44,23 @@ const HealthCheckDisease: React.FC<IHealthCheckDisease> = (props: IHealthCheckDi
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="left">Tên dịch bệnh</TableCell>
-                                    <TableCell align="left">Nhóm dịch bệnh</TableCell>
-                                    <TableCell align="left">Mô tả</TableCell>
+                                    <TableCell align="left" width="100">
+                                        Tên dịch bệnh
+                                    </TableCell>
+                                    <TableCell align="left" width="100">
+                                        Nhóm dịch bệnh
+                                    </TableCell>
+                                    <TableCell align="left" width="100">
+                                        Mô tả
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {props?.healthCheckDisease?.map((item) => (
                                     <TableRow key={item.id}>
-                                        <TableCell align="left">{item.disease?.name}</TableCell>
-                                        <TableCell align="left">
-                                            {item.disease?.diseaseGroup?.groupName}
-                                        </TableCell>
-                                        <TableCell align="left">
-                                            {item.disease?.description}
-                                        </TableCell>
+                                        <TableCell align="left">{item?.diseaseId}</TableCell>
+                                        <TableCell align="left">{item?.diseaseId}</TableCell>
+                                        <TableCell align="left">{item?.diseaseId}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

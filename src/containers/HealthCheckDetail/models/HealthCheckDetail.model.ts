@@ -1,6 +1,26 @@
 import { Disease } from "src/containers/DiseaseManagemenent/models/Disease.model";
 import { DrugType } from "src/containers/DrugTypeManagement/models/DrugType.models";
+import { Patient } from "src/containers/PatientManagement/models/Patient.model";
 import { Symptom } from "src/containers/SymptomManagement/models/Symptom.model";
+
+export type HealthCheck = {
+    id?: number;
+    height: number;
+    weight: number;
+    reasonCancel: string;
+    rating: number;
+    comment: string;
+    advice: string;
+    token: string;
+    patientId: number;
+    createdTime: string;
+    canceledTime: string;
+    patient: Patient;
+    healthCheckDiseases: HealthCheckDiseases[];
+    prescriptions: Prescriptions[];
+    slot: Slots[];
+    symptomHealthChecks: SymptomHealthChecks[];
+};
 
 export type HealthCheckDiseases = {
     id?: number;

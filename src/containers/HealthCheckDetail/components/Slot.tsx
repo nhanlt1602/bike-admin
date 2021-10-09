@@ -1,8 +1,9 @@
 import { useState } from "react";
 
+import moment from "moment";
+
 import { Slots } from "../models/HealthCheckDetail.model";
 
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
     Accordion,
     AccordionDetails,
@@ -30,12 +31,8 @@ const Slot: React.FC<ISlots> = (props: ISlots) => {
     return (
         <form autoComplete="off" noValidate>
             <Accordion expanded={expanded === "panel1"} onChange={handleChange("panel1")}>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1bh-content"
-                    id="panel1bh-header"
-                >
-                    <Typography>Thông tin Slot</Typography>
+                <AccordionSummary aria-controls="panel1bh-content" id="panel1bh-header">
+                    <Typography fontWeight="bold">Thông tin khung giờ tư vấn</Typography>
                 </AccordionSummary>
                 <Divider />
                 <AccordionDetails>
@@ -43,17 +40,29 @@ const Slot: React.FC<ISlots> = (props: ISlots) => {
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="left">Ngày chỉ định</TableCell>
-                                    <TableCell align="left">Thời gian bắt đầu</TableCell>
-                                    <TableCell align="left">Thời gian kết thúc</TableCell>
+                                    <TableCell align="left" width="80px">
+                                        Ngày chỉ định
+                                    </TableCell>
+                                    <TableCell align="left" width="80px">
+                                        Thời gian bắt đầu
+                                    </TableCell>
+                                    <TableCell align="left" width="80px">
+                                        Thời gian kết thúc
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {props?.slots?.map((item) => (
                                     <TableRow key={item.id}>
-                                        <TableCell align="left">{item?.assignedDate}</TableCell>
-                                        <TableCell align="left">{item?.startTime}</TableCell>
-                                        <TableCell align="left">{item?.endTime}</TableCell>
+                                        <TableCell align="left" width="80px">
+                                            {moment(item?.assignedDate).format(`DD/MM/YYYY`)}
+                                        </TableCell>
+                                        <TableCell align="left" width="80px">
+                                            {item?.startTime}
+                                        </TableCell>
+                                        <TableCell align="left" width="80px">
+                                            {item?.endTime}
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

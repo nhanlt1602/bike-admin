@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { Prescriptions } from "../models/HealthCheckDetail.model";
 
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
     Accordion,
     AccordionDetails,
@@ -30,12 +29,8 @@ const Prescription: React.FC<IPrescriptions> = (props: IPrescriptions) => {
     return (
         <form autoComplete="off" noValidate>
             <Accordion expanded={expanded === "panel1"} onChange={handleChange("panel1")}>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1bh-content"
-                    id="panel1bh-header"
-                >
-                    <Typography>Thông tin thuốc</Typography>
+                <AccordionSummary aria-controls="panel1bh-content" id="panel1bh-header">
+                    <Typography fontWeight="bold">Thông tin thuốc</Typography>
                 </AccordionSummary>
                 <Divider />
                 <AccordionDetails>

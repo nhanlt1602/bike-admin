@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { SymptomHealthChecks } from "../models/HealthCheckDetail.model";
 
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
     Accordion,
     AccordionDetails,
@@ -31,11 +31,11 @@ const SymptomHealthCheck: React.FC<ISymptomHealthChecks> = (props: ISymptomHealt
         <form autoComplete="off" noValidate>
             <Accordion expanded={expanded === "panel1"} onChange={handleChange("panel1")}>
                 <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
+                    // expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1bh-content"
                     id="panel1bh-header"
                 >
-                    <Typography>Thông tin triệu chứng</Typography>
+                    <Typography fontWeight="bold">Thông tin triệu chứng</Typography>
                 </AccordionSummary>
                 <Divider />
                 <AccordionDetails>
