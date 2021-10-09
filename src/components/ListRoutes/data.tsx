@@ -111,6 +111,25 @@ export const routes = [
                 path: "/time-frames",
                 icon: <TimelapseIcon />,
             },
+            {
+                id: 16,
+                name: "Danh sách kiểm tra",
+                path: "/health-checks",
+                icon: <TimelapseIcon />,
+            },
+        ],
+    },
+    {
+        id: 2,
+        name: "Quản lý",
+        icon: <AccountCircleIcon />,
+        children: [
+            {
+                id: 5,
+                name: "Danh sách bác sĩ",
+                path: "/doctors",
+                icon: <AccountCircleIcon />,
+            },
         ],
     },
 ];
