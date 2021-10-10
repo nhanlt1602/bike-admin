@@ -9,6 +9,7 @@ import {
     AccordionDetails,
     AccordionSummary,
     Divider,
+    Switch,
     Table,
     TableBody,
     TableCell,
@@ -25,9 +26,14 @@ export interface ISlots {
 
 const Slot: React.FC<ISlots> = (props: ISlots) => {
     const [expanded, setExpanded] = useState<string | false>("panel1");
+
     const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
     };
+    // const [checked, setChecked] = useState(true);
+    // const handleChangeSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     setChecked(event.target.checked);
+    // };
     return (
         <form autoComplete="off" noValidate>
             <Accordion expanded={expanded === "panel1"} onChange={handleChange("panel1")}>
@@ -49,6 +55,9 @@ const Slot: React.FC<ISlots> = (props: ISlots) => {
                                     <TableCell align="left" width="80px">
                                         Thời gian kết thúc
                                     </TableCell>
+                                    <TableCell align="left" width="80px">
+                                        Hoạt động
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -62,6 +71,13 @@ const Slot: React.FC<ISlots> = (props: ISlots) => {
                                         </TableCell>
                                         <TableCell align="left" width="80px">
                                             {item?.endTime}
+                                        </TableCell>
+                                        <TableCell align="left" width="80px">
+                                            <Switch
+                                                checked={item?.isActive}
+                                                // onChange={handleChangeSwitch}
+                                                inputProps={{ "aria-label": "controlled" }}
+                                            />
                                         </TableCell>
                                     </TableRow>
                                 ))}

@@ -8,6 +8,7 @@ import {
     AccordionDetails,
     AccordionSummary,
     Divider,
+    Switch,
     Table,
     TableBody,
     TableCell,
@@ -49,6 +50,9 @@ const SymptomHealthCheck: React.FC<ISymptomHealthChecks> = (props: ISymptomHealt
                                     <TableCell align="left" width="100px">
                                         Bằng chứng
                                     </TableCell>
+                                    <TableCell align="left" width="100px">
+                                        Trạng thái
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -58,7 +62,14 @@ const SymptomHealthCheck: React.FC<ISymptomHealthChecks> = (props: ISymptomHealt
                                             {item?.symptom?.name}
                                         </TableCell>
                                         <TableCell align="left" width="100px">
-                                            <img width="50%" height="130" src={item?.evidence} />
+                                            <img width="50%" height="90" src={item?.evidence} />
+                                        </TableCell>
+                                        <TableCell align="left" width="100px">
+                                            <Switch
+                                                checked={item?.isActive}
+                                                // onChange={handleChangeSwitch}
+                                                inputProps={{ "aria-label": "controlled" }}
+                                            />
                                         </TableCell>
                                     </TableRow>
                                 ))}

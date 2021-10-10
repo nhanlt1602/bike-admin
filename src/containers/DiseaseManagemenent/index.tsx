@@ -22,6 +22,7 @@ const Diseases: React.FC = () => {
         name: "",
         description: "",
         diseaseGroupId: 0,
+        isActive: true,
         // diseaseGroup: [{ 1: "Oke" }, { 2: "Good" }],
     };
 
@@ -64,11 +65,17 @@ const Diseases: React.FC = () => {
             index: 5,
         },
         {
+            field: "isActive",
+            align: "left",
+            title: "trạng thái",
+            index: 6,
+        },
+        {
             field: "diseaseGroup",
             align: "left",
             title: "Nhóm dịch bệnh",
             disableFilter: true,
-            index: 6,
+            index: 7,
             render: (props: DiseaseGroup) => {
                 return <React.Fragment>{props.groupName}</React.Fragment>;
             },

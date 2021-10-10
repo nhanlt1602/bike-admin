@@ -68,26 +68,13 @@ const HealthCheckDetail: React.FC = () => {
                     <Grid container spacing={3}>
                         <Grid item lg={6} md={6} xs={12}>
                             <Box>
-                                <PatientInformation
-                                    height={healthcheck?.height}
-                                    weight={healthcheck?.weight}
-                                    reasonCancel={healthcheck?.reasonCancel}
-                                    rating={healthcheck?.rating}
-                                    comment={healthcheck?.comment}
-                                    advice={healthcheck?.advice}
-                                    createTime={healthcheck?.createdTime}
-                                    canceledTime={healthcheck?.canceledTime}
-                                />
-                            </Box>
-
-                            <Box sx={{ m: 2 }} />
-                            <Box>
                                 <HealthCheckDisease healthCheckDisease={healthCheckDiseases} />
                             </Box>
                             <Box sx={{ m: 2 }} />
                             <Box>
                                 <SymptomHealthCheck symptomHealthChecks={symptomHealthCheck} />
                             </Box>
+                            <Box sx={{ m: 2 }} />
                         </Grid>
                         <Grid item lg={6} md={6} xs={12}>
                             {/* <Card>
@@ -109,7 +96,19 @@ const HealthCheckDetail: React.FC = () => {
                             <Box>
                                 <Prescription prescriptions={prescription} />
                             </Box>
-
+                            <Box sx={{ m: 2 }} />
+                            <Box>
+                                <PatientInformation
+                                    height={healthcheck?.height}
+                                    weight={healthcheck?.weight}
+                                    reasonCancel={healthcheck?.reasonCancel}
+                                    rating={healthcheck?.rating}
+                                    comment={healthcheck?.comment}
+                                    advice={healthcheck?.advice}
+                                    createTime={healthcheck?.createdTime}
+                                    canceledTime={healthcheck?.canceledTime}
+                                />
+                            </Box>
                             {/* </CardContent>
                             </Card> */}
                         </Grid>

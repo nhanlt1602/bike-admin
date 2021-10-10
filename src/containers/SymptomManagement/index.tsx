@@ -16,6 +16,7 @@ const Symptoms: React.FC = () => {
         symptomCode: "",
         name: "",
         description: "",
+        isActive: true,
     };
     const [data, setData] = useState<Symptom>(initSymptom);
     const [reload, setReload] = useState<Function>(() => {});
@@ -40,6 +41,12 @@ const Symptoms: React.FC = () => {
             field: "name",
             align: "left",
             title: "Tên triệu chứng",
+            index: 3,
+        },
+        {
+            field: "isActive",
+            align: "left",
+            title: "Trạng thái",
             index: 3,
         },
         {

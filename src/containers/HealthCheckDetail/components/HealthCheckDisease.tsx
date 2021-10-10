@@ -7,6 +7,7 @@ import {
     AccordionDetails,
     AccordionSummary,
     Divider,
+    Switch,
     Table,
     TableBody,
     TableCell,
@@ -48,7 +49,7 @@ const HealthCheckDisease: React.FC<IHealthCheckDisease> = (
                                         Tên dịch bệnh
                                     </TableCell>
                                     <TableCell align="left" width="100px">
-                                        Nhóm dịch bệnh
+                                        Trạng thái
                                     </TableCell>
                                     <TableCell align="left" width="100px">
                                         Mô tả
@@ -58,14 +59,18 @@ const HealthCheckDisease: React.FC<IHealthCheckDisease> = (
                             <TableBody>
                                 {props?.healthCheckDisease?.map((item) => (
                                     <TableRow key={item.id}>
-                                        <TableCell align="left" width="100px">
+                                        <TableCell align="left" width="180px">
                                             {item.disease?.name}
                                         </TableCell>
                                         <TableCell align="left" width="100px">
-                                            {item.disease?.diseaseCode}
+                                            <Switch
+                                                checked={item?.isActive}
+                                                // onChange={handleChangeSwitch}
+                                                inputProps={{ "aria-label": "controlled" }}
+                                            />
                                         </TableCell>
-                                        <TableCell align="left" width="100px">
-                                            {item.diseaseId}
+                                        <TableCell align="left" width="80px">
+                                            {item.disease?.description}
                                         </TableCell>
                                     </TableRow>
                                 ))}

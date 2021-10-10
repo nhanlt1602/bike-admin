@@ -7,4 +7,5 @@ export type Disease = {
     description: string;
     diseaseGroupId: number;
     diseaseGroup?: DiseaseGroup;
+    isActive: boolean;
 };

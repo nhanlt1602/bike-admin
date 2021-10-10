@@ -27,6 +27,7 @@ export type HealthCheckDiseases = {
     id?: number;
     healthCheckId?: number;
     diseaseId?: number;
+    isActive: boolean;
     disease: Disease;
 };
 export type Disease = {
@@ -36,6 +37,7 @@ export type Disease = {
     description: string;
     diseaseGroupId: number;
     diseaseGroup?: DiseaseGroup;
+    isActive: boolean;
 };
 export type Prescriptions = {
     id?: number;
@@ -53,6 +55,7 @@ export type Slots = {
     doctorId?: string;
     startTime: string;
     endTime: string;
+    isActive: boolean;
 };
 
 export type SymptomHealthChecks = {
@@ -60,5 +63,6 @@ export type SymptomHealthChecks = {
     symptomId?: number;
     healthCheckId?: number;
     evidence: string;
+    isActive: boolean;
     symptom: Symptom;
 };
