@@ -35,13 +35,13 @@ const Certifications: React.FC = () => {
             title: "Tên chứng nhận",
             index: 2,
         },
-        {
-            field: "description",
-            align: "left",
-            title: "Mô tả chứng nhận",
-            disableFilter: true,
-            index: 3,
-        },
+        // {
+        //     field: "description",
+        //     align: "left",
+        //     title: "Mô tả chứng nhận",
+        //     disableFilter: true,
+        //     index: 3,
+        // },
     ];
 
     const addRowData = async (callback: Function) => {
