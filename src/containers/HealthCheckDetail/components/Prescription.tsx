@@ -35,20 +35,32 @@ const Prescription: React.FC<IPrescriptions> = (props: IPrescriptions) => {
                 <Divider />
                 <AccordionDetails>
                     <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <Table sx={{ minWidth: 500 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="left">Tên thuốc</TableCell>
-                                    <TableCell align="left">Nhóm thuốc</TableCell>
-                                    <TableCell align="left">Mô tả nhóm thuốc</TableCell>
+                                    <TableCell align="left" width="100px">
+                                        Tên thuốc
+                                    </TableCell>
+                                    <TableCell align="left" width="100px">
+                                        Nhóm thuốc
+                                    </TableCell>
+                                    <TableCell align="left" width="100px">
+                                        Mô tả nhóm thuốc
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {props?.prescriptions?.map((item) => (
                                     <TableRow key={item.id}>
-                                        <TableCell align="left">{item.drugType?.name}</TableCell>
-                                        <TableCell align="left">{item.drugOrigin}</TableCell>
-                                        <TableCell align="left">{item.drugType?.name}</TableCell>
+                                        <TableCell align="left" width="100px">
+                                            {item.drugType?.name}
+                                        </TableCell>
+                                        <TableCell align="left" width="100px">
+                                            {item.drugOrigin}
+                                        </TableCell>
+                                        <TableCell align="left" width="100px">
+                                            {item.drugType?.name}
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

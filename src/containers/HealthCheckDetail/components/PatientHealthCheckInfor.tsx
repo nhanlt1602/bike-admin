@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Accordion, AccordionDetails, AccordionSummary, Divider, Typography } from "@mui/material";
 
 export interface IPatientHealthInfo {
+    email?: string;
     allery?: string;
     backgroundDisease?: string;
 }
@@ -30,6 +31,7 @@ const PatientHealthInfomation: React.FC<IPatientHealthInfo> = (props: IPatientHe
                 </AccordionSummary>
                 <Divider />
                 <AccordionDetails>
+                    <Typography>Email: {props.email}</Typography>
                     <Typography>Tiền sử dị ứng: {props.allery}</Typography>
                     <Typography>Danh sách bệnh nền:{props.backgroundDisease}</Typography>
                 </AccordionDetails>

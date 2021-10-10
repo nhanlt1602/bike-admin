@@ -37,7 +37,7 @@ const Slot: React.FC<ISlots> = (props: ISlots) => {
                 <Divider />
                 <AccordionDetails>
                     <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <Table sx={{ minWidth: 500 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
                                     <TableCell align="left" width="80px">

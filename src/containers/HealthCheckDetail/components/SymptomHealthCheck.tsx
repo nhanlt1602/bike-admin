@@ -40,18 +40,26 @@ const SymptomHealthCheck: React.FC<ISymptomHealthChecks> = (props: ISymptomHealt
                 <Divider />
                 <AccordionDetails>
                     <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <Table sx={{ minWidth: 500 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="left">Tên triệu chứng</TableCell>
-                                    <TableCell align="left">Bằng chứng</TableCell>
+                                    <TableCell align="left" width="100px">
+                                        Tên triệu chứng
+                                    </TableCell>
+                                    <TableCell align="left" width="100px">
+                                        Bằng chứng
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {props?.symptomHealthChecks?.map((item) => (
                                     <TableRow key={item.id}>
-                                        <TableCell align="left">{item?.symptom}</TableCell>
-                                        <TableCell align="left">{item?.evidence}</TableCell>
+                                        <TableCell align="left" width="100px">
+                                            {item?.symptom?.name}
+                                        </TableCell>
+                                        <TableCell align="left" width="100px">
+                                            <img width="50%" height="130" src={item?.evidence} />
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

@@ -41,16 +41,16 @@ const HealthCheckDisease: React.FC<IHealthCheckDisease> = (
                 <Divider />
                 <AccordionDetails>
                     <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <Table sx={{ minWidth: 500 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="left" width="100">
+                                    <TableCell align="left" width="100px">
                                         Tên dịch bệnh
                                     </TableCell>
-                                    <TableCell align="left" width="100">
+                                    <TableCell align="left" width="100px">
                                         Nhóm dịch bệnh
                                     </TableCell>
-                                    <TableCell align="left" width="100">
+                                    <TableCell align="left" width="100px">
                                         Mô tả
                                     </TableCell>
                                 </TableRow>
@@ -58,9 +58,15 @@ const HealthCheckDisease: React.FC<IHealthCheckDisease> = (
                             <TableBody>
                                 {props?.healthCheckDisease?.map((item) => (
                                     <TableRow key={item.id}>
-                                        <TableCell align="left">{item?.diseaseId}</TableCell>
-                                        <TableCell align="left">{item?.diseaseId}</TableCell>
-                                        <TableCell align="left">{item?.diseaseId}</TableCell>
+                                        <TableCell align="left" width="100px">
+                                            {item.disease?.name}
+                                        </TableCell>
+                                        <TableCell align="left" width="100px">
+                                            {item.disease?.diseaseCode}
+                                        </TableCell>
+                                        <TableCell align="left" width="100px">
+                                            {item.diseaseId}
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

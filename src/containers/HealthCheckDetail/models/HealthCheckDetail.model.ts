@@ -1,4 +1,5 @@
-import { Disease } from "src/containers/DiseaseManagemenent/models/Disease.model";
+// import { Disease } from "src/containers/DiseaseManagemenent/models/Disease.model";
+import { DiseaseGroup } from "src/containers/DiseaseGroupManagement/models/DiseaseGroup.model";
 import { DrugType } from "src/containers/DrugTypeManagement/models/DrugType.models";
 import { Patient } from "src/containers/PatientManagement/models/Patient.model";
 import { Symptom } from "src/containers/SymptomManagement/models/Symptom.model";
@@ -28,7 +29,14 @@ export type HealthCheckDiseases = {
     diseaseId?: number;
     disease: Disease;
 };
-
+export type Disease = {
+    id?: number;
+    diseaseCode: string;
+    name: string;
+    description: string;
+    diseaseGroupId: number;
+    diseaseGroup?: DiseaseGroup;
+};
 export type Prescriptions = {
     id?: number;
     name: string;
