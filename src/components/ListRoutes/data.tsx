@@ -1,7 +1,7 @@
 import { Settings } from "@mui/icons-material";
 import { Info } from "@mui/icons-material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
+// import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
@@ -22,91 +22,71 @@ export const routes = [
     },
     {
         id: 2,
-        name: "Tài khoản",
-        icon: <AccountCircleIcon />,
-        children: [
-            {
-                id: 3,
-                name: "Bác sĩ",
-                path: "/accounts",
-                icon: <LocalHospitalIcon />,
-            },
-            {
-                id: 4,
-                name: "Bệnh nhân",
-                path: "/patients",
-                icon: <AssignmentIndIcon />,
-            },
-            {
-                id: 5,
-                name: "Tài khoản",
-                path: "/accounts",
-                icon: <AccountCircleIcon />,
-            },
-        ],
-    },
-    {
-        id: 6,
-        name: "Cấu hình bác sĩ",
-        icon: <LocalHospitalIcon />,
-        children: [
-            {
-                id: 7,
-                name: "Bệnh viện",
-                path: "/hospitals",
-                icon: <LocalHospitalIcon />,
-            },
-            {
-                id: 8,
-                name: "Chứng chỉ",
-                path: "/certifications",
-                icon: <CardMembershipIcon />,
-            },
-            {
-                id: 9,
-                name: "Chuyên ngành",
-                path: "/majors",
-                icon: <CastForEducationIcon />,
-            },
-        ],
-    },
-    {
-        id: 10,
         name: "Lịch sử tư vấn",
         path: "/settings",
         icon: <HistoryIcon />,
     },
     {
-        id: 11,
+        id: 3,
+        name: "Bệnh nhân",
+        path: "/patients",
+        icon: <AssignmentIndIcon />,
+    },
+    {
+        id: 4,
+        name: "Bác sĩ",
+        path: "/accounts",
+        icon: <LocalHospitalIcon />,
+    },
+    {
+        id: 5,
         name: "Cấu hình chung",
         icon: <Settings />,
         children: [
             {
-                id: 12,
+                id: 6,
+                name: "Bệnh viện",
+                path: "/hospitals",
+                icon: <LocalHospitalIcon />,
+            },
+            {
+                id: 7,
+                name: "Chứng chỉ",
+                path: "/certifications",
+                icon: <CardMembershipIcon />,
+            },
+            {
+                id: 8,
+                name: "Chuyên ngành",
+                path: "/majors",
+                icon: <CastForEducationIcon />,
+            },
+            {
+                id: 9,
                 name: "Thuốc",
                 path: "/dash-board/general-setting/drug-manage",
                 icon: <MedicalServicesIcon />,
             },
             {
-                id: 13,
+                id: 10,
                 name: "Triệu chứng",
                 path: "/symptoms",
                 icon: <AutoStoriesIcon />,
             },
             {
-                id: 14,
+                id: 11,
                 name: "Loại bệnh",
                 path: "/dash-board/general-setting/disease-manage",
                 icon: <AutoFixNormalIcon />,
             },
+            // {
+            //     id: 15,
+            //     name: "Nhóm bệnh",
+            //     path: "/disease-group",
+            //     icon: <AddToPhotosIcon />,
+            // },
             {
-                id: 15,
-                name: "Nhóm bệnh",
-                path: "/disease-group",
-                icon: <AddToPhotosIcon />,
-            },
-            {
-                id: 16,
+                id: 12,
                 name: "Khung thời gian",
                 path: "/time-frames",
                 icon: <TimelapseIcon />,
@@ -117,10 +97,16 @@ export const routes = [
 
 export const routesControlApp = [
     {
-        id: 17,
+        id: 13,
         name: "About us",
         path: "/about-us",
         children: null,
         icon: <Info />,
+    },
+    {
+        id: 14,
+        name: "Tài khoản",
+        path: "/accounts",
+        icon: <AccountCircleIcon />,
     },
 ];
