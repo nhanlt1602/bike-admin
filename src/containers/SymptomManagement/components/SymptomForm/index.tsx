@@ -15,7 +15,7 @@ export interface ISymptomForm {
 
 const SymptomForm: React.FC<ISymptomForm> = (props: ISymptomForm) => {
     const { data } = props;
-    const [checked, setChecked] = useState(data.isActive);
+    const [checked, setChecked] = useState(data?.isActive);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
@@ -122,6 +122,7 @@ const SymptomForm: React.FC<ISymptomForm> = (props: ISymptomForm) => {
                     </Stack>
                     <Box
                         sx={{
+                            justifyContent: "center",
                             mx: "auto",
                             p: 1,
                             m: 1,

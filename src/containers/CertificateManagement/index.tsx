@@ -9,12 +9,16 @@ import { IColumn } from "src/components/CRUDTable/Models";
 import { Certificate } from "./models/Certificate.models";
 import CertificateService from "./services/Certificate.service";
 
+import { Chip } from "@mui/material";
+import { Box } from "@mui/system";
+
 const Certifications: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
 
     const initDrugType: Certificate = {
         name: "",
         description: "",
+        isActive: true,
     };
     const [data, setData] = useState<Certificate>(initDrugType);
     const [reload, setReload] = useState<Function>(() => {});
@@ -34,6 +38,25 @@ const Certifications: React.FC = () => {
             align: "left",
             title: "Tên chứng nhận",
             index: 2,
+        },
+        {
+            field: "isActive",
+            align: "left",
+            title: "Trạng thái",
+            disableSort: true,
+            disableFilter: true,
+            index: 3,
+            render: (props: boolean) => {
+                return (
+                    <Box display="flex" alignItems="center" justifyContent="center">
+                        <Chip
+                            label={props ? "ACTIVE" : "INACTIVE"}
+                            color={props ? "success" : "secondary"}
+                        />
+                    </Box>
+                );
+            },
+            width: "100",
         },
         // {
         //     field: "description",

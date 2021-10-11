@@ -26,7 +26,6 @@ const DrugForm: React.FC<IDrugForm> = (props: IDrugForm) => {
     const {
         register,
         handleSubmit,
-        control,
         formState: { errors },
         setValue,
         clearErrors,
@@ -90,7 +89,7 @@ const DrugForm: React.FC<IDrugForm> = (props: IDrugForm) => {
                         "& > :not(style)": {
                             m: 2,
                             display: "flex",
-                            justifyContent: "center",
+                            // justifyContent: "center",
                         },
                     }}
                 >
@@ -151,6 +150,7 @@ const DrugForm: React.FC<IDrugForm> = (props: IDrugForm) => {
                     </Stack>
                     <Box
                         sx={{
+                            justifyContent: "center",
                             mx: "auto",
                             p: 1,
                             m: 1,

@@ -10,10 +10,14 @@ import useSnackbar from "src/components/Snackbar/useSnackbar";
 import { Major } from "./models/Major.model";
 import MajorService from "./services/Major.service";
 
+import { Chip } from "@mui/material";
+import { Box } from "@mui/system";
+
 const Majors: React.FC = () => {
     const initMajor: Major = {
         name: "",
         description: "",
+        isActive: true,
     };
     const showSnackbar = useSnackbar();
     const [open, setOpen] = useState<boolean>(false);
@@ -35,6 +39,25 @@ const Majors: React.FC = () => {
             align: "left",
             title: "Tên Chuyên ngành",
             index: 2,
+        },
+        {
+            field: "isActive",
+            align: "left",
+            title: "Trạng thái",
+            disableSort: true,
+            disableFilter: true,
+            index: 3,
+            render: (props: boolean) => {
+                return (
+                    <Box display="flex" alignItems="center" justifyContent="center">
+                        <Chip
+                            label={props ? "ACTIVE" : "INACTIVE"}
+                            color={props ? "success" : "secondary"}
+                        />
+                    </Box>
+                );
+            },
+            width: "100",
         },
         // {
         //     field: "description",

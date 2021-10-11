@@ -10,7 +10,8 @@ import { DiseaseGroup } from "../DiseaseGroupManagement/models/DiseaseGroup.mode
 import { Disease } from "./models/Disease.model";
 import DiseaseService from "./services/Disease.service";
 
-import { Switch } from "@mui/material";
+import { Chip } from "@mui/material";
+import { Box } from "@mui/system";
 
 export type initDiseaseGroup = {
     id: 0;
@@ -18,7 +19,6 @@ export type initDiseaseGroup = {
 };
 const Diseases: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
-    const [checked, setChecked] = useState(true);
     const initDisease: Disease = {
         diseaseCode: "",
         name: "",
@@ -26,9 +26,6 @@ const Diseases: React.FC = () => {
         diseaseGroupId: 0,
         isActive: true,
         // diseaseGroup: [{ 1: "Oke" }, { 2: "Good" }],
-    };
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setChecked(event.target.checked);
     };
     const [data, setData] = useState<Disease>(initDisease);
     const [reload, setReload] = useState<Function>(() => {});
@@ -87,16 +84,15 @@ const Diseases: React.FC = () => {
             index: 5,
             render: (props: boolean) => {
                 return (
-                    <React.Fragment>
-                        <Switch
-                            checked={props}
-                            // onChange={handleChange}
-                            inputProps={{ "aria-label": "controlled" }}
+                    <Box display="flex" alignItems="center" justifyContent="center">
+                        <Chip
+                            label={props ? "ACTIVE" : "INACTIVE"}
+                            color={props ? "success" : "secondary"}
                         />
-                        {/* <Switch defaultChecked /> */}
-                    </React.Fragment>
+                    </Box>
                 );
             },
+            width: "100",
         },
     ];
     // const getDiseaseGroup = async () => {
@@ -122,18 +118,6 @@ const Diseases: React.FC = () => {
         setOpen(true);
         setData(rowData);
         setReload(() => callback);
-    };
-
-    const putIsActive = async (data: Disease) => {
-        try {
-            const response = await DiseaseService.update(data);
-            if (response.status === 201) {
-                reload();
-            }
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.log(error);
-        }
     };
 
     const postDiseaseGroup = async (data: Disease) => {
