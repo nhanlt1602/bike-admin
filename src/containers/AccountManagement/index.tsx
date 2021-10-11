@@ -96,7 +96,10 @@ const Accounts: React.FC = () => {
             render: (props: Role) => {
                 return (
                     <Box display="flex" alignItems="center" justifyContent="center">
-                        <Chip label={props.name} color={props.id === 1 ? "success" : "warning"} />
+                        <Chip
+                            label={props.name === "DOCTOR" ? "Bác sĩ" : "Bệnh nhân"}
+                            color={props.id === 1 ? "success" : "warning"}
+                        />
                     </Box>
                 );
             },
@@ -112,7 +115,7 @@ const Accounts: React.FC = () => {
                 return (
                     <Box display="flex" alignItems="center" justifyContent="center">
                         <Chip
-                            label={props ? "ACTIVE" : "INACTIVE"}
+                            label={props ? "Đã kích hoạt" : "Chưa kích hoạt"}
                             color={props ? "success" : "secondary"}
                         />
                     </Box>
