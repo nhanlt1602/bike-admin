@@ -1,13 +1,14 @@
 import React from "react";
 
+import moment from "moment";
 import { API_ROOT_URL } from "src/configurations";
 
 import CRUDTable from "src/components/CRUDTable";
 import { IColumn } from "src/components/CRUDTable/Models";
 
-import { HealthCheck } from "./models/HealthCheck.model";
+import { Patient } from "../PatientManagement/models/Patient.model";
 
-import { Typography } from "@mui/material";
+import { Box, Chip } from "@mui/material";
 import Util from "src/utils/Util";
 
 // import Util from "src/utils/Util";
@@ -23,88 +24,87 @@ const HealthChecks: React.FC = () => {
             disableSort: true,
             editable: "never",
             index: 1,
-            width: "80",
+            width: "120",
+            link: "/health-checks",
         },
-
         {
-            field: "email",
+            field: "slots",
             align: "left",
-            title: "Email",
-            disableFilter: true,
             disableSort: true,
+            disableFilter: true,
+            title: "Thời gian buổi tư vấn",
             index: 2,
-            render: (props: HealthCheck) => {
+            render: (props) => {
                 return (
                     <React.Fragment>
-                        <Typography align="center">{props?.patient?.email}</Typography>
+                        {props[0]?.startTime?.slice(0, 5)} {"- "}
+                        {props[0]?.endTime?.slice(0, 5)}{" "}
+                        {moment(props[0]?.assignedDate).format(`DD/MM/YYYY`)}
                     </React.Fragment>
                 );
             },
             width: "230",
         },
         {
-            field: "height",
+            field: "patient",
             align: "left",
-            title: "Chiều cao(cm)",
+            title: "Bệnh nhân",
             index: 3,
-            width: "80",
+            width: "200",
+            render: (props: Patient) => {
+                return <React.Fragment>{props.name}</React.Fragment>;
+            },
         },
         {
-            field: "weight",
+            field: "slots",
             align: "left",
-            title: "Cân nặng(kg)",
+            title: "Bác sĩ",
             index: 4,
-            width: "80",
-        },
-
-        {
-            field: "backgroundDisease",
-            align: "left",
-            title: "Bệnh nền",
-            index: 5,
-            width: "80",
-        },
-        {
-            field: "advice",
-            align: "left",
-            title: "Lời khuyên",
-            index: 6,
-            width: "80",
-        },
-        {
-            field: "rating",
-            align: "left",
-            title: "Đánh giá",
-            index: 7,
-            width: "80",
+            render: (props) => {
+                return <React.Fragment>{props[0]?.doctor?.name}</React.Fragment>;
+            },
+            width: "200",
         },
         {
             field: "createdTime",
             align: "left",
             title: "Ngày đăng ký",
-            index: 8,
+            index: 5,
             render: (props: string) => {
-                return <Typography align="center">{Util.convertDate(props)}</Typography>;
+                return <React.Fragment>{Util.convertDate(props)}</React.Fragment>;
             },
-            width: "80",
+            width: "150",
         },
         {
-            field: "canceledTime",
-            align: "left",
-            title: "Ngày hủy",
-            index: 9,
-            // render: (props: string) => {
-            //     return
-            //     <Typography align="center">{Util.convertDate(props)}</Typography>;
-            // },
-            width: "80",
-        },
-        {
-            field: "reasonCancel",
-            align: "left",
-            title: "Lý do hủy",
-            index: 10,
-            width: "80",
+            field: "status",
+            align: "center",
+            title: "Trạng thái",
+            index: 6,
+            width: "100",
+            render: (props: string) => {
+                switch (props) {
+                    case "BOOKED":
+                        return (
+                            <Box display="flex" alignItems="center" justifyContent="center">
+                                <Chip color="warning" variant="filled" label="Chờ tư vấn"></Chip>
+                            </Box>
+                        );
+                    case "CANCELED":
+                        return (
+                            <Box display="flex" alignItems="center" justifyContent="center">
+                                <Chip color="error" variant="filled" label="Đã hủy"></Chip>
+                            </Box>
+                        );
+                    case "COMPLETED":
+                        return (
+                            <Box display="flex" alignItems="center" justifyContent="center">
+                                <Chip color="success" variant="filled" label="Đã tư vấn"></Chip>
+                            </Box>
+                        );
+                    default:
+                        return <React.Fragment></React.Fragment>;
+                }
+            },
         },
     ];
 
@@ -112,13 +112,8 @@ const HealthChecks: React.FC = () => {
         <React.Fragment>
             <CRUDTable
                 title="Quản lí kiểm tra sức khỏe"
-                enableFilter
-                sort
                 query={`${API_ROOT_URL}/health-checks`}
                 columns={columns}
-                action={{
-                    onDelete: true,
-                }}
             />
         </React.Fragment>
     );

@@ -49,17 +49,17 @@ const Hospitals: React.FC = () => {
             title: "Địa chỉ",
             index: 4,
         },
-        {
-            field: "description",
-            align: "left",
-            title: "Mô tả",
-            disableFilter: true,
-            disableSort: true,
-            index: 5,
-            // render: (props: string) => {
-            //     return <div style={{ backgroundColor: "red" }}>{props}</div>;
-            // },
-        },
+        // {
+        //     field: "description",
+        //     align: "left",
+        //     title: "Mô tả",
+        //     disableFilter: true,
+        //     disableSort: true,
+        //     index: 5,
+        //     // render: (props: string) => {
+        //     //     return <div style={{ backgroundColor: "red" }}>{props}</div>;
+        //     // },
+        // },
     ];
 
     const addRowData = async (callback: Function) => {

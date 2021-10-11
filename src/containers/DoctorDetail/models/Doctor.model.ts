@@ -13,6 +13,7 @@ export type Doctors = {
     certificationDoctors: Cetification[];
     hospitalDoctors: HospitalDoctor[];
     majorDoctors: Major[];
+    name?: string;
 };
 
 export type Major = {

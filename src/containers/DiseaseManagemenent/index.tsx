@@ -44,6 +44,7 @@ const Diseases: React.FC = () => {
             align: "left",
             title: "Mã dịch bệnh",
             index: 2,
+            width: "150",
         },
         {
             field: "name",
@@ -51,31 +52,30 @@ const Diseases: React.FC = () => {
             title: "Tên dịch bệnh",
             index: 3,
         },
-        {
-            field: "description",
-            align: "left",
-            title: "Mô tả",
-            disableFilter: true,
-            index: 4,
-        },
-        {
-            field: "diseaseGroupId",
-            align: "left",
-            title: "Mã nhóm dịch bệnh",
-            index: 5,
-        },
+        // {
+        //     field: "description",
+        //     align: "left",
+        //     title: "Mô tả",
+        //     disableFilter: true,
+        //     index: 4,
+        // },
+        // {
+        //     field: "diseaseGroupId",
+        //     align: "left",
+        //     title: "Mã nhóm dịch bệnh",
+        //     index: 5,
+        // },
         {
             field: "isActive",
             align: "left",
             title: "trạng thái",
-            index: 6,
+            index: 4,
         },
         {
             field: "diseaseGroup",
             align: "left",
             title: "Nhóm dịch bệnh",
-            disableFilter: true,
-            index: 7,
+            index: 5,
             render: (props: DiseaseGroup) => {
                 return <React.Fragment>{props.groupName}</React.Fragment>;
             },

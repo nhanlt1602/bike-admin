@@ -1,5 +1,6 @@
 // import { Disease } from "src/containers/DiseaseManagemenent/models/Disease.model";
 import { DiseaseGroup } from "src/containers/DiseaseGroupManagement/models/DiseaseGroup.model";
+import { Doctors } from "src/containers/DoctorDetail/models/Doctor.model";
 import { DrugType } from "src/containers/DrugTypeManagement/models/DrugType.models";
 import { Patient } from "src/containers/PatientManagement/models/Patient.model";
 import { Symptom } from "src/containers/SymptomManagement/models/Symptom.model";
@@ -21,6 +22,7 @@ export type HealthCheck = {
     prescriptions: Prescriptions[];
     slot: Slots[];
     symptomHealthChecks: SymptomHealthChecks[];
+    status: string;
 };
 
 export type HealthCheckDiseases = {
@@ -56,6 +58,7 @@ export type Slots = {
     startTime: string;
     endTime: string;
     isActive: boolean;
+    doctor: Doctors;
 };
 
 export type SymptomHealthChecks = {

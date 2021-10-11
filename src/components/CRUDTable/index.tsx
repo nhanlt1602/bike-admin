@@ -142,6 +142,12 @@ const CRUDTable = <T extends Record<string, string | number>>(
         callbackLoadData(1, 5, param, stringFilter, orderBy);
     }, [callbackLoadData, param, stringFilter, orderBy]);
 
+    useEffect(() => {
+        if (columns) {
+            setSelectedColumns(columns);
+        }
+    }, [columns]);
+
     const handleChangePage = (event: unknown, newPage: number) => {
         loadData(newPage + 1, paging.pageSize);
     };

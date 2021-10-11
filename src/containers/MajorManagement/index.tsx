@@ -36,17 +36,14 @@ const Majors: React.FC = () => {
             title: "Tên Chuyên ngành",
             index: 2,
         },
-        {
-            field: "description",
-            align: "left",
-            title: "Mô tả",
-            disableFilter: true,
-            disableSort: true,
-            index: 3,
-            // render: (props: string) => {
-            //     return <div style={{ backgroundColor: "red" }}>{props}</div>;
-            // },
-        },
+        // {
+        //     field: "description",
+        //     align: "left",
+        //     title: "Mô tả",
+        //     disableFilter: true,
+        //     disableSort: true,
+        //     index: 3,
+        // },
     ];
 
     const addRowData = async (callback: Function) => {

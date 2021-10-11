@@ -43,22 +43,13 @@ const Symptoms: React.FC = () => {
             title: "Tên triệu chứng",
             index: 3,
         },
-        {
-            field: "isActive",
-            align: "left",
-            title: "Trạng thái",
-            index: 3,
-        },
-        {
-            field: "description",
-            align: "left",
-            title: "Mô tả",
-            disableFilter: true,
-            index: 4,
-            // render: (props: string) => {
-            //     return <div style={{ backgroundColor: "red" }}>{props}</div>;
-            // },
-        },
+        // {
+        //     field: "description",
+        //     align: "left",
+        //     title: "Mô tả",
+        //     disableFilter: true,
+        //     index: 4,
+        // },
     ];
 
     const addRowData = async (callback: Function) => {
