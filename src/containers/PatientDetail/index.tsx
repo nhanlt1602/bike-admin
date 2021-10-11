@@ -11,6 +11,7 @@ import useSnackbar from "src/components/Snackbar/useSnackbar";
 
 import Util from "../../utils/Util";
 import { Account } from "../AccountManagement/models/Account.model";
+import { HealthCheck } from "../PatientManagement/models/HealthCheck.model";
 import { Patient } from "./models/Patient.model";
 
 import { Container, Grid } from "@mui/material";
@@ -23,6 +24,7 @@ const PatientDetail: React.FC = () => {
     const [isActive, setIsActive] = useState<boolean>(false);
     const [account, setAccount] = useState<Account>();
     const [patient, setPatient] = useState<Patient>();
+    const [healthChecks, setHealthChecks] = useState<HealthCheck[]>([]);
 
     const params = useParams<{ email: string }>();
     const email = params.email;
@@ -80,9 +82,21 @@ const PatientDetail: React.FC = () => {
         [history]
     );
 
+    const getHealthChecks = useCallback(async (patientId) => {
+        try {
+            const response = await axios.get(
+                `/health-checks?patient-id=${patientId}&page-offset=1&limit=4`
+            );
+            if (response.status === 200) {
+                setHealthChecks(response.data.content);
+            }
+        } catch (_error) {}
+    }, []);
+
     useEffect(() => {
         getAccountByEmail(email);
-    }, [email, getAccountByEmail]);
+        getHealthChecks(patient?.id);
+    }, [email, getAccountByEmail, getHealthChecks, patient]);
 
     return (
         <React.Fragment>
@@ -116,7 +130,7 @@ const PatientDetail: React.FC = () => {
                                 />
                             </Box>
                             <Box sx={{ mt: 3 }}>
-                                <ConsultationHistory healthChecks={patient?.healthChecks} />
+                                <ConsultationHistory healthChecks={healthChecks} />
                             </Box>
                         </Grid>
                     </Grid>

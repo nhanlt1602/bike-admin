@@ -7,8 +7,7 @@ import { IColumn } from "src/components/CRUDTable/Models";
 
 import { Patient } from "../PatientDetail/models/Patient.model";
 
-import { Avatar, Chip } from "@mui/material";
-import { Box } from "@mui/system";
+import { Avatar } from "@mui/material";
 
 // import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 // import { IconButton } from "@mui/material";
@@ -52,7 +51,7 @@ const Patients: React.FC = () => {
             title: "Email",
             index: 4,
             renderLink: (patient: Patient) => `/patients/${patient.email}`,
-            width: "200",
+            width: "150",
         },
         {
             field: "bloodGroup",
@@ -62,36 +61,56 @@ const Patients: React.FC = () => {
             width: "80",
         },
         {
-            field: "active",
-            align: "center",
-            title: "Trạng thái",
-            disableFilter: true,
+            field: "allergy",
+            align: "left",
+            title: "Dị ứng",
             index: 6,
-            render: (props: boolean) => {
-                return (
-                    <Box display="flex" alignItems="center" justifyContent="center">
-                        <Chip
-                            label={props ? "Đã kích hoạt" : "Chưa kích hoạt"}
-                            color={props ? "success" : "secondary"}
-                        />
-                    </Box>
-                );
+            render: (allery: string) => {
+                let res = allery;
+                if (res) {
+                    const length = res.length;
+                    if (length > 20) {
+                        res = allery.slice(0, 20) + "...";
+                    }
+                }
+                return <React.Fragment>{res}</React.Fragment>;
             },
-            width: "150",
+            width: "160",
+        },
+        {
+            field: "backgroundDisease",
+            align: "left",
+            title: "Bệnh nền",
+            index: 7,
+            render: (backgroundDisease: string) => {
+                let res = backgroundDisease;
+                if (res) {
+                    const length = res.length;
+                    if (length > 20) {
+                        res = backgroundDisease.slice(0, 20) + "...";
+                    }
+                }
+                return <React.Fragment>{res}</React.Fragment>;
+            },
+            width: "160",
         },
         // {
-        //     field: "allergy",
-        //     align: "left",
-        //     title: "Dị ứng",
+        //     field: "active",
+        //     align: "center",
+        //     title: "Trạng thái",
+        //     disableFilter: true,
         //     index: 6,
-        //     width: "200",
-        // },
-        // {
-        //     field: "backgroundDisease",
-        //     align: "left",
-        //     title: "Bệnh nền",
-        //     index: 7,
-        //     width: "200",
+        //     render: (props: boolean) => {
+        //         return (
+        //             <Box display="flex" alignItems="center" justifyContent="center">
+        //                 <Chip
+        //                     label={props ? "Đã kích hoạt" : "Chưa kích hoạt"}
+        //                     color={props ? "success" : "secondary"}
+        //                 />
+        //             </Box>
+        //         );
+        //     },
+        //     width: "150",
         // },
         // {
         //     field: "email",

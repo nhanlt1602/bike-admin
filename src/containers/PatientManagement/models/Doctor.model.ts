@@ -6,6 +6,8 @@ import { Slot } from "./Slot.model";
 export type Doctor = {
     id: number;
     email: string;
+    name: string;
+    avatar: string;
     practisingCertificate: string;
     certificateCode: string;
     placeOfCertificate: string;
