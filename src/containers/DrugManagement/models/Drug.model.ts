@@ -8,4 +8,5 @@ export type Drug = {
     drugForm: string;
     drugType?: DrugType;
     drugTypeId: number;
+    isActive: boolean;
 };

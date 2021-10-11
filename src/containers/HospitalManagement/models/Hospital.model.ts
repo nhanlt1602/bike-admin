@@ -4,4 +4,5 @@ export type Hospital = {
     name: string;
     address: string;
     description?: string;
+    isActive: boolean;
 };

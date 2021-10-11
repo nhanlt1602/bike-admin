@@ -69,7 +69,7 @@ const Patients: React.FC = () => {
             index: 6,
             render: (props: boolean) => {
                 return (
-                    <Box display="flex" alignItems="center" justifyContent="center">
+                    <Box display="flex" alignItems="center" justifyContent="left">
                         <Chip
                             label={props ? "Đã kích hoạt" : "Chưa kích hoạt"}
                             color={props ? "success" : "secondary"}
@@ -78,6 +78,25 @@ const Patients: React.FC = () => {
                 );
             },
             width: "150",
+        },
+        {
+            field: "isActive",
+            align: "left",
+            title: "Trạng thái",
+            disableSort: true,
+            disableFilter: true,
+            index: 7,
+            render: (props: boolean) => {
+                return (
+                    <Box display="flex" alignItems="center" justifyContent="left">
+                        <Chip
+                            label={props ? "ACTIVE" : "INACTIVE"}
+                            color={props ? "success" : "secondary"}
+                        />
+                    </Box>
+                );
+            },
+            width: "100",
         },
         // {
         //     field: "allergy",

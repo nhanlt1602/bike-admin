@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { DiseaseGroup } from "../models/DiseaseGroup.model";
 
-import { Button, Card, Modal, TextField, Typography } from "@mui/material";
+import { Button, Card, Modal, Stack, Switch, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 export interface IDiseaseGroupForm {
@@ -15,6 +15,12 @@ export interface IDiseaseGroupForm {
 
 const DiseaseGroupForm: React.FC<IDiseaseGroupForm> = (props: IDiseaseGroupForm) => {
     const { data } = props;
+    const [checked, setChecked] = useState(data?.isActive);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setChecked(event.target.checked);
+        setValue("isActive", checked);
+    };
     const {
         register,
         handleSubmit,
@@ -26,6 +32,7 @@ const DiseaseGroupForm: React.FC<IDiseaseGroupForm> = (props: IDiseaseGroupForm)
     React.useEffect(() => {
         setValue("id", data.id);
         setValue("groupName", data.groupName);
+        setValue("isActive", data.isActive);
     }, [data, setValue]);
 
     const submitHandler: SubmitHandler<DiseaseGroup> = (data: DiseaseGroup) => {
@@ -65,7 +72,11 @@ const DiseaseGroupForm: React.FC<IDiseaseGroupForm> = (props: IDiseaseGroupForm)
                     component="form"
                     onSubmit={handleSubmit(submitHandler)}
                     sx={{
-                        "& > :not(style)": { m: 2, display: "flex", justifyContent: "center" },
+                        "& > :not(style)": {
+                            m: 2,
+                            display: "flex",
+                            //  justifyContent: "center"
+                        },
                     }}
                 >
                     <TextField
@@ -76,9 +87,26 @@ const DiseaseGroupForm: React.FC<IDiseaseGroupForm> = (props: IDiseaseGroupForm)
                         helperText={errors.groupName && "Tên nhóm dịch bệnh là bắt buộc"}
                         {...register("groupName", { required: true })}
                     />
-
+                    <Stack direction="row" spacing={0}>
+                        <Typography
+                            sx={{
+                                // mx: "auto",
+                                p: 1,
+                                //
+                                // "& > :not(style)": { m: 1 },
+                            }}
+                        >
+                            Trạng thái:
+                        </Typography>
+                        <Switch
+                            checked={checked}
+                            onChange={handleChange}
+                            inputProps={{ "aria-label": "controlled" }}
+                        />
+                    </Stack>
                     <Box
                         sx={{
+                            justifyContent: "center",
                             mx: "auto",
                             p: 1,
                             m: 1,
