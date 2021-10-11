@@ -9,7 +9,8 @@ import { IColumn } from "src/components/CRUDTable/Models";
 import { DiseaseGroup } from "./models/DiseaseGroup.model";
 import DiseaseGroupService from "./services/DiseaseGroup.service";
 
-import { Switch } from "@mui/material";
+import { Chip } from "@mui/material";
+import { Box } from "@mui/system";
 
 const DiseaseGroups: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
@@ -44,18 +45,18 @@ const DiseaseGroups: React.FC = () => {
             title: "Trạng thái",
             disableSort: true,
             disableFilter: true,
-            index: 5,
+            index: 3,
             render: (props: boolean) => {
                 return (
-                    <React.Fragment>
-                        <Switch
-                            checked={props}
-                            // onChange={handleChange}
-                            inputProps={{ "aria-label": "controlled" }}
+                    <Box display="flex" alignItems="center" justifyContent="center">
+                        <Chip
+                            label={props ? "ACTIVE" : "INACTIVE"}
+                            color={props ? "success" : "secondary"}
                         />
-                    </React.Fragment>
+                    </Box>
                 );
             },
+            width: "100",
         },
     ];
     const addRowData = async (callback: Function) => {

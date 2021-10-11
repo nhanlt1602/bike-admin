@@ -55,7 +55,7 @@ const Symptoms: React.FC = () => {
             index: 4,
             render: (props: boolean) => {
                 return (
-                    <Box display="flex" alignItems="center" justifyContent="center">
+                    <Box display="flex" alignItems="center" justifyContent="left">
                         <Chip
                             label={props ? "ACTIVE" : "INACTIVE"}
                             color={props ? "success" : "secondary"}
