@@ -242,6 +242,9 @@ const DoctorDetails: React.FC = () => {
                 >
                     {verifyDoctor ? "Chưa xác thực" : "Xác thực"}
                 </Button>
+                <Button color={"warning"} fullWidth variant="text">
+                    Lịch hoạt động
+                </Button>
             </CardActions>
         </Card>
     );

@@ -1,7 +1,7 @@
 // import { Disease } from "src/containers/DiseaseManagemenent/models/Disease.model";
 import { DiseaseGroup } from "src/containers/DiseaseGroupManagement/models/DiseaseGroup.model";
 import { Doctors } from "src/containers/DoctorDetail/models/Doctor.model";
-import { DrugType } from "src/containers/DrugTypeManagement/models/DrugType.models";
+import { Drug } from "src/containers/DrugManagement/models/Drug.model";
 import { Patient } from "src/containers/PatientManagement/models/Patient.model";
 import { Symptom } from "src/containers/SymptomManagement/models/Symptom.model";
 
@@ -43,11 +43,11 @@ export type Disease = {
 };
 export type Prescriptions = {
     id?: number;
-    name: string;
-    producer: string;
-    drugOrigin: string;
-    drugForm: string;
-    drugType: DrugType;
+    symptomId: number;
+    healthCheckId: number;
+    evidence: string;
+    isActive: true;
+    drug: Drug;
     drugTypeId: number;
 };
 
