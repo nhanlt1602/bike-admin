@@ -9,11 +9,14 @@ import { IColumn } from "src/components/CRUDTable/Models";
 import { DiseaseGroup } from "./models/DiseaseGroup.model";
 import DiseaseGroupService from "./services/DiseaseGroup.service";
 
+import { Switch } from "@mui/material";
+
 const DiseaseGroups: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
 
     const initDiseaseGroup: DiseaseGroup = {
         groupName: "",
+        isActive: true,
     };
 
     const [data, setData] = useState<DiseaseGroup>(initDiseaseGroup);
@@ -34,6 +37,25 @@ const DiseaseGroups: React.FC = () => {
             align: "left",
             title: "Nhóm dịch bệnh",
             index: 2,
+        },
+        {
+            field: "isActive",
+            align: "left",
+            title: "Trạng thái",
+            disableSort: true,
+            disableFilter: true,
+            index: 5,
+            render: (props: boolean) => {
+                return (
+                    <React.Fragment>
+                        <Switch
+                            checked={props}
+                            // onChange={handleChange}
+                            inputProps={{ "aria-label": "controlled" }}
+                        />
+                    </React.Fragment>
+                );
+            },
         },
     ];
     const addRowData = async (callback: Function) => {

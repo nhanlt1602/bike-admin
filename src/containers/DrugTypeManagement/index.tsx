@@ -9,12 +9,16 @@ import { IColumn } from "src/components/CRUDTable/Models";
 import { DrugType } from "./models/DrugType.models";
 import DrugTypeService from "./services/DrugType.service";
 
+import { Chip } from "@mui/material";
+import { Box } from "@mui/system";
+
 const DrugTypes: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
 
     const initDrugType: DrugType = {
         name: "",
         description: "",
+        isActive: true,
     };
     const [data, setData] = useState<DrugType>(initDrugType);
     const [reload, setReload] = useState<Function>(() => {});
@@ -34,13 +38,25 @@ const DrugTypes: React.FC = () => {
             title: "Tên loại thuốc",
             index: 2,
         },
-        // {
-        //     field: "description",
-        //     align: "left",
-        //     title: "Mô tả",
-        //     disableFilter: true,
-        //     index: 3,
-        // },
+        {
+            field: "isActive",
+            align: "left",
+            title: "Trạng thái",
+            disableSort: true,
+            disableFilter: true,
+            index: 3,
+            render: (props: boolean) => {
+                return (
+                    <Box display="flex" alignItems="center" justifyContent="center">
+                        <Chip
+                            label={props ? "ACTIVE" : "INACTIVE"}
+                            color={props ? "success" : "secondary"}
+                        />
+                    </Box>
+                );
+            },
+            width: "100",
+        },
     ];
 
     const addRowData = async (callback: Function) => {
