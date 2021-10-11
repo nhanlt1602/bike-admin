@@ -37,8 +37,8 @@ const Drugs: React.FC = () => {
         },
         { field: "name", align: "left", title: "Tên thuốc", index: 2 },
         { field: "producer", align: "left", title: "Nhà sản xuất", index: 3 },
-        { field: "drugOrigin", align: "left", title: "Xuất xứ", index: 4 },
-        { field: "drugForm", align: "left", title: "Định dạng", index: 5 },
+        { field: "drugOrigin", align: "left", title: "Xuất xứ", index: 4, width: "100" },
+        { field: "drugForm", align: "left", title: "Định dạng", index: 5, width: "100" },
         {
             field: "drugType",
             align: "left",

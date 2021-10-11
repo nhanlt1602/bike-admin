@@ -34,7 +34,7 @@ export const routes = [
             {
                 id: 4,
                 name: "Bệnh nhân",
-                path: "/accounts",
+                path: "/patients",
                 icon: <AssignmentIndIcon />,
             },
             {

@@ -34,13 +34,13 @@ const DrugTypes: React.FC = () => {
             title: "Tên loại thuốc",
             index: 2,
         },
-        {
-            field: "description",
-            align: "left",
-            title: "Mô tả",
-            disableFilter: true,
-            index: 3,
-        },
+        // {
+        //     field: "description",
+        //     align: "left",
+        //     title: "Mô tả",
+        //     disableFilter: true,
+        //     index: 3,
+        // },
     ];
 
     const addRowData = async (callback: Function) => {
