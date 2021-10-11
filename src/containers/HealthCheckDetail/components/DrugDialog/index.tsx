@@ -2,7 +2,20 @@ import { CardActions } from "@material-ui/core";
 
 import { Prescriptions } from "../../models/HealthCheckDetail.model";
 
-import { Button, Card, CardContent, CardHeader, Modal, Typography } from "@mui/material";
+import {
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    Modal,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography,
+} from "@mui/material";
 
 export interface IDrugDialog {
     open: boolean;
@@ -32,7 +45,31 @@ const DrugDialog: React.FC<IDrugDialog> = (props: IDrugDialog) => {
                 }}
             >
                 <CardHeader title={<Typography variant="h6">Đơn thuốc</Typography>} />
-                <CardContent></CardContent>
+                <CardContent>
+                    <TableContainer>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Tên thuốc</TableCell>
+                                    <TableCell>Thời gian</TableCell>
+                                    <TableCell>Sáng</TableCell>
+                                    <TableCell>Trưa</TableCell>
+                                    <TableCell>Chiều</TableCell>
+                                    <TableCell>Hướng dẫn</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {prescription?.map((drug) => {
+                                    return (
+                                        <TableRow key={drug.id}>
+                                            <TableCell>{drug.drug.name}</TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </CardContent>
                 <CardActions>
                     <Button variant="contained" onClick={() => handleClose()}>
                         Thoát

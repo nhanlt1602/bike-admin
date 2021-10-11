@@ -43,10 +43,15 @@ export type Disease = {
 };
 export type Prescriptions = {
     id?: number;
-    symptomId: number;
     healthCheckId: number;
-    evidence: string;
-    isActive: true;
+    startDate: string;
+    endDate: string;
+    drugId: number;
+    morningQuantity: number;
+    afternoonQuantity: number;
+    eveningQuantity: number;
+    description: string;
+    isActive: boolean;
     drug: Drug;
     drugTypeId: number;
 };
