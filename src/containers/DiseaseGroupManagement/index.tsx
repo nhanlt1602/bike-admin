@@ -9,11 +9,15 @@ import { IColumn } from "src/components/CRUDTable/Models";
 import { DiseaseGroup } from "./models/DiseaseGroup.model";
 import DiseaseGroupService from "./services/DiseaseGroup.service";
 
+import { Chip } from "@mui/material";
+import { Box } from "@mui/system";
+
 const DiseaseGroups: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
 
     const initDiseaseGroup: DiseaseGroup = {
         groupName: "",
+        isActive: true,
     };
 
     const [data, setData] = useState<DiseaseGroup>(initDiseaseGroup);
@@ -34,6 +38,25 @@ const DiseaseGroups: React.FC = () => {
             align: "left",
             title: "Nhóm dịch bệnh",
             index: 2,
+        },
+        {
+            field: "isActive",
+            align: "left",
+            title: "Trạng thái",
+            disableSort: true,
+            disableFilter: true,
+            index: 3,
+            render: (props: boolean) => {
+                return (
+                    <Box display="flex" alignItems="center" justifyContent="center">
+                        <Chip
+                            label={props ? "ACTIVE" : "INACTIVE"}
+                            color={props ? "success" : "secondary"}
+                        />
+                    </Box>
+                );
+            },
+            width: "100",
         },
     ];
     const addRowData = async (callback: Function) => {

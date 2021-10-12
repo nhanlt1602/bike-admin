@@ -9,6 +9,9 @@ import { IColumn } from "src/components/CRUDTable/Models";
 import { Symptom } from "./models/Symptom.model";
 import SymptomService from "./services/Symptom.service";
 
+import { Chip } from "@mui/material";
+import { Box } from "@mui/system";
+
 const Symptoms: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
 
@@ -16,6 +19,7 @@ const Symptoms: React.FC = () => {
         symptomCode: "",
         name: "",
         description: "",
+        isActive: true,
     };
     const [data, setData] = useState<Symptom>(initSymptom);
     const [reload, setReload] = useState<Function>(() => {});
@@ -42,13 +46,25 @@ const Symptoms: React.FC = () => {
             title: "Tên triệu chứng",
             index: 3,
         },
-        // {
-        //     field: "description",
-        //     align: "left",
-        //     title: "Mô tả",
-        //     disableFilter: true,
-        //     index: 4,
-        // },
+        {
+            field: "isActive",
+            align: "left",
+            title: "Trạng thái",
+            disableSort: true,
+            disableFilter: true,
+            index: 4,
+            render: (props: boolean) => {
+                return (
+                    <Box display="flex" alignItems="center" justifyContent="left">
+                        <Chip
+                            label={props ? "ACTIVE" : "INACTIVE"}
+                            color={props ? "success" : "secondary"}
+                        />
+                    </Box>
+                );
+            },
+            width: "100",
+        },
     ];
 
     const addRowData = async (callback: Function) => {

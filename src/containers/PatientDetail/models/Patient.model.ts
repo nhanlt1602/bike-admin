@@ -4,5 +4,8 @@ export type Patient = {
     backgroundDisease: string;
     allergy: string;
     bloodGroup: string;
+    isActive: boolean;
     healthChecks?: any[];
+    name: string;
+    avatar?: string;
 };

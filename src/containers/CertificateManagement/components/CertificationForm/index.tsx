@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Certificate } from "../../models/Certificate.models";
 
-import { Card, Modal, TextField, Typography } from "@mui/material";
+import { Card, Modal, Stack, Switch, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/system";
 
@@ -15,6 +15,13 @@ export interface ICertificationForm {
 }
 const CertificationForm: React.FC<ICertificationForm> = (props: ICertificationForm) => {
     const { data } = props;
+
+    const [checked, setChecked] = React.useState(data?.isActive);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setChecked(event.target.checked);
+        setValue("isActive", checked);
+    };
     const {
         register,
         handleSubmit,
@@ -27,6 +34,7 @@ const CertificationForm: React.FC<ICertificationForm> = (props: ICertificationFo
         setValue("name", data.name);
         setValue("id", data.id);
         setValue("description", data.description);
+        setValue("isActive", data.isActive);
     }, [data, setValue]);
 
     const submitHandler: SubmitHandler<Certificate> = (data: Certificate) => {
@@ -63,7 +71,11 @@ const CertificationForm: React.FC<ICertificationForm> = (props: ICertificationFo
                     </Box>
                     <Box
                         sx={{
-                            "& > :not(style)": { m: 2, display: "flex", justifyContent: "center" },
+                            "& > :not(style)": {
+                                m: 2,
+                                display: "flex",
+                                // justifyContent: "center"
+                            },
                         }}
                     >
                         <TextField
@@ -83,9 +95,26 @@ const CertificationForm: React.FC<ICertificationForm> = (props: ICertificationFo
                             multiline
                             rows={5}
                         />
-
+                        <Stack direction="row" spacing={0}>
+                            <Typography
+                                sx={{
+                                    // mx: "auto",
+                                    p: 1,
+                                    //
+                                    // "& > :not(style)": { m: 1 },
+                                }}
+                            >
+                                Trạng thái:
+                            </Typography>
+                            <Switch
+                                checked={checked}
+                                onChange={handleChange}
+                                inputProps={{ "aria-label": "controlled" }}
+                            />
+                        </Stack>
                         <Box
                             sx={{
+                                justifyContent: "center",
                                 mx: "auto",
                                 p: 1,
                                 m: 1,

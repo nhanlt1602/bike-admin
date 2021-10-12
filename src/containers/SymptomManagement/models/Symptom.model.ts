@@ -3,4 +3,5 @@ export type Symptom = {
     symptomCode: string;
     name: string;
     description?: string;
+    isActive: boolean;
 };

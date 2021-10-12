@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -6,7 +6,7 @@ import CustomizeAutocomplete from "src/components/CustomizeAutocomplete";
 
 import { Disease } from "../../models/Disease.model";
 
-import { Button, Card, Modal, TextField, Typography } from "@mui/material";
+import { Button, Card, Modal, Stack, Switch, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 export interface IDiseaseForm {
@@ -17,6 +17,13 @@ export interface IDiseaseForm {
 
 const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
     const { data } = props;
+
+    const [checked, setChecked] = useState(data?.isActive);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setChecked(event.target.checked);
+        setValue("isActive", checked);
+    };
     const {
         register,
         handleSubmit,
@@ -32,6 +39,7 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
         setValue("name", data.name);
         setValue("description", data.description);
         setValue("diseaseGroupId", data.diseaseGroupId);
+        setValue("isActive", data.isActive);
         // setValue("diseaseGroup", data.diseaseGroup);
     }, [data, setValue]);
 
@@ -84,7 +92,11 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                     component="form"
                     onSubmit={handleSubmit(submitHandler)}
                     sx={{
-                        "& > :not(style)": { m: 2, display: "flex", justifyContent: "center" },
+                        "& > :not(style)": {
+                            m: 2,
+                            display: "flex",
+                            //  justifyContent: "center"
+                        },
                     }}
                 >
                     <TextField
@@ -137,9 +149,26 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
                         multiline
                         rows={5}
                     />
-
+                    <Stack direction="row" spacing={0}>
+                        <Typography
+                            sx={{
+                                // mx: "auto",
+                                p: 1,
+                                //
+                                // "& > :not(style)": { m: 1 },
+                            }}
+                        >
+                            Trạng thái:
+                        </Typography>
+                        <Switch
+                            checked={checked}
+                            onChange={handleChange}
+                            inputProps={{ "aria-label": "controlled" }}
+                        />
+                    </Stack>
                     <Box
                         sx={{
+                            justifyContent: "center",
                             mx: "auto",
                             p: 1,
                             m: 1,

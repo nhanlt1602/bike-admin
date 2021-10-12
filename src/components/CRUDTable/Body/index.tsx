@@ -60,14 +60,18 @@ export const TableData = <T extends Record<string, any>>(
                 return (
                     <TableRow key={row.id}>
                         {props.columns.map((column: IColumn, index: number) => {
+                            const { render, link, renderLink } = column;
                             if (column.type === "index") {
                                 return (
                                     <TableCell width={column.width || undefined} key={index}>
-                                        {indexRow + 1}
+                                        {!link ? (
+                                            indexRow + 1
+                                        ) : (
+                                            <a href={`${link}/${row.id}`}>{indexRow + 1}</a>
+                                        )}
                                     </TableCell>
                                 );
                             }
-                            const { render, link, renderLink } = column;
                             return (
                                 <TableCell width={column.width || undefined} key={index}>
                                     {render !== undefined ? (
