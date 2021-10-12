@@ -5,6 +5,7 @@ export interface ITable {
     title?: string | React.ReactElement;
     headerColor?: "primary" | "secondary" | "standard";
     query: string;
+    initParam?: string;
     action?: {
         onAdd?: (callback: Function) => void;
         onEdit?: (rowData: any, callback: Function) => void;

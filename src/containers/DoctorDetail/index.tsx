@@ -17,7 +17,14 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
-import { Accordion, Dialog, DialogContent, DialogTitle, Rating } from "@mui/material";
+import {
+    Accordion,
+    CircularProgress,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    Rating,
+} from "@mui/material";
 import {
     Button,
     Avatar,
@@ -90,6 +97,8 @@ const DoctorDetails: React.FC = () => {
                 }
             } catch (_error) {
                 history.push("/not-found");
+            } finally {
+                setLoading(false);
             }
         },
         [history]
@@ -226,25 +235,40 @@ const DoctorDetails: React.FC = () => {
             </CardContent>
             <Divider />
             <CardActions>
-                <Button
-                    color={lockAccount ? "success" : "error"}
-                    fullWidth
-                    variant="text"
-                    onClick={handleClickLock}
-                >
-                    {account?.active ? "Khóa tài khoản" : "Kích hoạt tài khoản"}
-                </Button>
-                <Button
-                    color={verifyDoctor ? "error" : "success"}
-                    fullWidth
-                    variant="text"
-                    onClick={handleClickVerify}
-                >
-                    {verifyDoctor ? "Chưa xác thực" : "Xác thực"}
-                </Button>
-                <Button color={"warning"} fullWidth variant="text">
-                    Lịch hoạt động
-                </Button>
+                {doctor?.isVerify ? (
+                    <React.Fragment>
+                        <Button
+                            color={lockAccount ? "success" : "error"}
+                            fullWidth
+                            variant="text"
+                            onClick={handleClickLock}
+                        >
+                            {account?.active ? "Khóa tài khoản" : "Kích hoạt tài khoản"}
+                        </Button>
+                        <Button color={"warning"} fullWidth variant="text">
+                            Lịch hoạt động
+                        </Button>
+                    </React.Fragment>
+                ) : (
+                    <React.Fragment>
+                        <Button
+                            color={"success"}
+                            fullWidth
+                            variant="text"
+                            onClick={handleClickVerify}
+                        >
+                            XÁC THỰC BÁC SĨ
+                        </Button>
+                        <Button
+                            color={"error"}
+                            fullWidth
+                            variant="text"
+                            onClick={handleClickVerify}
+                        >
+                            TỪ CHỐI XÁC THỰC
+                        </Button>
+                    </React.Fragment>
+                )}
             </CardActions>
         </Card>
     );
@@ -405,6 +429,10 @@ const DoctorDetails: React.FC = () => {
             </Accordion>
         </form>
     );
+
+    if (loading) {
+        return <CircularProgress />;
+    }
 
     return (
         <React.Fragment>

@@ -1,7 +1,5 @@
 import { Settings } from "@mui/icons-material";
 import { Info } from "@mui/icons-material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-// import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
@@ -23,7 +21,7 @@ export const routes = [
     {
         id: 2,
         name: "Lịch sử tư vấn",
-        path: "/settings",
+        path: "/health-checks",
         icon: <HistoryIcon />,
     },
     {
@@ -35,80 +33,67 @@ export const routes = [
     {
         id: 4,
         name: "Bác sĩ",
-        path: "/accounts",
+        path: "/doctors",
         icon: <LocalHospitalIcon />,
     },
     {
         id: 5,
+        name: "Xác nhận Bác sĩ",
+        path: "/verify/doctors",
+        icon: <LocalHospitalIcon />,
+    },
+    {
+        id: 6,
         name: "Cấu hình chung",
         icon: <Settings />,
         children: [
             {
-                id: 6,
+                id: 7,
                 name: "Bệnh viện",
                 path: "/hospitals",
                 icon: <LocalHospitalIcon />,
             },
             {
-                id: 7,
+                id: 8,
                 name: "Chứng chỉ",
                 path: "/certifications",
                 icon: <CardMembershipIcon />,
             },
             {
-                id: 8,
+                id: 9,
                 name: "Chuyên ngành",
                 path: "/majors",
                 icon: <CastForEducationIcon />,
             },
             {
-                id: 9,
+                id: 10,
                 name: "Thuốc",
                 path: "/dash-board/general-setting/drug-manage",
                 icon: <MedicalServicesIcon />,
             },
             {
-                id: 10,
+                id: 11,
                 name: "Triệu chứng",
                 path: "/symptoms",
                 icon: <AutoStoriesIcon />,
             },
             {
-                id: 11,
+                id: 12,
                 name: "Loại bệnh",
                 path: "/dash-board/general-setting/disease-manage",
                 icon: <AutoFixNormalIcon />,
             },
-            // {
-            //     id: 15,
-            //     name: "Nhóm bệnh",
-            //     path: "/disease-group",
-            //     icon: <AddToPhotosIcon />,
-            // },
             {
-                id: 12,
+                id: 13,
                 name: "Khung thời gian",
                 path: "/time-frames",
                 icon: <TimelapseIcon />,
             },
             {
-                id: 16,
-                name: "Danh sách kiểm tra",
-                path: "/health-checks",
+                id: 14,
+                name: "Tài khoản",
+                path: "/accounts",
                 icon: <TimelapseIcon />,
-            },
-        ],
-    },
-    {
-        id: 2,
-        name: "Quản lý",
-        icon: <AccountCircleIcon />,
-        children: [
-            {
-                id: 5,
-                name: "Danh sách bác sĩ",
-                path: "/doctors",
-                icon: <AccountCircleIcon />,
             },
         ],
     },
@@ -116,16 +101,10 @@ export const routes = [
 
 export const routesControlApp = [
     {
-        id: 13,
+        id: 15,
         name: "About us",
         path: "/about-us",
         children: null,
         icon: <Info />,
-    },
-    {
-        id: 14,
-        name: "Tài khoản",
-        path: "/accounts",
-        icon: <AccountCircleIcon />,
     },
 ];

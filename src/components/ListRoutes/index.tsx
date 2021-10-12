@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import { useHistory } from "react-router";
+import axios from "src/axios";
 
 import RoutesCollapse from "./components/RoutesCollapse";
 
 import { routes, routesControlApp } from "./data";
 
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { ListItemIcon, ListItem, Divider, Toolbar, ListItemText, List } from "@mui/material";
+import {
+    ListItemIcon,
+    ListItem,
+    Divider,
+    Toolbar,
+    ListItemText,
+    List,
+    IconButton,
+} from "@mui/material";
 
 export type ChildrenType = {
     fatherIndex: number;
@@ -16,6 +25,7 @@ export type ChildrenType = {
 };
 
 const ListRoutes = () => {
+    const [count, setCount] = useState(0);
     const itemSelected = sessionStorage.getItem("itemSelected");
     const history = useHistory();
     const [openChildren, setOpenChildren] = useState<ChildrenType>(
@@ -27,6 +37,22 @@ const ListRoutes = () => {
               }
             : JSON.parse(itemSelected)
     );
+
+    const countDoctor = useCallback(async () => {
+        try {
+            const response = await axios.get("/doctors/count?is-verify=-2");
+            if (response.status === 200) {
+                setCount(response.data);
+            }
+        } catch (ex) {
+            // eslint-disable-next-line no-console
+            console.log(ex);
+        }
+    }, []);
+
+    useEffect(() => {
+        countDoctor();
+    }, [countDoctor]);
     useEffect(() => {
         sessionStorage.setItem("itemSelected", JSON.stringify(openChildren));
     }, [openChildren]);
@@ -73,6 +99,18 @@ const ListRoutes = () => {
                             handleListItemClick(item.id, item.path, Boolean(item.children), item.id)
                         }
                         selected={openChildren.fatherIndex === item.id}
+                        secondaryAction={
+                            item.id === -1 ? (
+                                <IconButton
+                                    edge="end"
+                                    size="small"
+                                    color="error"
+                                    aria-label="comments"
+                                >
+                                    {count}
+                                </IconButton>
+                            ) : null
+                        }
                     >
                         <ListItemIcon>{item.icon}</ListItemIcon>
                         <ListItemText primary={item.name} />

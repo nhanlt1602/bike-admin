@@ -32,7 +32,7 @@ const convertCamelToSnakeCase = (str: string) =>
 const CRUDTable = <T extends Record<string, string | number>>(
     props: ITable & { children?: React.ReactNode }
 ) => {
-    const { query, columns } = props;
+    const { query, columns, initParam } = props;
     const [loading, setLoading] = useState<boolean>(false);
     const [paging, setPaging] = useState<IPagingSupport<T>>({
         totalPage: 0,
@@ -68,7 +68,9 @@ const CRUDTable = <T extends Record<string, string | number>>(
         setLoading(true);
         try {
             const response = await fetch(
-                `${query}?page-offset=${offset}&limit=${limit}${stringFilter}`,
+                `${query}?${
+                    initParam ? initParam : ""
+                }page-offset=${offset}&limit=${limit}${stringFilter}`,
                 {
                     method: "GET",
                     headers: {
@@ -109,7 +111,9 @@ const CRUDTable = <T extends Record<string, string | number>>(
                     }&order-type=${orderBy.order}`;
                 }
                 const response = await fetch(
-                    `${query}?offset=${offset}&limit=${limit}${stringFilter}${queryStr}${orderStr}`,
+                    `${query}?${
+                        initParam ? initParam : ""
+                    }offset=${offset}&limit=${limit}${stringFilter}${queryStr}${orderStr}`,
                     {
                         method: "GET",
                         headers: {
@@ -130,7 +134,7 @@ const CRUDTable = <T extends Record<string, string | number>>(
                 setLoading(false);
             }
         },
-        [query]
+        [query, initParam]
     );
 
     useEffect(() => {
