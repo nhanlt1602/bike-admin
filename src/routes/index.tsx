@@ -26,6 +26,7 @@ import Majors from "src/containers/MajorManagement";
 import NotFound from "src/containers/NotFound";
 import PatientDetail from "src/containers/PatientDetail";
 import Patients from "src/containers/PatientManagement";
+import SlotManagement from "src/containers/SlotManagement";
 import Symptoms from "src/containers/SymptomManagement";
 import TimeFrames from "src/containers/TimeFrame";
 
@@ -156,6 +157,11 @@ export const privateRoutes = [
         path: "/health-checks/:id",
         name: "healthCheckDetail",
         component: HealthCheckDetail,
+    },
+    {
+        path: "/slots",
+        name: "slots",
+        component: SlotManagement,
     },
 ];
 
