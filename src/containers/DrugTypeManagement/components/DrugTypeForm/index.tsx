@@ -15,11 +15,20 @@ export interface IDrugTypeForm {
 }
 const DrugTypeForm: React.FC<IDrugTypeForm> = (props: IDrugTypeForm) => {
     const { data } = props;
-    const [checked, setChecked] = React.useState(data?.isActive);
+    const [checked, setChecked] = React.useState<boolean>(data.isActive);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
-        setValue("isActive", checked);
+        // eslint-disable-next-line no-console
+        console.log(event.target.checked); //true
+        if (event.target.checked === true) {
+            setValue("isActive", true);
+        } else if (event.target.checked === false) {
+            setValue("isActive", false);
+        } else {
+            // eslint-disable-next-line no-console
+            console.log(event.target.checked);
+        }
     };
     const {
         register,
@@ -34,7 +43,8 @@ const DrugTypeForm: React.FC<IDrugTypeForm> = (props: IDrugTypeForm) => {
         setValue("id", data.id);
         setValue("description", data.description);
         setValue("isActive", data.isActive);
-    }, [data, setValue]);
+        setChecked(data.isActive);
+    }, [data, setValue, setChecked]);
 
     const submitHandler: SubmitHandler<DrugType> = (data: DrugType) => {
         // eslint-disable-next-line no-console

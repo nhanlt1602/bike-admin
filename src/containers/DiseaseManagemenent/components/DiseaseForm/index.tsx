@@ -18,11 +18,22 @@ export interface IDiseaseForm {
 const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
     const { data } = props;
 
-    const [checked, setChecked] = useState(data?.isActive);
+    const [checked, setChecked] = useState<boolean>(data.isActive);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
-        setValue("isActive", checked);
+        // eslint-disable-next-line no-console
+        console.log(event.target.checked); //true
+        if (event.target.checked === true) {
+            setValue("isActive", true);
+            clearErrors("diseaseGroupId");
+        } else if (event.target.checked === false) {
+            setValue("isActive", false);
+            clearErrors("diseaseGroupId");
+        } else {
+            // eslint-disable-next-line no-console
+            console.log(event.target.checked);
+        }
     };
     const {
         register,
@@ -41,7 +52,8 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
         setValue("diseaseGroupId", data.diseaseGroupId);
         setValue("isActive", data.isActive);
         // setValue("diseaseGroup", data.diseaseGroup);
-    }, [data, setValue]);
+        setChecked(data.isActive);
+    }, [data, setValue, setChecked]);
 
     const changeValue = (value: number) => {
         setValue("diseaseGroupId", value);
@@ -51,9 +63,9 @@ const DiseaseForm: React.FC<IDiseaseForm> = (props: IDiseaseForm) => {
     const submitHandler: SubmitHandler<Disease> = (data: Disease) => {
         // eslint-disable-next-line no-console
         console.log(data);
-        // if (data) {
-        //     props.handleClose("SAVE", data, clearErrors);
-        // }
+        if (data) {
+            props.handleClose("SAVE", data, clearErrors);
+        }
     };
 
     const { ref: diseaseGroupIdRef, ...diseaseGroupIdRefProps } = register("diseaseGroupId", {
