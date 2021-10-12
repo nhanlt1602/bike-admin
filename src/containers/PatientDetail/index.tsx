@@ -82,10 +82,10 @@ const PatientDetail: React.FC = () => {
         [history]
     );
 
-    const getHealthChecks = useCallback(async (patientId) => {
+    const getHealthChecks = useCallback(async (patientId, limit) => {
         try {
             const response = await axios.get(
-                `/health-checks?patient-id=${patientId}&page-offset=1&limit=4`
+                `/health-checks?patient-id=${patientId}&page-offset=1&limit=${limit}`
             );
             if (response.status === 200) {
                 setHealthChecks(response.data.content);
@@ -93,10 +93,17 @@ const PatientDetail: React.FC = () => {
         } catch (_error) {}
     }, []);
 
+    const handleViewMore = (limit: number) => {
+        getHealthChecks(patient?.id, limit);
+    };
+
     useEffect(() => {
         getAccountByEmail(email);
-        getHealthChecks(patient?.id);
-    }, [email, getAccountByEmail, getHealthChecks, patient]);
+    }, [email, getAccountByEmail]);
+
+    useEffect(() => {
+        getHealthChecks(patient?.id, 4);
+    }, [patient, getHealthChecks]);
 
     return (
         <React.Fragment>
@@ -130,7 +137,10 @@ const PatientDetail: React.FC = () => {
                                 />
                             </Box>
                             <Box sx={{ mt: 3 }}>
-                                <ConsultationHistory healthChecks={healthChecks} />
+                                <ConsultationHistory
+                                    healthChecks={healthChecks}
+                                    clicked={handleViewMore}
+                                />
                             </Box>
                         </Grid>
                     </Grid>
