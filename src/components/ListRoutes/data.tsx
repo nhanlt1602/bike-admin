@@ -1,5 +1,4 @@
 import { Settings } from "@mui/icons-material";
-import { Info } from "@mui/icons-material";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
@@ -99,12 +98,12 @@ export const routes = [
     },
 ];
 
-export const routesControlApp = [
-    {
-        id: 15,
-        name: "About us",
-        path: "/about-us",
-        children: null,
-        icon: <Info />,
-    },
-];
+// export const routesControlApp = [
+//     {
+//         id: 15,
+//         name: "About us",
+//         path: "/about-us",
+//         children: null,
+//         icon: <Info />,
+//     },
+// ];

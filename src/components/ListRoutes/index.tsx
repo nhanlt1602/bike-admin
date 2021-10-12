@@ -5,18 +5,10 @@ import axios from "src/axios";
 
 import RoutesCollapse from "./components/RoutesCollapse";
 
-import { routes, routesControlApp } from "./data";
+import { routes } from "./data";
 
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import {
-    ListItemIcon,
-    ListItem,
-    Divider,
-    Toolbar,
-    ListItemText,
-    List,
-    IconButton,
-} from "@mui/material";
+import { ListItemIcon, ListItem, Divider, Toolbar, ListItemText, IconButton } from "@mui/material";
 
 export type ChildrenType = {
     fatherIndex: number;
@@ -133,7 +125,7 @@ const ListRoutes = () => {
                 </React.Fragment>
             ))}
             <Divider />
-            <List>
+            {/* <List>
                 {routesControlApp.map((item) => (
                     <ListItem
                         button
@@ -147,7 +139,7 @@ const ListRoutes = () => {
                         <ListItemText primary={item.name} />
                     </ListItem>
                 ))}
-            </List>
+            </List> */}
         </React.Fragment>
     );
 };
