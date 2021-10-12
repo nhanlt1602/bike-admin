@@ -17,11 +17,20 @@ export interface IDrugForm {
 
 const DrugForm: React.FC<IDrugForm> = (props: IDrugForm) => {
     const { data } = props;
-    const [checked, setChecked] = useState(data?.isActive);
+    const [checked, setChecked] = useState<boolean>(data.isActive);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
-        setValue("isActive", checked);
+        // eslint-disable-next-line no-console
+        console.log(event.target.checked); //true
+        if (event.target.checked === true) {
+            setValue("isActive", true);
+        } else if (event.target.checked === false) {
+            setValue("isActive", false);
+        } else {
+            // eslint-disable-next-line no-console
+            console.log(event.target.checked);
+        }
     };
     const {
         register,
@@ -39,7 +48,9 @@ const DrugForm: React.FC<IDrugForm> = (props: IDrugForm) => {
         setValue("drugForm", data.drugForm);
         setValue("drugTypeId", data.drugTypeId);
         setValue("isActive", data.isActive);
-    }, [data, setValue]);
+
+        setChecked(data.isActive);
+    }, [data, setValue, setChecked]);
 
     const changeValue = (value: number) => {
         setValue("drugTypeId", value);

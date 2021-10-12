@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -15,11 +15,20 @@ export interface IDiseaseGroupForm {
 
 const DiseaseGroupForm: React.FC<IDiseaseGroupForm> = (props: IDiseaseGroupForm) => {
     const { data } = props;
-    const [checked, setChecked] = useState(data?.isActive);
+    const [checked, setChecked] = React.useState<boolean>(data.isActive);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
-        setValue("isActive", checked);
+        // eslint-disable-next-line no-console
+        console.log(event.target.checked); //true
+        if (event.target.checked === true) {
+            setValue("isActive", true);
+        } else if (event.target.checked === false) {
+            setValue("isActive", false);
+        } else {
+            // eslint-disable-next-line no-console
+            console.log(event.target.checked);
+        }
     };
     const {
         register,
@@ -33,7 +42,8 @@ const DiseaseGroupForm: React.FC<IDiseaseGroupForm> = (props: IDiseaseGroupForm)
         setValue("id", data.id);
         setValue("groupName", data.groupName);
         setValue("isActive", data.isActive);
-    }, [data, setValue]);
+        setChecked(data.isActive);
+    }, [data, setValue, setChecked]);
 
     const submitHandler: SubmitHandler<DiseaseGroup> = (data: DiseaseGroup) => {
         // eslint-disable-next-line no-console
