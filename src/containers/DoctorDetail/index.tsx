@@ -245,7 +245,12 @@ const DoctorDetails: React.FC = () => {
                         >
                             {account?.active ? "Khóa tài khoản" : "Kích hoạt tài khoản"}
                         </Button>
-                        <Button color={"warning"} fullWidth variant="text">
+                        <Button
+                            onClick={() => history.push("/slots/" + doctor.id)}
+                            color={"warning"}
+                            fullWidth
+                            variant="text"
+                        >
                             Lịch hoạt động
                         </Button>
                     </React.Fragment>

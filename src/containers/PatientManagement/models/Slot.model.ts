@@ -1,4 +1,5 @@
 import { Doctor } from "./Doctor.model";
+import { HealthCheck } from "./HealthCheck.model";
 
 export type Slot = {
     id: number;
@@ -8,4 +9,5 @@ export type Slot = {
     endTime: string;
     healthCheckId: number;
     doctor: Doctor;
+    healthCheck: HealthCheck;
 };

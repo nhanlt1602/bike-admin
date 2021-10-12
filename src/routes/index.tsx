@@ -164,7 +164,7 @@ export const privateRoutes = [
         component: HealthCheckDetail,
     },
     {
-        path: "/slots",
+        path: "/slots/:id",
         name: "slots",
         component: SlotManagement,
     },
