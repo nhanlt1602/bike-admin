@@ -7,8 +7,8 @@ class TimeManageUltis {
 
     convertMinutes(time: string) {
         const array = time.split(":");
-        if (array.length == 2 && Number.isInteger(array[0]) && Number.isInteger(array[1])) {
-            return +array[0] * 60 + +array[1];
+        if (array.length == 2) {
+            return Number.parseInt(array[0]) * 60 + Number.parseInt(array[1]);
         }
         return 0;
     }

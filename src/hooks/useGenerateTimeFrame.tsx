@@ -18,6 +18,7 @@ const useGenerateTimeFrame = () => {
             startTime != undefined ? TimeManageUltis.convertMinutes(startTime) : 0;
         const endTimeNumber = endTime != undefined ? TimeManageUltis.convertMinutes(endTime) : 0;
         const rangeTimeNumber = Number.parseInt(rangeTime);
+
         if (
             startTimeNumber > 0 &&
             endTimeNumber > 0 &&
