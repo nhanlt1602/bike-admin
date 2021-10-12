@@ -67,42 +67,42 @@ const normalColumns: IColumn[] = [
         renderLink: (data: Doctor) => {
             return "/doctors/" + data.email;
         },
-        width: "100",
+        width: "90",
     },
     {
         field: "name",
         align: "left",
         title: "Tên bác sĩ",
         index: 4,
-        width: "120",
+        width: "130",
     },
     {
         field: "certificateCode",
         align: "left",
         title: "Mã hành nghề",
         index: 5,
-        width: "140",
+        width: "150",
     },
     {
         field: "scopeOfPractice",
         align: "left",
         title: "Chuyên khoa",
         index: 6,
-        width: "200",
+        width: "190",
     },
     {
         field: "numberOfConsultants",
         align: "left",
         title: "Số người tư vấn",
         index: 7,
-        width: "140",
+        width: "160",
     },
     {
         field: "rating",
         align: "left",
         title: "Đánh giá",
         index: 8,
-        width: "100",
+        width: "90",
         render: (props: number) => {
             return <Rating readOnly value={props || 0} />;
         },
@@ -178,14 +178,15 @@ const Doctors: React.FC = () => {
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Bác sĩ đã xác nhận" />
                         <Tab label="Bác sĩ chưa xác nhận" />
+                        <Tab label="Bác sĩ đã từ chối" />
                     </Tabs>
                 </Box>
                 <TabPanel value={value} index={0}>
                     <CRUDTable
                         title={
                             window.location.href.includes("verify")
-                                ? "Danh sách bác sĩ chưa xác nhận"
-                                : "Quản lí bác sĩ"
+                                ? "Danh sách bác sĩ đã xác nhận"
+                                : "Danh sách bác sĩ đã xác nhận"
                         }
                         enableFilter
                         sort
@@ -212,7 +213,25 @@ const Doctors: React.FC = () => {
                             window.location.href.includes("verify") ? "-2" : "-2"
                         }&`}
                         columns={
-                            window.location.href.includes("verify") ? verifyColumns : normalColumns
+                            window.location.href.includes("verify") ? verifyColumns : verifyColumns
+                        }
+                    />
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                    <CRUDTable
+                        title={
+                            window.location.href.includes("verify")
+                                ? "Danh sách bác sĩ đã từ chối"
+                                : "Danh sách bác sĩ đã từ chối"
+                        }
+                        enableFilter
+                        sort
+                        query={`${API_ROOT_URL}/doctors`}
+                        initParam={`&is-verify=${
+                            window.location.href.includes("verify") ? "-1" : "-1"
+                        }&`}
+                        columns={
+                            window.location.href.includes("verify") ? verifyColumns : verifyColumns
                         }
                     />
                 </TabPanel>
