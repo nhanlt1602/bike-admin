@@ -8,7 +8,7 @@ import { Slot } from "../PatientManagement/models/Slot.model";
 
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import { Scheduler, WeekView, Appointments } from "@devexpress/dx-react-scheduler-material-ui";
-import { CircularProgress, Paper } from "@mui/material";
+import { Box, CircularProgress, Paper, Typography } from "@mui/material";
 
 const currentDate = new Date().toDateString();
 
@@ -95,6 +95,10 @@ const SlotManagement: React.FC = () => {
             }) || [];
         return (
             <React.Fragment>
+                <Typography variant="h5">
+                    Lịch khám bệnh của bác sĩ {slots && slots[0]?.doctor.name}
+                </Typography>
+                <Box height={20} />
                 <Paper>
                     <Scheduler data={data}>
                         <ViewState defaultCurrentDate={currentDate} />

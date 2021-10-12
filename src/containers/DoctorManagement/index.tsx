@@ -146,7 +146,7 @@ const Doctors: React.FC = () => {
                 title={
                     window.location.href.includes("verify")
                         ? "Danh sách bác sĩ chưa xác nhận"
-                        : "Quả lí bác sĩ"
+                        : "Quản lí bác sĩ"
                 }
                 enableFilter
                 sort
