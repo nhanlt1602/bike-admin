@@ -16,11 +16,16 @@ import Util from "src/utils/Util";
 
 export interface IConsultationHistory {
     healthChecks?: HealthCheck[];
+    clicked: (limit: number) => void;
 }
 
 const ConsultationHistory: React.FC<IConsultationHistory> = (props: IConsultationHistory) => {
     const { healthChecks } = props;
     const history = useHistory();
+
+    const viewMoreHandler = () => {
+        props.clicked(20);
+    };
 
     let healthCheckList = (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: 233 }}>
@@ -45,17 +50,18 @@ const ConsultationHistory: React.FC<IConsultationHistory> = (props: IConsultatio
                                   <Typography component="div" sx={{ mr: 1 }} color="text.secondary">
                                       Bác sĩ tư vấn
                                   </Typography>
-                                  <Typography component="div" sx={{ mr: 5 }}>
+                                  <Typography component="div" sx={{ mr: 3, width: 170 }}>
                                       {item.slots[0].doctor.name}
                                   </Typography>
                                   <Typography component="div" sx={{ mr: 1 }} color="text.secondary">
                                       Ngày đăng kí
                                   </Typography>
-                                  <Typography component="div" sx={{ mr: 5 }}>
+                                  <Typography component="div" sx={{ mr: 3 }}>
                                       {Util.convertDate(item.createdTime)}
                                   </Typography>
                                   <Box sx={{ display: "flex", alignItems: "center" }}>
                                       <Chip
+                                          sx={{ width: 85 }}
                                           label={
                                               item.status === "BOOKED"
                                                   ? "Đã đặt hẹn"
@@ -96,6 +102,7 @@ const ConsultationHistory: React.FC<IConsultationHistory> = (props: IConsultatio
                     variant="text"
                     size="large"
                     disabled={props.healthChecks?.length === 0}
+                    onClick={viewMoreHandler}
                 >
                     Xem thêm
                 </Button>
