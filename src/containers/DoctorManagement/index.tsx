@@ -7,7 +7,33 @@ import { IColumn } from "src/components/CRUDTable/Models";
 
 import { Doctor } from "../PatientManagement/models/Doctor.model";
 
-import { Avatar, Rating } from "@mui/material";
+import { Avatar, Rating, Tab, Tabs, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+
+interface TabPanelProps {
+    children?: React.ReactNode;
+    index: number;
+    value: number;
+}
+function TabPanel(props: TabPanelProps) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
 
 const normalColumns: IColumn[] = [
     {
@@ -140,20 +166,57 @@ const verifyColumns: IColumn[] = [
     },
 ];
 const Doctors: React.FC = () => {
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+        setValue(newValue);
+    };
     return (
         <React.Fragment>
-            <CRUDTable
-                title={
-                    window.location.href.includes("verify")
-                        ? "Danh sách bác sĩ chưa xác nhận"
-                        : "Quả lí bác sĩ"
-                }
-                enableFilter
-                sort
-                query={`${API_ROOT_URL}/doctors`}
-                initParam={`&is-verify=${window.location.href.includes("verify") ? "-2" : "1"}&`}
-                columns={window.location.href.includes("verify") ? verifyColumns : normalColumns}
-            />
+            <Box sx={{ width: "100%" }}>
+                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                        <Tab label="Bác sĩ đã xác nhận" />
+                        <Tab label="Bác sĩ chưa xác nhận" />
+                    </Tabs>
+                </Box>
+                <TabPanel value={value} index={0}>
+                    <CRUDTable
+                        title={
+                            window.location.href.includes("verify")
+                                ? "Danh sách bác sĩ chưa xác nhận"
+                                : "Quản lí bác sĩ"
+                        }
+                        enableFilter
+                        sort
+                        query={`${API_ROOT_URL}/doctors`}
+                        initParam={`&is-verify=${
+                            window.location.href.includes("verify") ? "-2" : "1"
+                        }&`}
+                        columns={
+                            window.location.href.includes("verify") ? verifyColumns : normalColumns
+                        }
+                    />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <CRUDTable
+                        title={
+                            window.location.href.includes("verify")
+                                ? "Danh sách bác sĩ chưa xác nhận"
+                                : "Danh sách bác sĩ chưa xác nhận"
+                        }
+                        enableFilter
+                        sort
+                        query={`${API_ROOT_URL}/doctors`}
+                        initParam={`&is-verify=${
+                            window.location.href.includes("verify") ? "-2" : "-2"
+                        }&`}
+                        columns={
+                            window.location.href.includes("verify") ? verifyColumns : normalColumns
+                        }
+                    />
+                </TabPanel>
+            </Box>
         </React.Fragment>
     );
 };
