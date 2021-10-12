@@ -1,3 +1,5 @@
+import { useHistory } from "react-router";
+
 import {
     Button,
     Card,
@@ -18,6 +20,7 @@ export interface IConsultationHistory {
 
 const ConsultationHistory: React.FC<IConsultationHistory> = (props: IConsultationHistory) => {
     const { healthChecks } = props;
+    const history = useHistory();
 
     let healthCheckList = (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: 233 }}>
@@ -76,7 +79,12 @@ const ConsultationHistory: React.FC<IConsultationHistory> = (props: IConsultatio
                                   </Box>
                               </CardContent>
                               <CardActions>
-                                  <Button size="small">Chi tiết</Button>
+                                  <Button
+                                      size="small"
+                                      onClick={() => history.push("/health-checks/" + item.id)}
+                                  >
+                                      Chi tiết
+                                  </Button>
                               </CardActions>
                           </Card>
                       ))}
