@@ -124,7 +124,6 @@ const ListRoutes = () => {
                     ) : null}
                 </React.Fragment>
             ))}
-            <Divider />
             {/* <List>
                 {routesControlApp.map((item) => (
                     <ListItem

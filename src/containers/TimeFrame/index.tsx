@@ -11,6 +11,7 @@ import { API_ROOT_URL } from "../../configurations";
 
 import { Box } from "@mui/system";
 import useGenerateTimeFrame from "src/hooks/useGenerateTimeFrame";
+import TimeManageUltis from "src/utils/TimeManageUltis";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -61,14 +62,6 @@ const TimeFrames: React.FC = () => {
         formState: { errors },
     } = useForm();
 
-    const convert_minutes = (time: string) => {
-        const array = time.split(":");
-        if (array.length == 2 && Number.isInteger(array[0]) && Number.isInteger(array[1])) {
-            return +array[0] * 60 + +array[1];
-        }
-        return 0;
-    };
-
     const submitHandler = () => {
         clearErrors();
         handleGenerateTimeFrame(
@@ -118,7 +111,8 @@ const TimeFrames: React.FC = () => {
                         {...register("timeEnd", {
                             required: "Thời gian kết thúc không được để trống!",
                             validate: (value) =>
-                                convert_minutes(value) > convert_minutes(getValues("timeStart")) ||
+                                TimeManageUltis.convertMinutes(value) >
+                                    TimeManageUltis.convertMinutes(getValues("timeStart")) ||
                                 "Thời gian kết thúc cần lớn hơn thời gian bắt đầu",
                         })}
                         error={Boolean(errors.timeEnd)}
