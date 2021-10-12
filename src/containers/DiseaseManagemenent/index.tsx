@@ -67,10 +67,16 @@ const Diseases: React.FC = () => {
         // },
 
         {
+            field: "isActive",
+            align: "left",
+            title: "trạng thái",
+            index: 4,
+        },
+        {
             field: "diseaseGroup",
             align: "left",
             title: "Nhóm dịch bệnh",
-            index: 4,
+            index: 5,
             render: (props: DiseaseGroup) => {
                 return <React.Fragment>{props.groupName}</React.Fragment>;
             },

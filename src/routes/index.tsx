@@ -14,8 +14,11 @@ import DrugManage from "src/containers/DashBoard/GeneralSetting/DrugManage";
 import DiseaseGroups from "src/containers/DiseaseGroupManagement";
 import Diseases from "src/containers/DiseaseManagemenent";
 import DoctorDetails from "src/containers/DoctorDetail";
+import Doctors from "src/containers/DoctorManagement";
 import Drugs from "src/containers/DrugManagement";
 import DrugTypes from "src/containers/DrugTypeManagement";
+import HealthChecks from "src/containers/HealthCheck";
+import HealthCheckDetail from "src/containers/HealthCheckDetail";
 import Hospitals from "src/containers/HospitalManagement";
 import Layout from "src/containers/Layout";
 import Login from "src/containers/Login";
@@ -23,6 +26,7 @@ import Majors from "src/containers/MajorManagement";
 import NotFound from "src/containers/NotFound";
 import PatientDetail from "src/containers/PatientDetail";
 import Patients from "src/containers/PatientManagement";
+import SlotManagement from "src/containers/SlotManagement";
 import Symptoms from "src/containers/SymptomManagement";
 import TimeFrames from "src/containers/TimeFrame";
 
@@ -105,7 +109,7 @@ export const privateRoutes = [
         component: PatientDetail,
     },
     {
-        path: "/doctors/:id",
+        path: "/doctors/:email",
         name: "doctorDetail",
         component: DoctorDetails,
     },
@@ -138,6 +142,26 @@ export const privateRoutes = [
         path: "/majors",
         name: "majors",
         component: Majors,
+    },
+    {
+        path: "/doctors",
+        name: "doctor",
+        component: Doctors,
+    },
+    {
+        path: "/health-checks",
+        name: "healthChecks",
+        component: HealthChecks,
+    },
+    {
+        path: "/health-checks/:id",
+        name: "healthCheckDetail",
+        component: HealthCheckDetail,
+    },
+    {
+        path: "/slots",
+        name: "slots",
+        component: SlotManagement,
     },
 ];
 

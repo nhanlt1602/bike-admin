@@ -8,4 +8,5 @@ export type Disease = {
     diseaseGroupId: number;
     isActive: boolean;
     diseaseGroup?: DiseaseGroup;
+    isActive: boolean;
 };

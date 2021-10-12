@@ -6,4 +6,6 @@ export type Patient = {
     bloodGroup: string;
     isActive: boolean;
     healthChecks?: any[];
+    name: string;
+    avatar?: string;
 };
