@@ -93,11 +93,11 @@ export const privateRoutes = [
         name: "drug",
         component: Drugs,
     },
-    {
-        name: "Xác nhận Bác sĩ",
-        path: "/verify/doctors",
-        component: Doctors,
-    },
+    // {
+    //     name: "Xác nhận Bác sĩ",
+    //     path: "/verify/doctors",
+    //     component: Doctors,
+    // },
     {
         path: "/drug-types",
         name: "drugType",

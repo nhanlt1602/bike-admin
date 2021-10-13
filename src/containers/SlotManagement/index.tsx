@@ -8,7 +8,8 @@ import { Slot } from "../PatientManagement/models/Slot.model";
 
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import { Scheduler, WeekView, Appointments } from "@devexpress/dx-react-scheduler-material-ui";
-import { Box, CircularProgress, Paper, Typography } from "@mui/material";
+import { Box, CircularProgress, Grid, Paper, Typography } from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 const currentDate = new Date().toDateString();
 
@@ -42,6 +43,7 @@ const SlotManagement: React.FC = () => {
                     ...style,
                     backgroundColor: data.backgroundColor,
                     color: data.color,
+                    fontSize: 12,
                 }}
             >
                 {children}
@@ -90,14 +92,63 @@ const SlotManagement: React.FC = () => {
                     location: "",
                     backgroundColor: slot.healthCheckId
                         ? getColor(slot.healthCheck?.status)
-                        : "blue",
+                        : grey[400],
+                    color: slot.healthCheckId ? "#fff" : "#fff",
                 };
             }) || [];
         return (
             <React.Fragment>
-                <Typography variant="h5">
-                    Lịch khám bệnh của bác sĩ {slots && slots[0]?.doctor.name}
-                </Typography>
+                <Grid container>
+                    <Grid item lg={6} md={6} xs={12}>
+                        <Typography variant="h5">
+                            Lịch khám bệnh của bác sĩ {slots && slots[0]?.doctor.name}
+                        </Typography>
+                    </Grid>
+                    <Grid item lg={6} md={6} xs={12}>
+                        <Grid padding={1} container border="1px solid grey" borderRadius="15px">
+                            <Grid display="flex" item xs={6} alignItems="center">
+                                <Box
+                                    borderRadius="5px"
+                                    mr={2}
+                                    height={20}
+                                    width={20}
+                                    bgcolor="grey.400"
+                                ></Box>
+                                Chưa có lịch
+                            </Grid>
+                            <Grid display="flex" item xs={6} alignItems="center">
+                                <Box
+                                    borderRadius="5px"
+                                    mr={2}
+                                    height={20}
+                                    width={20}
+                                    bgcolor="orange"
+                                ></Box>
+                                Đang đợi
+                            </Grid>
+                            <Grid display="flex" item xs={6} alignItems="center">
+                                <Box
+                                    borderRadius="5px"
+                                    mr={2}
+                                    height={20}
+                                    width={20}
+                                    bgcolor="red"
+                                ></Box>
+                                Bị hủy
+                            </Grid>
+                            <Grid display="flex" item xs={6} alignItems="center">
+                                <Box
+                                    borderRadius="5px"
+                                    mr={2}
+                                    height={20}
+                                    width={20}
+                                    bgcolor="green"
+                                ></Box>
+                                Đã hoàn thành
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
                 <Box height={20} />
                 <Paper>
                     <Scheduler data={data}>
