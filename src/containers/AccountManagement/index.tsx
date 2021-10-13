@@ -80,7 +80,7 @@ const Accounts: React.FC = () => {
                     <Box display="flex" alignItems="center" justifyContent="center">
                         <Chip
                             label={props ? "Nam" : "Nữ"}
-                            color={props ? "secondary" : "primary"}
+                            color={props ? "primary" : "secondary"}
                         />
                     </Box>
                 );
@@ -99,6 +99,7 @@ const Accounts: React.FC = () => {
                         <Chip
                             label={props.name === "DOCTOR" ? "Bác sĩ" : "Bệnh nhân"}
                             color={props.id === 1 ? "success" : "warning"}
+                            sx={{ width: 100 }}
                         />
                     </Box>
                 );
@@ -115,8 +116,8 @@ const Accounts: React.FC = () => {
                 return (
                     <Box display="flex" alignItems="center" justifyContent="center">
                         <Chip
-                            label={props ? "Đã kích hoạt" : "Chưa kích hoạt"}
-                            color={props ? "success" : "secondary"}
+                            label={props ? "Active" : "Inactive"}
+                            color={props ? "success" : "default"}
                         />
                     </Box>
                 );
