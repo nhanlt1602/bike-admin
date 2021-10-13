@@ -8,7 +8,7 @@ import RoutesCollapse from "./components/RoutesCollapse";
 import { routes } from "./data";
 
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { ListItemIcon, ListItem, Divider, Toolbar, ListItemText, IconButton } from "@mui/material";
+import { ListItem, Divider, Toolbar, ListItemText, IconButton, ListItemIcon } from "@mui/material";
 
 export type ChildrenType = {
     fatherIndex: number;
@@ -104,7 +104,9 @@ const ListRoutes = () => {
                             ) : null
                         }
                     >
-                        <ListItemIcon>{item.icon}</ListItemIcon>
+                        <ListItemIcon>
+                            <img src={item.icon} width="30px" height="auto" alt="icon" />
+                        </ListItemIcon>
                         <ListItemText primary={item.name} />
                         {item?.children ? (
                             openChildren.fatherIndex == item.id && openChildren.isOpen ? (

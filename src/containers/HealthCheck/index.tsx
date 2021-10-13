@@ -86,19 +86,34 @@ const HealthChecks: React.FC = () => {
                     case "BOOKED":
                         return (
                             <Box display="flex" alignItems="center" justifyContent="center">
-                                <Chip color="warning" variant="filled" label="Chờ tư vấn"></Chip>
+                                <Chip
+                                    color="primary"
+                                    variant="filled"
+                                    label="Đã đăt hẹn"
+                                    sx={{ width: 100 }}
+                                ></Chip>
                             </Box>
                         );
                     case "CANCELED":
                         return (
                             <Box display="flex" alignItems="center" justifyContent="center">
-                                <Chip color="error" variant="filled" label="Đã hủy"></Chip>
+                                <Chip
+                                    color="error"
+                                    variant="filled"
+                                    label="Đã hủy"
+                                    sx={{ width: 100 }}
+                                ></Chip>
                             </Box>
                         );
                     case "COMPLETED":
                         return (
                             <Box display="flex" alignItems="center" justifyContent="center">
-                                <Chip color="success" variant="filled" label="Đã tư vấn"></Chip>
+                                <Chip
+                                    color="success"
+                                    variant="filled"
+                                    label="Hoàn thành"
+                                    sx={{ width: 100 }}
+                                ></Chip>
                             </Box>
                         );
                     default:

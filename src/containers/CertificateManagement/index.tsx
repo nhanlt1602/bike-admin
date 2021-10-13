@@ -50,8 +50,8 @@ const Certifications: React.FC = () => {
                 return (
                     <Box display="flex" alignItems="center" justifyContent="center">
                         <Chip
-                            label={props ? "ACTIVE" : "INACTIVE"}
-                            color={props ? "success" : "secondary"}
+                            label={props ? "Active" : "Inactive"}
+                            color={props ? "success" : "default"}
                         />
                     </Box>
                 );

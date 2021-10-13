@@ -1,39 +1,41 @@
-import { Settings } from "@mui/icons-material";
-import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
-import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import CardMembershipIcon from "@mui/icons-material/CardMembership";
-import CastForEducationIcon from "@mui/icons-material/CastForEducation";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import HistoryIcon from "@mui/icons-material/History";
-import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
-import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
-import TimelapseIcon from "@mui/icons-material/Timelapse";
+import account from "../../assets/account.png";
+import certificate from "../../assets/certificate.png";
+import dashboard from "../../assets/dashboard.png";
+import disease from "../../assets/disease.png";
+import doctor from "../../assets/doctor.png";
+import drugs from "../../assets/drugs.png";
+import history from "../../assets/history.png";
+import hospital from "../../assets/hospital.png";
+import major from "../../assets/major.png";
+import patient from "../../assets/patient.png";
+import setting from "../../assets/setting.png";
+import symptoms from "../../assets/symptoms.png";
+import timeframe from "../../assets/timeframe.png";
 
 export const routes = [
     {
         id: 1,
         name: "Bảng điều khiển",
         path: "/dash-boards",
-        icon: <DashboardIcon />,
+        icon: dashboard,
     },
     {
         id: 2,
         name: "Lịch sử tư vấn",
         path: "/health-checks",
-        icon: <HistoryIcon />,
+        icon: history,
     },
     {
         id: 3,
         name: "Bệnh nhân",
         path: "/patients",
-        icon: <AssignmentIndIcon />,
+        icon: patient,
     },
     {
         id: 4,
         name: "Bác sĩ",
         path: "/doctors",
-        icon: <LocalHospitalIcon />,
+        icon: doctor,
     },
     // {
     //     id: 5,
@@ -44,55 +46,55 @@ export const routes = [
     {
         id: 5,
         name: "Cấu hình chung",
-        icon: <Settings />,
+        icon: setting,
         children: [
             {
                 id: 6,
                 name: "Bệnh viện",
                 path: "/hospitals",
-                icon: <LocalHospitalIcon />,
+                icon: hospital,
             },
             {
                 id: 7,
                 name: "Chứng chỉ",
                 path: "/certifications",
-                icon: <CardMembershipIcon />,
+                icon: certificate,
             },
             {
                 id: 8,
                 name: "Chuyên ngành",
                 path: "/majors",
-                icon: <CastForEducationIcon />,
+                icon: major,
             },
             {
                 id: 9,
                 name: "Thuốc",
                 path: "/dash-board/general-setting/drug-manage",
-                icon: <MedicalServicesIcon />,
+                icon: drugs,
             },
             {
                 id: 10,
                 name: "Triệu chứng",
                 path: "/symptoms",
-                icon: <AutoStoriesIcon />,
+                icon: symptoms,
             },
             {
                 id: 11,
                 name: "Loại bệnh",
                 path: "/dash-board/general-setting/disease-manage",
-                icon: <AutoFixNormalIcon />,
+                icon: disease,
             },
             {
                 id: 12,
                 name: "Khung thời gian",
                 path: "/time-frames",
-                icon: <TimelapseIcon />,
+                icon: timeframe,
             },
             {
                 id: 13,
                 name: "Tài khoản",
                 path: "/accounts",
-                icon: <TimelapseIcon />,
+                icon: account,
             },
         ],
     },

@@ -2,6 +2,8 @@ import React from "react";
 
 import axios from "src/axios";
 
+import logo from "../../assets/app-logo.png";
+
 import { AccountCircle } from "@mui/icons-material";
 import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -87,9 +89,12 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = (props: IAppBarWithDrawer)
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography sx={{ flexGrow: 1 }} variant="h6" noWrap component="div">
+                {/* <Typography sx={{ flexGrow: 1 }} variant="h6" noWrap component="div">
                     TeleMedicine App Admin
-                </Typography>
+                </Typography> */}
+                <Box sx={{ flexGrow: 1 }}>
+                    <img src={logo} alt="telemedicine-logo" width="210" height="30" />
+                </Box>
                 <IconButton
                     size="large"
                     aria-label="notification"
