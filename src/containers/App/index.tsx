@@ -3,6 +3,8 @@ import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import RouteComponent from "src/routes";
 
+import Notifications from "src/components/Notification/Notification";
+
 import SnackbarProvider from "src/context/SnackbarProvider.context";
 
 const App = () => {
@@ -10,6 +12,7 @@ const App = () => {
         <React.Fragment>
             <BrowserRouter>
                 <SnackbarProvider>
+                    <Notifications />
                     <RouteComponent />
                 </SnackbarProvider>
             </BrowserRouter>

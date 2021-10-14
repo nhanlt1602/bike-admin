@@ -1,6 +1,7 @@
 import React from "react";
 
 import axios from "src/axios";
+import { API_ROOT_URL } from "src/configurations";
 
 import logo from "../../assets/app-logo.png";
 
@@ -58,10 +59,22 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = (props: IAppBarWithDrawer)
         setAnchorElNoti(event.currentTarget);
     };
 
-    const logout = () => {
-        LocalStorageUtil.clear();
-        setAnchorEl(null);
-        window.location.reload();
+    const logout = async () => {
+        try {
+            const response = await axios.post(`${API_ROOT_URL}/logout`, {
+                token: LocalStorageUtil.getItem("token_subcribe"),
+                id: Number(LocalStorageUtil.getItem("id_app")),
+            });
+            if (response.status === 200) {
+                LocalStorageUtil.clear();
+                window.location.reload();
+            }
+        } catch (ex) {
+            // eslint-disable-next-line no-console
+            console.log(ex);
+        } finally {
+            setAnchorEl(null);
+        }
     };
 
     const handleClose = () => {

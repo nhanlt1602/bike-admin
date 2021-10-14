@@ -1,20 +1,28 @@
 import React, { createContext, useState } from "react";
 
-import SnackbarBase, { AlertBase, AlertBaseProps } from "src/components/Snackbar/SnackbarBase";
+import SnackbarBase, {
+    AlertBase,
+    AlertBaseProps,
+    SnackbarBaseProps,
+} from "src/components/Snackbar/SnackbarBase";
 
-export type showSnackbar = (newAlert: AlertBaseProps) => void;
+export type showSnackbar = (newAlert: AlertBaseProps, snackbarBase?: SnackbarBaseProps) => void;
 export const SnackbarContext = createContext<showSnackbar>(({}) => {});
 
 const SnackbarProvider: React.FC = ({ children }) => {
     const [alert, setAlert] = useState<AlertBaseProps>({});
+    const [snackbar, setSnackbar] = useState<SnackbarBaseProps>({});
     const [open, setOpen] = useState<boolean>(false);
 
-    const showSnackbar = (newAlert: AlertBaseProps) => {
+    const showSnackbar = (newAlert: AlertBaseProps, snackbarBase?: SnackbarBaseProps) => {
         setAlert({
             variant: "filled",
             severity: "success",
             ...newAlert,
         });
+        if (snackbarBase) {
+            setSnackbar(snackbarBase);
+        }
         setOpen(true);
     };
 
@@ -39,6 +47,7 @@ const SnackbarProvider: React.FC = ({ children }) => {
                 open={open}
                 onClose={handleClose}
                 autoHideDuration={4000}
+                {...snackbar}
             >
                 <AlertBase variant="filled" {...alert} onClose={handleClose} />
             </SnackbarBase>

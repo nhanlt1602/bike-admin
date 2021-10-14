@@ -10,3 +10,16 @@ export default axios.create({
         Authorization: `Bearer ${LocalStorageUtil.getToken()}`,
     },
 });
+
+axios.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error) => {
+        if (error.response.status === 401) {
+            LocalStorageUtil.clear();
+            window.location.reload();
+        }
+        return error;
+    }
+);

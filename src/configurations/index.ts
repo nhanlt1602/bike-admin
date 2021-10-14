@@ -7,6 +7,7 @@ const publicRuntimeConfig = {
     MESSAGING_SENDER_ID: process.env.REACT_APP_MESSAGING_SENDER_ID,
     APP_ID: process.env.REACT_APP_APP_ID,
     MEASUREMENT_ID: process.env.REACT_APP_MEASUREMENT_ID,
+    CLOUD_MESSAGING_TOKEN: process.env.REACT_APP_CLOUD_MESSAGING_TOKEN,
 };
 
 export const {
@@ -18,4 +19,5 @@ export const {
     MESSAGING_SENDER_ID,
     MEASUREMENT_ID,
     APP_ID,
+    CLOUD_MESSAGING_TOKEN,
 } = publicRuntimeConfig;

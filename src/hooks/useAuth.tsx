@@ -1,4 +1,3 @@
-import { useHistory } from "react-router";
 import axios from "src/axios";
 import { auth } from "src/config/firebase";
 import { API_ROOT_URL } from "src/configurations";
@@ -18,7 +17,6 @@ export const facebookProvider = new FacebookAuthProvider();
 
 const useAuth = () => {
     const showSnackBar = useSnackbar();
-    const history = useHistory();
     const login = async (provider: AuthProvider) => {
         try {
             let response = await signInWithPopup(auth, provider);
@@ -31,7 +29,8 @@ const useAuth = () => {
                 if (responseLogin.status === 200) {
                     LocalStorageUtil.setItem("user", responseLogin?.data?.account);
                     LocalStorageUtil.setItem("token", responseLogin?.data.accessToken);
-                    history.push("/");
+                    LocalStorageUtil.setItem("id_app", responseLogin?.data.account.id || "0");
+                    window.location.reload();
                 }
             }
         } catch (exception: any) {
