@@ -3,6 +3,7 @@ import { Switch } from "react-router";
 import { PrivateRoute } from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
+import AccesssaryManagements from "src/containers/AccessaryManagement";
 import Accounts from "src/containers/AccountManagement";
 import Certifications from "src/containers/CertificateManagement";
 import DashBoard from "src/containers/DashBoard";
@@ -24,9 +25,13 @@ import Layout from "src/containers/Layout";
 import Login from "src/containers/Login";
 import Majors from "src/containers/MajorManagement";
 import NotFound from "src/containers/NotFound";
+import OrderManagement from "src/containers/OrderManagement";
 import PatientDetail from "src/containers/PatientDetail";
 import Patients from "src/containers/PatientManagement";
+import ServiceManagement from "src/containers/ServiceManagement";
 import SlotManagement from "src/containers/SlotManagement";
+import StatisticManagement from "src/containers/StatisticManagement";
+import StoreManagement from "src/containers/StoreManagement";
 import Symptoms from "src/containers/SymptomManagement";
 import TimeFrames from "src/containers/TimeFrame";
 
@@ -167,6 +172,31 @@ export const privateRoutes = [
         path: "/slots/:id",
         name: "slots",
         component: SlotManagement,
+    },
+    {
+        path: "/order",
+        name: "orders",
+        component: OrderManagement,
+    },
+    {
+        path: "/accessary",
+        name: "accessarys",
+        component: AccesssaryManagements,
+    },
+    {
+        path: "/store",
+        name: "stores",
+        component: StoreManagement,
+    },
+    {
+        path: "/statistic",
+        name: "statistic",
+        component: StatisticManagement,
+    },
+    {
+        path: "/service",
+        name: "services",
+        component: ServiceManagement,
     },
 ];
 

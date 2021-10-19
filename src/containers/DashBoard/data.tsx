@@ -15,26 +15,26 @@ import TimelapseIcon from "@mui/icons-material/Timelapse";
 export const mainDashBoard = [
     {
         id: 1,
-        name: "Quản lí tài khoản",
-        path: "/dash-board/account-manage",
+        name: "Quản lí đơn hàng",
+        path: "/order",
         icon: AccountCircleIcon,
     },
     {
         id: 2,
-        name: "Quản lí cấu hình bác sĩ",
-        path: "/dash-board/doctor-manage",
+        name: "Quản lý cửa hàng",
+        path: "/store",
         icon: LocalHospitalIcon,
     },
     {
         id: 3,
-        name: "Quản lí cấu hình chung",
-        path: "/dash-board/general-setting",
+        name: "Quản lý phụ tùng",
+        path: "/accessary",
         icon: SettingsIcon,
     },
     {
         id: 4,
-        name: "Lịch sử tư vấn",
-        path: "/dash-board/consulting-history",
+        name: "Thống kê",
+        path: "/statistic",
         icon: HistoryIcon,
     },
 ];

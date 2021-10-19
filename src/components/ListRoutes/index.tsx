@@ -3,12 +3,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useHistory } from "react-router";
 import axios from "src/axios";
 
-import RoutesCollapse from "./components/RoutesCollapse";
-
 import { routes } from "./data";
 
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { ListItem, Divider, Toolbar, ListItemText, IconButton, ListItemIcon } from "@mui/material";
+import { ListItem, Divider, Toolbar, ListItemText, IconButton } from "@mui/material";
 
 export type ChildrenType = {
     fatherIndex: number;
@@ -87,9 +84,7 @@ const ListRoutes = () => {
                     <ListItem
                         button
                         key={item.name}
-                        onClick={() =>
-                            handleListItemClick(item.id, item.path, Boolean(item.children), item.id)
-                        }
+                        onClick={() => handleListItemClick(item.id, item.path, false, item.id)}
                         selected={openChildren.fatherIndex === item.id}
                         secondaryAction={
                             item.id === -1 ? (
@@ -104,26 +99,11 @@ const ListRoutes = () => {
                             ) : null
                         }
                     >
-                        <ListItemIcon>
+                        {/* <ListItemIcon>
                             <img src={item.icon} width="30px" height="auto" alt="icon" />
-                        </ListItemIcon>
+                        </ListItemIcon> */}
                         <ListItemText primary={item.name} />
-                        {item?.children ? (
-                            openChildren.fatherIndex == item.id && openChildren.isOpen ? (
-                                <ExpandLess />
-                            ) : (
-                                <ExpandMore />
-                            )
-                        ) : null}
                     </ListItem>
-                    {item?.children ? (
-                        <RoutesCollapse
-                            item={item?.children}
-                            fatherId={item?.id}
-                            handleListItemClick={handleListItemClick}
-                            openChildren={openChildren}
-                        />
-                    ) : null}
                 </React.Fragment>
             ))}
             {/* <List>

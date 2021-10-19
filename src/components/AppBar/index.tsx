@@ -3,8 +3,6 @@ import React from "react";
 import axios from "src/axios";
 import { API_ROOT_URL } from "src/configurations";
 
-import logo from "../../assets/app-logo.png";
-
 import { AccountCircle } from "@mui/icons-material";
 import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -89,6 +87,7 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = (props: IAppBarWithDrawer)
         <AppBar
             position="fixed"
             style={{
+                backgroundColor: "#e46b10",
                 zIndex: theme.zIndex.drawer + 1,
             }}
         >
@@ -106,7 +105,10 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = (props: IAppBarWithDrawer)
                     TeleMedicine App Admin
                 </Typography> */}
                 <Box sx={{ flexGrow: 1 }}>
-                    <img src={logo} alt="telemedicine-logo" width="210" height="30" />
+                    {/* <img src={logo} alt="telemedicine-logo" width="210" height="30" /> */}
+                    <Typography variant="h3" textOverflow="ellipsis">
+                        SosCar
+                    </Typography>
                 </Box>
                 <IconButton
                     size="large"
