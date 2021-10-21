@@ -79,37 +79,6 @@ const StatisticManagement: React.FC = () => {
                 </Typography>
                 <Container maxWidth="lg">
                     <Grid container spacing={3}>
-                        {/* <Grid item lg={3} md={6} xs={12}>
-                            <Card sx={{ maxWidth: 200 }}>
-                                <CardContent sx={{ justifyContent: "center" }}>
-                                    <Typography
-                                        sx={{ fontSize: 14 }}
-                                        color="text.secondary"
-                                        gutterBottom
-                                    >
-                                        Total Order day
-                                    </Typography>
-                                    <Stack direction="row" spacing={2}>
-                                        <Item>
-                                            <Typography variant="h5" component="h6" color="green">
-                                                +2.5%
-                                            </Typography>
-                                        </Item>
-                                        <StackedBarChartIcon
-                                            sx={{ fontSize: 40, color: "green" }}
-                                        />
-                                    </Stack>
-
-                                    <Typography
-                                        variant="h4"
-                                        sx={{ mb: 1.5 }}
-                                        color="text.secondary"
-                                    >
-                                        836.253
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid> */}
                         <Grid item lg={3} md={6} xs={12}>
                             <Card sx={{ maxWidth: 200 }}>
                                 <Box

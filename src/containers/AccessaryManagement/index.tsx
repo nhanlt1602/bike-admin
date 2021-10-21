@@ -124,87 +124,92 @@ const AccesssaryManagements: React.FC = () => {
     };
 
     return (
-        <Box sx={{ width: "100%" }}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Xe máy" />
-                    <Tab label="Ô tô" />
-                </Tabs>
+        <React.Fragment>
+            <Box>
+                <Typography variant="h3">Phụ tùng cửa hàng Hàng Xanh</Typography>
             </Box>
-            <TabPanel value={value} index={0}>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="left">ID</TableCell>
-                                <TableCell align="left">Tên</TableCell>
-                                <TableCell align="left">Hình ảnh</TableCell>
-                                <TableCell align="left">Giá tiền (VNĐ)</TableCell>
-                                <TableCell align="left">Nhà sản xuất</TableCell>
-                                <TableCell align="left">Xuất xứ</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows.map((row) => (
-                                <TableRow
-                                    key={row.name}
-                                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                                >
-                                    <TableCell>{row.name}</TableCell>
-                                    <TableCell align="left" width="200">
-                                        {row.calories}
-                                    </TableCell>
-                                    <TableCell align="left" width="130">
-                                        <img
-                                            width="100%"
-                                            height="100%"
-                                            src={row.image}
-                                            loading="lazy"
-                                        />
-                                    </TableCell>
-                                    <TableCell align="left" width="100">
-                                        {row.fat}
-                                    </TableCell>
-                                    <TableCell align="left" width="200">
-                                        {row.carbs}
-                                    </TableCell>
-                                    <TableCell align="left">{row.protein}</TableCell>
+            <Box sx={{ width: "100%" }}>
+                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                        <Tab label="Xe máy" />
+                        <Tab label="Ô tô" />
+                    </Tabs>
+                </Box>
+                <TabPanel value={value} index={0}>
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align="left">ID</TableCell>
+                                    <TableCell align="left">Tên</TableCell>
+                                    <TableCell align="left">Hình ảnh</TableCell>
+                                    <TableCell align="left">Giá tiền (VNĐ)</TableCell>
+                                    <TableCell align="left">Nhà sản xuất</TableCell>
+                                    <TableCell align="left">Xuất xứ</TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="left">ID:</TableCell>
-                                <TableCell align="left">Tên</TableCell>
-                                <TableCell align="left">Giá tiền</TableCell>
-                                <TableCell align="left">Nhà sản xuất</TableCell>
-                                <TableCell align="left">Xuất xứ</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows.map((row) => (
-                                <TableRow
-                                    key={row.name}
-                                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                                >
-                                    <TableCell>{row.name}</TableCell>
-                                    <TableCell align="left">{row.calories}</TableCell>
-                                    <TableCell align="left">{row.fat}</TableCell>
-                                    <TableCell align="left">{row.carbs}</TableCell>
-                                    <TableCell align="left">{row.protein}</TableCell>
+                            </TableHead>
+                            <TableBody>
+                                {rows.map((row) => (
+                                    <TableRow
+                                        key={row.name}
+                                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                    >
+                                        <TableCell>{row.name}</TableCell>
+                                        <TableCell align="left" width="200">
+                                            {row.calories}
+                                        </TableCell>
+                                        <TableCell align="left" width="130">
+                                            <img
+                                                width="100%"
+                                                height="100%"
+                                                src={row.image}
+                                                loading="lazy"
+                                            />
+                                        </TableCell>
+                                        <TableCell align="left" width="100">
+                                            {row.fat}
+                                        </TableCell>
+                                        <TableCell align="left" width="200">
+                                            {row.carbs}
+                                        </TableCell>
+                                        <TableCell align="left">{row.protein}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align="left">ID:</TableCell>
+                                    <TableCell align="left">Tên</TableCell>
+                                    <TableCell align="left">Giá tiền</TableCell>
+                                    <TableCell align="left">Nhà sản xuất</TableCell>
+                                    <TableCell align="left">Xuất xứ</TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </TabPanel>
-        </Box>
+                            </TableHead>
+                            <TableBody>
+                                {rows.map((row) => (
+                                    <TableRow
+                                        key={row.name}
+                                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                    >
+                                        <TableCell>{row.name}</TableCell>
+                                        <TableCell align="left">{row.calories}</TableCell>
+                                        <TableCell align="left">{row.fat}</TableCell>
+                                        <TableCell align="left">{row.carbs}</TableCell>
+                                        <TableCell align="left">{row.protein}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </TabPanel>
+            </Box>
+        </React.Fragment>
     );
 };
 export default AccesssaryManagements;
