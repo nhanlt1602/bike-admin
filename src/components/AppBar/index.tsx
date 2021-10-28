@@ -106,8 +106,8 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = (props: IAppBarWithDrawer)
                 </Typography> */}
                 <Box sx={{ flexGrow: 1 }}>
                     {/* <img src={logo} alt="telemedicine-logo" width="210" height="30" /> */}
-                    <Typography variant="h3" textOverflow="ellipsis">
-                        SosCar
+                    <Typography variant="h4" textOverflow="ellipsis">
+                        Hàng xanh Yamaha
                     </Typography>
                 </Box>
                 <IconButton

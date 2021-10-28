@@ -1,7 +1,21 @@
 import * as React from "react";
 
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    IconButton,
+    TextField,
+    Tooltip,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 import Tab from "@mui/material/Tab";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,13 +25,16 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
+import { styled } from "@mui/material/styles";
 
 interface TabPanelProps {
     children?: React.ReactNode;
     index: number;
     value: number;
 }
-
+const Input = styled("input")({
+    display: "none",
+});
 function createData(
     name: string,
     calories: string,
@@ -118,7 +135,7 @@ function TabPanel(props: TabPanelProps) {
 
 const AccesssaryManagements: React.FC = () => {
     const [value, setValue] = React.useState(0);
-
+    const [open, setOpen] = React.useState(false);
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
@@ -126,8 +143,70 @@ const AccesssaryManagements: React.FC = () => {
     return (
         <React.Fragment>
             <Box>
-                <Typography variant="h3">Phụ tùng cửa hàng Hàng Xanh</Typography>
+                <Typography variant="h5">Phụ tùng cửa hàng Hàng Xanh</Typography>
             </Box>
+            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button variant="contained" endIcon={<AddIcon />} onClick={() => setOpen(true)}>
+                    Thêm phụ kiện
+                </Button>
+            </Box>
+            <Dialog fullWidth open={open} onClose={() => setOpen(false)}>
+                <DialogTitle>Thêm dịch vụ</DialogTitle>
+                <DialogContent>
+                    <Box sx={{ display: "block" }}>
+                        <Box>
+                            <TextField fullWidth label="Tên phụ kiện" variant="outlined" />
+                        </Box>
+                        <Box sx={{ mt: 2 }} />
+                        <Box>
+                            <TextField
+                                fullWidth
+                                label="Giá tiền"
+                                type="number"
+                                variant="outlined"
+                            />
+                        </Box>
+                        <Box sx={{ mt: 2 }} />
+                        <Box>
+                            <TextField fullWidth label="Nhà sản xuất" variant="outlined" />
+                        </Box>
+                        <Box sx={{ mt: 2 }} />
+                        <Box>
+                            <TextField fullWidth label="Xuất xứ" variant="outlined" />
+                        </Box>
+                        <Box sx={{ mt: 2, ml: 4 }} />
+                        <Box>
+                            <Stack direction="row" alignItems="center" spacing={2}>
+                                <label htmlFor="contained-button-file">
+                                    <Input
+                                        accept="image/*"
+                                        id="contained-button-file"
+                                        multiple
+                                        type="file"
+                                    />
+                                    <Button variant="contained" component="span">
+                                        Upload hình ảnh
+                                    </Button>
+                                </label>
+                                {/* <label htmlFor="icon-button-file">
+                                    <Input accept="image/*" id="icon-button-file" type="file" />
+                                    <IconButton
+                                        color="primary"
+                                        aria-label="upload picture"
+                                        component="span"
+                                    >
+                                        <PhotoCamera />
+                                    </IconButton>
+                                </label> */}
+                            </Stack>
+                        </Box>
+                    </Box>
+                </DialogContent>
+                <DialogActions sx={{ display: "flex" }}>
+                    <Button onClick={() => setOpen(false)}>Hủy</Button>
+                    <Button onClick={() => setOpen(false)}>Lưu</Button>
+                </DialogActions>
+            </Dialog>
             <Box sx={{ width: "100%" }}>
                 <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
@@ -146,6 +225,7 @@ const AccesssaryManagements: React.FC = () => {
                                     <TableCell align="left">Giá tiền (VNĐ)</TableCell>
                                     <TableCell align="left">Nhà sản xuất</TableCell>
                                     <TableCell align="left">Xuất xứ</TableCell>
+                                    <TableCell align="left">Thao tác</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -166,13 +246,25 @@ const AccesssaryManagements: React.FC = () => {
                                                 loading="lazy"
                                             />
                                         </TableCell>
-                                        <TableCell align="left" width="100">
+                                        <TableCell align="left" width="130">
                                             {row.fat}
                                         </TableCell>
                                         <TableCell align="left" width="200">
                                             {row.carbs}
                                         </TableCell>
                                         <TableCell align="left">{row.protein}</TableCell>
+                                        <TableCell align="left">
+                                            <Tooltip title="Delete">
+                                                <IconButton>
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </Tooltip>
+                                            <Tooltip title="Edit">
+                                                <IconButton>
+                                                    <EditIcon />
+                                                </IconButton>
+                                            </Tooltip>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

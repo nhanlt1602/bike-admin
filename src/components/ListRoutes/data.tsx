@@ -1,5 +1,5 @@
 // import Filter5Icon from "@mui/icons-material/Filter5";
-// import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
+import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import StoreIcon from "@mui/icons-material/Store";
 
 export const routes = [
@@ -24,21 +24,21 @@ export const routes = [
     {
         id: 3,
         name: "Quản lý cửa hàng",
-        path: "/store",
+        path: "/order",
         icon: StoreIcon,
     },
-    // {
-    //     id: 4,
-    //     name: "Quản lý phụ tùng",
-    //     path: "/accessary",
-    //     icon: HomeRepairServiceIcon,
-    // },
-    // {
-    //     id: 4,
-    //     name: "Quản lý dịch vụ",
-    //     path: "/service",
-    //     icon: HomeRepairServiceIcon,
-    // },
+    {
+        id: 4,
+        name: "Quản lý phụ tùng",
+        path: "/accessary",
+        icon: HomeRepairServiceIcon,
+    },
+    {
+        id: 4,
+        name: "Quản lý dịch vụ",
+        path: "/service",
+        icon: HomeRepairServiceIcon,
+    },
     // {
     //     id: 4,
     //     name: "Quản lý Feedback",
