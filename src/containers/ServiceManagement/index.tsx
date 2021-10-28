@@ -1,6 +1,19 @@
 import * as React from "react";
 
-import { Typography } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    IconButton,
+    TextField,
+    Tooltip,
+    Typography,
+} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -23,20 +36,48 @@ const rows = [
 ];
 
 export default function ServiceManagement() {
+    const [open, setOpen] = React.useState(false);
     return (
         <React.Fragment>
             <Box>
-                <Typography variant="h3">Dịch vụ cửa hàng Hàng Xanh</Typography>
+                <Typography variant="h5">Dịch vụ cửa hàng Hàng Xanh</Typography>
             </Box>
+            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button variant="contained" endIcon={<AddIcon />} onClick={() => setOpen(true)}>
+                    Thêm dịch vụ
+                </Button>
+            </Box>
+            <Dialog open={open} onClose={() => setOpen(false)}>
+                <DialogTitle>Thêm dịch vụ</DialogTitle>
+                <DialogContent>
+                    <Box sx={{ display: "block" }}>
+                        <Box>
+                            <TextField fullWidth label="Tên dịch vụ" variant="outlined" />
+                        </Box>
+                        <Box sx={{ mt: 2 }} />
+                        <Box>
+                            <TextField
+                                fullWidth
+                                label="Giá tiền"
+                                type="number"
+                                variant="outlined"
+                            />
+                        </Box>
+                    </Box>
+                </DialogContent>
+                <DialogActions sx={{ display: "flex" }}>
+                    <Button onClick={() => setOpen(false)}>Hủy</Button>
+                    <Button onClick={() => setOpen(false)}>Lưu</Button>
+                </DialogActions>
+            </Dialog>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>ID</TableCell>
                             <TableCell align="left">Tên dịch vụ</TableCell>
-                            <TableCell align="left">Tên nhân viên</TableCell>
                             <TableCell align="left">Giá tiền (VNĐ)</TableCell>
-                            <TableCell align="left">Ngày</TableCell>
+                            <TableCell align="left">Thao tác</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -49,9 +90,19 @@ export default function ServiceManagement() {
                                     {row.name}
                                 </TableCell>
                                 <TableCell align="left">{row.calories}</TableCell>
-                                <TableCell align="left">{row.fat}</TableCell>
                                 <TableCell align="left">{row.carbs}</TableCell>
-                                <TableCell align="left">{row.protein}</TableCell>
+                                <TableCell align="left">
+                                    <Tooltip title="Delete">
+                                        <IconButton>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Tooltip title="Edit">
+                                        <IconButton>
+                                            <EditIcon />
+                                        </IconButton>
+                                    </Tooltip>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
