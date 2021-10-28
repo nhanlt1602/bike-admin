@@ -232,17 +232,20 @@ const OrderManagement: React.FC = () => {
                             </Button>
                         </Box>
                         <Box sx={{ mt: 1 }} />
-                        <Box sx={{ display: "flex", width: "100%" }}>
+                        <Box
+                            sx={{ display: "flex", justifyContent: "space-around", width: "100%" }}
+                        >
                             <Card sx={{ width: "100%" }} elevation={2}>
                                 <Box
                                     sx={{
+                                        width: "100%",
                                         display: "inline-flex",
                                         justifyContent: "space-around",
                                         p: "10px",
                                     }}
                                 >
                                     <Box sx={{ justifyContent: "space-between" }}>
-                                        <Stack direction="row" spacing={1}>
+                                        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
                                             <Typography
                                                 variant="body2"
                                                 component="div"
@@ -256,7 +259,7 @@ const OrderManagement: React.FC = () => {
                                             </Typography>
                                         </Stack>
 
-                                        <Stack direction="row" spacing={1}>
+                                        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
                                             <Typography
                                                 variant="body2"
                                                 component="div"
@@ -269,7 +272,7 @@ const OrderManagement: React.FC = () => {
                                                 Lê Trọng Nhân
                                             </Typography>
                                         </Stack>
-                                        <Stack direction="row" spacing={1}>
+                                        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
                                             <Typography
                                                 variant="body2"
                                                 component="div"
@@ -282,7 +285,7 @@ const OrderManagement: React.FC = () => {
                                                 0889567567 - 088936936
                                             </Typography>
                                         </Stack>
-                                        <Stack direction="row" spacing={1}>
+                                        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
                                             <Typography
                                                 variant="body2"
                                                 component="div"
@@ -295,7 +298,7 @@ const OrderManagement: React.FC = () => {
                                             </Typography>
                                         </Stack>
 
-                                        <Stack direction="row" spacing={1}>
+                                        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
                                             <Typography
                                                 variant="body2"
                                                 component="div"
@@ -307,7 +310,7 @@ const OrderManagement: React.FC = () => {
                                                 Ô tô, xe máy
                                             </Typography>
                                         </Stack>
-                                        <Stack direction="row" spacing={1}>
+                                        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
                                             <Box sx={{ display: "flex" }}>
                                                 <Box sx={{ mt: 1 }}>
                                                     <Button>
@@ -323,7 +326,7 @@ const OrderManagement: React.FC = () => {
                                         </Stack>
                                     </Box>
                                     <Box sx={{ justifyContent: "space-between", ml: "5rem" }}>
-                                        <Stack direction="row" spacing={1}>
+                                        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
                                             <Typography
                                                 variant="body2"
                                                 component="div"
@@ -335,7 +338,7 @@ const OrderManagement: React.FC = () => {
                                                 Sửa xe, bảo trì và cung cấp phụ tùng
                                             </Typography>
                                         </Stack>
-                                        <Stack direction="row" spacing={1}>
+                                        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
                                             <Typography
                                                 variant="body2"
                                                 component="div"
@@ -347,7 +350,7 @@ const OrderManagement: React.FC = () => {
                                                 251251#f3f
                                             </Typography>
                                         </Stack>
-                                        <Stack direction="row" spacing={1}>
+                                        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
                                             <Typography
                                                 variant="body2"
                                                 component="div"
@@ -360,7 +363,7 @@ const OrderManagement: React.FC = () => {
                                                 45 Bưng Ông Thoàn, Phượng Hiệp Phú, Quận 9
                                             </Typography>
                                         </Stack>
-                                        <Stack direction="row" spacing={1}>
+                                        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
                                             <Typography
                                                 variant="body2"
                                                 component="div"
@@ -373,7 +376,7 @@ const OrderManagement: React.FC = () => {
                                                 15-05-2021
                                             </Typography>
                                         </Stack>
-                                        <Stack direction="row" spacing={1}>
+                                        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
                                             <Typography
                                                 variant="body2"
                                                 component="div"
@@ -446,7 +449,7 @@ const OrderManagement: React.FC = () => {
                                         fontSize: 12,
                                     }}
                                 >
-                                    so với tuần trước
+                                    so với tháng trước
                                 </Box>
                             </Box>
                         </Card>
@@ -496,7 +499,7 @@ const OrderManagement: React.FC = () => {
                                         fontSize: 12,
                                     }}
                                 >
-                                    so với tuần trước
+                                    so với tháng trước
                                 </Box>
                             </Box>
                         </Card>
@@ -546,7 +549,7 @@ const OrderManagement: React.FC = () => {
                                         fontSize: 12,
                                     }}
                                 >
-                                    so với tuần trước
+                                    so với tháng trước
                                 </Box>
                             </Box>
                         </Card>
@@ -591,7 +594,7 @@ const OrderManagement: React.FC = () => {
                                         mx: 0.5,
                                     }}
                                 >
-                                    2.1 k
+                                    11 %
                                 </Box>
                                 <Box
                                     sx={{
@@ -600,7 +603,7 @@ const OrderManagement: React.FC = () => {
                                         fontSize: 12,
                                     }}
                                 >
-                                    so với tuần trước
+                                    so với tháng trước
                                 </Box>
                             </Box>
                         </Card>

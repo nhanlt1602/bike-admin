@@ -165,7 +165,7 @@ const StatisticManagement: React.FC = () => {
                                             mx: 0.5,
                                         }}
                                     >
-                                        2.1 k
+                                        11 %
                                     </Box>
                                     <Box
                                         sx={{

@@ -8,8 +8,8 @@ const BarChart = () => {
                     labels: ["May", "Jun", "July", "Aug", "Sep", "Oct"],
                     datasets: [
                         {
-                            label: "# Đơn hàng",
-                            data: [12, 19, 3, 5, 2, 3],
+                            label: "# Số đơn",
+                            data: [221, 312, 127, 234, 267, 317],
                             backgroundColor: [
                                 "rgba(255, 99, 132, 0.2)",
                                 "rgba(54, 162, 235, 0.2)",

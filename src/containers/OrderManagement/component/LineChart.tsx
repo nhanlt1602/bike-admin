@@ -7,11 +7,11 @@ const LineChart = () => {
         <div>
             <Line
                 data={{
-                    labels: ["Jun", "July", "Aug", "Sep", "Oct"],
+                    labels: ["May", "Jun", "July", "Aug", "Sep", "Oct"],
                     datasets: [
                         {
-                            label: "# Đơn hàng",
-                            data: [3, 4, 5, 15, 16, 22],
+                            label: "# Triệu VNĐ",
+                            data: [13, 17.2, 9.8, 14.3, 16.89, 18.43],
                             backgroundColor: "rgba(255, 99, 132, 0.2)",
                             borderColor: "rgba(255, 99, 132, 1)",
 
