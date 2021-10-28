@@ -44,16 +44,28 @@ function createData(
 }
 
 const rows = [
-    createData("Lê Trọng Nhân", "Phan thi Tra My", "Lốp xe", "125.00", "D2, Hiệp Phú, Quận 9"),
-    createData("Trương Thanh Bình", "Lương Thanh Hà", "Yên xe", "300.00", "D2, Hiệp Phú, Quận 9"),
-    createData("Lý Gia Hân", "Phạm Văn Danh", "Kính xe", "125.00", "D2, Hiệp Phú, Quận 9"),
-    createData("Nguyễn Văn Tâm", "Trần Thị Khánh Vy", "Lốp xe", "200.00", "D2, Hiệp Phú, Quận 9"),
+    createData("Lê Trọng Nhân", "Phan thi Tra My", "Lốp xe", "125.000 VNĐ", "D2, Hiệp Phú, Quận 9"),
+    createData(
+        "Trương Thanh Bình",
+        "Lương Thanh Hà",
+        "Yên xe",
+        "300.000 VNĐ",
+        "93, Hoàng Diệu 2, Thủ Đức"
+    ),
+    createData("Lý Gia Hân", "Phạm Văn Danh", "Kính xe", "127.000 VNĐ", "39, Lê Văn Việt, Quận 9"),
+    createData(
+        "Nguyễn Văn Tâm",
+        "Trần Thị Khánh Vy",
+        "Lốp xe",
+        "200.000 VNĐ",
+        "63D1, Khu công nghệ cao, Quận 9"
+    ),
     createData(
         "Nguyễn Đình Hào",
         "Phạm Văn Danh",
         "Nhông sên dĩa",
-        "135.00",
-        "D2, Hiệp Phú, Quận 9"
+        "135.000 VNĐ",
+        "39 Thống Nhất, Linh Trung, Quận 9"
     ),
 ];
 

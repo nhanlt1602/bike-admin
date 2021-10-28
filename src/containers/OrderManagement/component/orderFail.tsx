@@ -33,27 +33,40 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // function createData(name: string, calories: string, fat: string, carbs: string, protein: string) {
 //     return { name, calories, fat, carbs, protein };
 // }
-function createData(
-    customer: string,
-    repair: string,
-    accessary: string,
-    price: string,
-    address: string
-) {
-    return { customer, repair, accessary, price, address };
+function createData(customer: string, repair: string, accessary: string, address: string) {
+    return { customer, repair, accessary, address };
 }
 
 const rows = [
-    createData("Hồ Lê Quỳnh Như", "Nguyễn Duy Mạnh", "Lốp xe", "125.00", "D2, Hiệp Phú, Quận 9"),
-    createData("Trương Thanh Bình", "Lương Thanh Hà", "Yên xe", "300.00", "D2, Hiệp Phú, Quận 9"),
-    createData("Đoàn Kkim Thanh", "Phạm Văn Danh", "Kính xe", "125.00", "D2, Hiệp Phú, Quận 9"),
-    createData("Nguyễn Văn Tâm", "Trần Thị Khánh Vy", "Lốp xe", "200.00", "D2, Hiệp Phú, Quận 9"),
+    createData(
+        "Hồ Lê Quỳnh Như",
+        "Nguyễn Duy Mạnh",
+        "Cửa hàng không đủ thiết bị",
+        "39, Võ Văn Ngân, Thủ Đức"
+    ),
+    createData(
+        "Trương Thanh Bình",
+        "Lương Thanh Hà",
+        "Dòng xe này quá cũ không thể sửa",
+        "112, Kha Vạn Cân, Thủ Đức"
+    ),
+    createData(
+        "Đoàn Kim Thanh",
+        "Phạm Văn Danh",
+        "Người hư xe không đồng ý sửa xe",
+        "12, Phạm Văn Đồng, Thủ Đức"
+    ),
+    createData(
+        "Nguyễn Văn Tâm",
+        "Trần Thị Khánh Vy",
+        "Cửa hàng không đủ thiết bị",
+        "D2, Hiệp Phú, Quận 9"
+    ),
     createData(
         "Nguyễn Đình Hào",
         "Phạm Văn Danh",
-        "Nhông sên dĩa",
-        "135.00",
-        "D2, Hiệp Phú, Quận 9"
+        "Không tìm thấy người đặt hẹn",
+        "12, Võ Văn Tăng, Quận 9"
     ),
 ];
 
@@ -76,10 +89,9 @@ const OrderFail: React.FC = () => {
                                 </StyledTableCell>
                             </TableRow>
                             <TableRow>
-                                <StyledTableCell>Khách hàng</StyledTableCell>
-                                <StyledTableCell align="left">Thợ sửa</StyledTableCell>
-                                <StyledTableCell align="left">Phụ tùng</StyledTableCell>
-                                <StyledTableCell align="left">Tổng tiền (VNĐ)</StyledTableCell>
+                                <StyledTableCell>Người bị hư xe</StyledTableCell>
+                                <StyledTableCell align="left">Nhân viên cửa hàng</StyledTableCell>
+                                <StyledTableCell align="left">Lí do hủy đơn</StyledTableCell>
                                 <StyledTableCell align="left">Địa điểm</StyledTableCell>
                             </TableRow>
                         </TableHead>
@@ -94,7 +106,6 @@ const OrderFail: React.FC = () => {
                                     </StyledTableCell>
                                     <StyledTableCell align="left">{row.repair}</StyledTableCell>
                                     <StyledTableCell align="left">{row.accessary}</StyledTableCell>
-                                    <StyledTableCell align="left">{row.price}</StyledTableCell>
                                     <StyledTableCell align="left">{row.address}</StyledTableCell>
                                 </TableRow>
                             ))}

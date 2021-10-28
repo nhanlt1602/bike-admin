@@ -16,7 +16,6 @@ import {
     DialogTitle,
     Divider,
     Icon,
-    IconButton,
     Stack,
     TextField,
 } from "@mui/material";
@@ -113,11 +112,13 @@ const OrderManagement: React.FC = () => {
 
     return (
         <React.Fragment>
-            <Dialog open={open} onClose={() => setOpen(false)}>
-                <DialogTitle>Chỉnh sửa thông tin</DialogTitle>
+            <Dialog fullWidth maxWidth="lg" open={open} onClose={() => setOpen(false)}>
+                <DialogTitle sx={{ textAlign: "center" }}>
+                    <Typography variant="h6">Chỉnh sửa thông tin</Typography>
+                </DialogTitle>
                 <DialogContent>
                     <Box sx={{}}>
-                        <Box sx={{ display: "flex" }}>
+                        <Box sx={{ display: "flex", justifyContent: "space-around" }}>
                             <ItemTextField>
                                 <TextField
                                     label="Tên cửa hàng"
@@ -132,8 +133,6 @@ const OrderManagement: React.FC = () => {
                                     value="Lê Trọng Nhân"
                                 />
                             </ItemTextField>
-                        </Box>
-                        <Box sx={{ display: "flex" }}>
                             <ItemTextField>
                                 <TextField
                                     label="Số điện thoại"
@@ -141,6 +140,8 @@ const OrderManagement: React.FC = () => {
                                     value="0889386214"
                                 />
                             </ItemTextField>
+                        </Box>
+                        <Box sx={{ display: "flex", justifyContent: "space-around" }}>
                             <ItemTextField>
                                 <TextField
                                     label="Mã số thuế"
@@ -148,22 +149,21 @@ const OrderManagement: React.FC = () => {
                                     value="5362536325"
                                 />
                             </ItemTextField>
-                        </Box>
-                        <Box sx={{ display: "flex" }}>
                             <ItemTextField>
                                 <TextField
                                     label="Mã cửa hàng"
                                     variant="outlined"
-                                    value="Sửa xe, bảo trì và cung cấp phụ tùng"
+                                    value="251251#f3f"
                                 />
                             </ItemTextField>
                             <ItemTextField>
                                 <TextField label="Loại" variant="outlined" value="Ô tô, xe máy" />
                             </ItemTextField>
                         </Box>
-                        <Box sx={{ display: "flex" }}>
-                            <ItemTextField>
+                        <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+                            <ItemTextField sx={{ width: "615px" }}>
                                 <TextField
+                                    fullWidth
                                     label="Chuyên"
                                     variant="outlined"
                                     value="Sửa xe, bảo trì và cung cấp phụ tùng"
@@ -171,17 +171,33 @@ const OrderManagement: React.FC = () => {
                             </ItemTextField>
                             <ItemTextField>
                                 <TextField
-                                    label="Địa chỉ"
+                                    label="Số lượng nhân viên"
                                     variant="outlined"
-                                    value="45 Bưng Ông Thoàn, Phượng Hiệp Phú, Quận 9"
+                                    value="23"
                                 />
                             </ItemTextField>
                         </Box>
+                        <Box sx={{ display: "flex", justifyContent: "space-around", mt: 1 }}>
+                            <Box width={0.863}>
+                                <TextField
+                                    fullWidth
+                                    label="Địa chỉ"
+                                    variant="outlined"
+                                    value="45 Bưng Ông Thoàn, Phượng Hiệp Phú, Quận 9"
+                                    multiline
+                                    minRows={2}
+                                />
+                            </Box>
+                        </Box>
                     </Box>
                 </DialogContent>
-                <DialogActions sx={{ display: "flex" }}>
+                <DialogActions
+                    sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+                >
                     <Button onClick={() => setOpen(false)}>Hủy</Button>
-                    <Button onClick={() => setOpen(false)}>Lưu</Button>
+                    <Button variant="contained" onClick={() => setOpen(false)}>
+                        Lưu thay đổi
+                    </Button>
                 </DialogActions>
             </Dialog>
             <Box
@@ -198,20 +214,32 @@ const OrderManagement: React.FC = () => {
 
             <Box sx={{ mt: 2 }} />
             <Container maxWidth="lg">
-                <Grid container>
-                    <Grid item xs={12} md={10} lg={12}>
-                        <Box sx={{ ml: 2 }}>
+                <Grid container width="100%">
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                ml: 2,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                            }}
+                        >
                             <Typography variant="h6" component="div">
                                 Thông tin cửa hàng
-                                <IconButton onClick={() => setOpen(true)}>
-                                    <Icon>edit</Icon>
-                                </IconButton>
                             </Typography>
+                            <Button variant="contained" onClick={() => setOpen(true)}>
+                                Chỉnh sửa <Icon>edit</Icon>
+                            </Button>
                         </Box>
-                        <Box sx={{ display: "flex", gridTemplateColumns: "repeat(3, 1fr)" }}>
-                            <Item>
+                        <Box sx={{ mt: 1 }} />
+                        <Box sx={{ display: "flex", width: "100%" }}>
+                            <Card sx={{ width: "100%" }} elevation={2}>
                                 <Box
-                                    sx={{ display: "inline-flex", justifyContent: "space-between" }}
+                                    sx={{
+                                        display: "inline-flex",
+                                        justifyContent: "space-around",
+                                        p: "10px",
+                                    }}
                                 >
                                     <Box sx={{ justifyContent: "space-between" }}>
                                         <Stack direction="row" spacing={1}>
@@ -220,7 +248,7 @@ const OrderManagement: React.FC = () => {
                                                 component="div"
                                                 sx={{ fontWeight: "bold" }}
                                             >
-                                                Tên cửa hàng:
+                                                Tên cửa hàng:{" "}
                                             </Typography>
 
                                             <Typography variant="body2" component="h5">
@@ -273,7 +301,7 @@ const OrderManagement: React.FC = () => {
                                                 component="div"
                                                 sx={{ fontWeight: "bold" }}
                                             >
-                                                Loại:
+                                                Loại xe:
                                             </Typography>
                                             <Typography variant="body2" component="h5">
                                                 Ô tô, xe máy
@@ -305,18 +333,6 @@ const OrderManagement: React.FC = () => {
                                             </Typography>
                                             <Typography variant="body2" component="h5">
                                                 Sửa xe, bảo trì và cung cấp phụ tùng
-                                            </Typography>
-                                        </Stack>
-                                        <Stack direction="row" spacing={1}>
-                                            <Typography
-                                                variant="body2"
-                                                component="div"
-                                                sx={{ fontWeight: "bold" }}
-                                            >
-                                                Loại:
-                                            </Typography>
-                                            <Typography variant="body2" component="h5">
-                                                Ô tô, xe máy
                                             </Typography>
                                         </Stack>
                                         <Stack direction="row" spacing={1}>
@@ -357,15 +373,28 @@ const OrderManagement: React.FC = () => {
                                                 15-05-2021
                                             </Typography>
                                         </Stack>
+                                        <Stack direction="row" spacing={1}>
+                                            <Typography
+                                                variant="body2"
+                                                component="div"
+                                                sx={{ fontWeight: "bold" }}
+                                            >
+                                                Số lượng nhân viên:
+                                            </Typography>
+
+                                            <Typography variant="body2" component="h5">
+                                                23
+                                            </Typography>
+                                        </Stack>
                                     </Box>
                                 </Box>
-                            </Item>
+                            </Card>
                         </Box>
                     </Grid>
                 </Grid>
             </Container>
             <Container maxWidth="lg">
-                <Box sx={{ ml: 2 }}>
+                <Box sx={{ ml: 2, mt: 2 }}>
                     <Typography variant="h6" component="div">
                         Thông tin kế toán
                     </Typography>
@@ -390,7 +419,7 @@ const OrderManagement: React.FC = () => {
                                         fontWeight: "medium",
                                     }}
                                 >
-                                    231.453.000 VNĐ
+                                    18.453.000 VNĐ
                                 </Box>
                                 <Divider />
                                 <TrendingUpIcon
@@ -440,7 +469,7 @@ const OrderManagement: React.FC = () => {
                                         fontWeight: "medium",
                                     }}
                                 >
-                                    70.000.000 VNĐ
+                                    12.532.124 VNĐ
                                 </Box>
                                 <Divider />
                                 <TrendingUpIcon
@@ -490,7 +519,7 @@ const OrderManagement: React.FC = () => {
                                         fontWeight: "medium",
                                     }}
                                 >
-                                    12.3 K
+                                    317 Đơn
                                 </Box>
                                 <Divider />
                                 <TrendingUpIcon
@@ -544,7 +573,7 @@ const OrderManagement: React.FC = () => {
                                         fontWeight: "medium",
                                     }}
                                 >
-                                    0.3 K
+                                    23 Đơn
                                 </Box>
                                 <Divider />
                                 <TrendingUpIcon
